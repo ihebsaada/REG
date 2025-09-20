@@ -106,7 +106,13 @@ export function PostListPage({ data, encodeDataAttribute }: PostListPageProps) {
                         <p className="text-xs font-semibold text-gray-400 dark:text-gray-200 text-center">
                           {stats.words} words - {stats.text}
                         </p>
-                        <ShareButton />
+                        <ShareButton
+                          slug={post?.slug ? `posts/${post.slug}` : undefined}
+                          title={post?.title}
+                          description={
+                            post?.overview ? toPlainText(post.overview) : ''
+                          }
+                        />
                       </div>
                     </div>
                   </div>

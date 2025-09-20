@@ -22,12 +22,17 @@ export async function generateMetadata(): Promise<Metadata> {
     loadSettings(),
     loadHomePage(),
   ])
-
   const ogImage = urlForOpenGraphImage(settings?.ogImage)
+  // const ogImage = Array.isArray(settings?.ogImage)
+  //   ? urlForOpenGraphImage(settings.ogImage[0])
+  //   : urlForOpenGraphImage(settings?.ogImage)
+
+  // console.log('settings', settings)
+  // const ogImage = urlForOpenGraphImage(settings?.ogImage[0])
   return {
     title: homePage?.title
       ? {
-          template: `%s | ${homePage.title}`,
+          template: `%s`,
           default: homePage.title || 'Personal website',
         }
       : undefined,
@@ -35,10 +40,26 @@ export async function generateMetadata(): Promise<Metadata> {
       ? toPlainText(homePage.overview)
       : undefined,
     openGraph: {
+      title: homePage?.title || 'Respect Environment Group',
+      description: homePage?.overview
+        ? toPlainText(homePage.overview)
+        : 'Join REG in revolutionizing recycling and demolition practices across Tunisia!',
       images: ogImage ? [ogImage] : [],
+      url: 'https://3586f5b35d7a.ngrok-free.app',
+      siteName: 'Respect Environment Group',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: homePage?.title || 'Respect Environment Group',
+      description: homePage?.overview
+        ? toPlainText(homePage.overview)
+        : undefined,
+      images: ogImage ? [ogImage] : [],
+      // creator: '@TonCompteTwitter',
     },
 
-    metadataBase: new URL('https://www.s-reg.tn/metadata'),
+    metadataBase: new URL('https://3586f5b35d7a.ngrok-free.app'),
     appleWebApp: {
       capable: true,
       title: homePage.title,
@@ -47,31 +68,33 @@ export async function generateMetadata(): Promise<Metadata> {
     icons: [
       {
         rel: 'icon',
-        url: 'https://www.s-reg.tn/metadata/favicon-32x32.png',
+        url: 'https://3586f5b35d7a.ngrok-free.app/metadata/favicon-32x32.png',
       },
       {
         rel: 'icon',
-        url: 'https://www.s-reg.tn/metadata/favicon-16x16.png',
+        url: 'https://3586f5b35d7a.ngrok-free.app/metadata/favicon-16x16.png',
       },
       {
         rel: 'apple-touch-icon',
-        url: 'https://www.s-reg.tn/metadata/apple-touch-icon.png',
+        url: 'https://3586f5b35d7a.ngrok-free.app/metadata/apple-touch-icon.png',
       },
       {
         rel: 'mask-icon',
-        url: 'https://www.s-reg.tn/metadata/safari-pinned-tab.svg',
+        url: 'https://3586f5b35d7a.ngrok-free.app/metadata/safari-pinned-tab.svg',
         color: '#1e9146',
       },
       {
         rel: 'shortcut icon',
-        url: 'https://www.s-reg.tn/metadata/favicon.ico',
+        url: 'https://3586f5b35d7a.ngrok-free.app/metadata/favicon.ico',
       },
     ],
-    manifest: 'https://www.s-reg.tn/manifest.json',
+    manifest: 'https://3586f5b35d7a.ngrok-free.app/manifest.json',
     robots: 'index, follow',
     abstract: homePage?.overview ? toPlainText(homePage.overview) : undefined,
     applicationName: homePage?.title,
-    authors: [{ name: homePage?.title, url: 'https://www.s-reg.tn' }],
+    authors: [
+      { name: homePage?.title, url: 'https://3586f5b35d7a.ngrok-free.app' },
+    ],
     category: 'Services for renewable energy',
     classification:
       "Join REG in revolutionizing recycling and demolition practices across Tunisia! Let's build a greener, cleaner future together. #RecycleSmart #SustainableDemolition",
@@ -92,7 +115,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const GOOGLE_TAG_MANAGER_ID = process.env.GOOGLE_TAG_MANAGER_ID
-
 
 export const viewport: Viewport = {
   themeColor: '#000',

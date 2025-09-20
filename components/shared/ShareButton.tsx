@@ -2,29 +2,72 @@
 import React from 'react'
 import { Button } from '../ui/button'
 import { Facebook, Twitter, Linkedin, Copy, Share2 } from 'lucide-react'
+import clsx from 'clsx'
 
-export function ShareButton() {
+interface ShareButtonProps {
+  slug?: string | { current: string }
+  title?: string
+  description?: string
+}
+export function ShareButton({ slug, title, description }: ShareButtonProps) {
   const [isOpen, setIsOpen] = React.useState(false)
+  const [origin, setOrigin] = React.useState<string>('')
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setOrigin(window.location.origin)
+    }
+  }, [])
+
+  // normalize slug string and make sure path matches your route
+  const slugStr = typeof slug === 'string' ? slug : slug?.current ?? ''
+  const shareUrl = origin
+    ? `${origin}/posts/${encodeURIComponent(slugStr)}`
+    : '' // empty until hydrated
+
+  const titles = title
+    ? title.length > 60
+      ? `${title.slice(0, 60)}...`
+      : title
+    : ''
+  const desc = description ?? ''
   const listShareButton = [
     {
       name: 'Facebook',
-      icon: <Facebook className="w-[15px] " />,
-      link: '#',
+      icon: <Facebook className="w-[15px]" />,
+      link: shareUrl
+        ? `https://www.facebook.com/sharer/sharer.php?u=https://3586f5b35d7a.ngrok-free.app/posts/reg-partner-of-the-creer-bim-ec-project-towards-sustainable-road-infrastructure-through-bim-and`
+        : '#',
     },
     {
       name: 'Twitter',
-      icon: <Twitter className="w-[15px] " />,
-      link: '#',
+      icon: <Twitter className="w-[15px]" />,
+      link: shareUrl
+        ? `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+            shareUrl,
+          )}&text=${encodeURIComponent(titles)}`
+        : '#',
     },
     {
       name: 'Linkedin',
-      icon: <Linkedin className="w-[15px]  " />,
-      link: '#',
+      icon: <Linkedin className="w-[15px]" />,
+      link: shareUrl
+        ? `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+            shareUrl,
+          )}&title=${encodeURIComponent(titles)}&summary=${encodeURIComponent(
+            desc,
+          )}&source=${encodeURIComponent(origin)}`
+        : '#',
     },
     {
       name: 'Copy Link',
-      icon: <Copy className="w-[15px] " />,
+      icon: <Copy className="w-[15px]" />,
       link: '#',
+      onClick: () => {
+        if (!shareUrl) return
+        navigator.clipboard.writeText(shareUrl)
+        alert('Link copied to clipboard!')
+      },
     },
   ]
 
@@ -39,6 +82,7 @@ export function ShareButton() {
           onClick={toggleShareIcons}
           className="text-white focus:text-green bg-green-500 hover:bg-white-800 font-medium rounded-lg text-sm h-8 px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 gap-2"
           type="button"
+          disabled={!origin} // avoids "#" links pre-hydration
         >
           <Share2 className="bx h-4 w-4 bxs-share-alt text-xs text-black ²"></Share2>
           Share
@@ -57,7 +101,10 @@ export function ShareButton() {
                 {item.icon}
                 <a
                   href={item.link}
+                  onClick={item?.onClick}
                   className="block text-white font-bold hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {item.name}
                 </a>
@@ -65,17 +112,6 @@ export function ShareButton() {
             ))}
           </ul>
         </div>
-        {/* <div className={`absolute ${isOpen ? 'block' : 'hidden'}`}>
-          <span className="absolute flex items-center justify-center h-8 w-8 rounded-full bg-blue-500 text-white -top-14 left-8 cursor-pointer">
-            <i className="bx bxl-twitter"></i>
-          </span>
-          <span className="absolute flex items-center justify-center h-8 w-8 rounded-full bg-blue-500 text-white -top-4 left-12 cursor-pointer">
-            <i className="bx bxl-facebook"></i>
-          </span>
-          <span className="absolute flex items-center justify-center h-8 w-8 rounded-full bg-blue-500 text-white top-6 left-8 cursor-pointer">
-            <i className="bx bxl-linkedin"></i>
-          </span>
-        </div> */}
       </div>
     </div>
   )

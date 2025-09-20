@@ -21,14 +21,38 @@ export async function generateMetadata(
   const { data: post } = await loadPostBySlug(params.slug)
   const ogImage = urlForOpenGraphImage(post?.coverImage)
 
+  console.log('post', ogImage)
+
+  const description = post?.overview
+    ? toPlainText(post.overview)
+    : (await parent).description || undefined
+
   return {
-    title: post?.title,
-    description: post?.overview
-      ? toPlainText(post.overview)
-      : (await parent).description,
+    title: post?.title
+      ? post?.title.length > 60
+        ? `${post?.title.substring(0, 57)}...`
+        : post?.title
+      : 'Respect Environment Group',
+    description,
     openGraph: ogImage
       ? {
           images: [ogImage, ...((await parent).openGraph?.images || [])],
+        }
+      : {},
+    twitter: ogImage
+      ? {
+          card: 'summary_large_image',
+          title: post?.title
+            ? post?.title.length > 60
+              ? `${post?.title.substring(0, 56)}...`
+              : post?.title
+            : 'Respect Environment Group',
+          description: post?.overview
+            ? toPlainText(post.overview).length > 200
+              ? `${toPlainText(post.overview).substring(0, 196)}...`
+              : toPlainText(post.overview)
+            : 'Respect Environment Group',
+          // images: ogImage ? [ogImage] : [],
         }
       : {},
   }

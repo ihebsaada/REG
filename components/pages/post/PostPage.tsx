@@ -34,10 +34,11 @@ export function PostPage({ data, encodeDataAttribute }: PostPageProps) {
     videos,
     certifications,
     files,
-  } = data ?? {}
-
+    slug,
+  } = (data ?? {}) as Partial<PostPayload>
+  console.log('data', data)
   const stats = readingTime(toPlainText(description ?? []))
-
+  console.log(data)
   return (
     <div className="py-14 sm:py-22">
       <WebAnalytics value="/post" event="Pageview" />
@@ -88,7 +89,19 @@ export function PostPage({ data, encodeDataAttribute }: PostPageProps) {
                   <p className="text-sm font-semibold text-gray-400 dark:text-gray-200">
                     {stats.words} words - {stats.text}
                   </p>
-                  <ShareButton />
+                  <ShareButton
+                    slug={
+                      typeof slug === 'string'
+                        ? slug
+                        : typeof slug === 'object' &&
+                            slug !== null &&
+                            'current' in slug
+                          ? (slug as { current: string }).current
+                          : ''
+                    }
+                    title={title}
+                    description={description ? toPlainText(description) : ''}
+                  />
                 </div>
               </div>
             </div>
