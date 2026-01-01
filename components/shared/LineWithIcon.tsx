@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
 
+import HandleLink from '@/components/global/HandleLink'
+
 interface LineWithIconProps {
   icon?: React.ReactNode
   label?: string
@@ -30,14 +32,14 @@ export function LineWithIcon({
           className: `w-4 h-4 ${iconClassName} mr-3 text-green-600 dark:text-green-200`,
         })}
       {link ? (
-        <Link
+        <HandleLink
           href={link}
           target={externalLink ? '_blank' : '_self'}
           rel={externalLink ? 'noopener noreferrer' : ''}
           className="text-green-600 dark:text-green-200 hover:underline"
         >
           <span className="text-green-600 dark:text-green-200">{label}</span>
-        </Link>
+        </HandleLink>
       ) : (
         <span className="text-green-600 dark:text-green-200 ">{label}</span>
       )}

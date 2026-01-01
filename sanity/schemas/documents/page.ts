@@ -1,4 +1,3 @@
-import { getExtension } from '@sanity/asset-utils'
 import { DocumentIcon } from '@sanity/icons'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
@@ -8,65 +7,75 @@ export default defineType({
   title: 'Page',
   icon: DocumentIcon,
   fields: [
+    // ===== LOCALISÉ =====
+    defineField({
+      name: 'titleLocalized',
+      title: 'Title (localized)',
+      type: 'localeString', // { en?, fr?, ar? }
+      options: { collapsible: true, collapsed: true },
+    }),
+
+    defineField({
+      name: 'overviewLocalized',
+      title: 'Overview (localized)',
+      type: 'localeBlock', // { en?, fr?, ar? } PortableText[]
+      options: { collapsible: true, collapsed: true },
+    }),
+
+    defineField({
+      name: 'bodyLocalized',
+      title: 'Body (localized)',
+      type: 'localeBlock', // ou localeRichBlock si tu veux
+      options: { collapsible: true, collapsed: true },
+    }),
+
+    // ===== LEGACY =====
     defineField({
       type: 'string',
       name: 'title',
-      title: 'Title',
+      title: 'Title (legacy)',
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       type: 'slug',
       name: 'slug',
       title: 'Slug',
-      options: {
-        source: 'title',
-      },
+      options: { source: 'title' },
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: 'overview',
       description:
-        'Used both for the <meta> description tag for SEO, and the personal website subheader.',
-      title: 'Overview',
+        'Used both for the <meta> description tag for SEO, and the personal website subheader. (legacy)',
+      title: 'Overview (legacy)',
       type: 'array',
       of: [
-        // Paragraphs
         defineArrayMember({
+          type: 'block',
+          styles: [],
           lists: [],
           marks: {
             annotations: [],
             decorators: [
-              {
-                title: 'Italic',
-                value: 'em',
-              },
-              {
-                title: 'Strong',
-                value: 'strong',
-              },
+              { title: 'Italic', value: 'em' },
+              { title: 'Strong', value: 'strong' },
             ],
           },
-          styles: [],
-          type: 'block',
         }),
       ],
       validation: (rule) => rule.max(155).required(),
     }),
+
     defineField({
       type: 'blockContent',
       name: 'body',
-      title: 'Body',
+      title: 'Body (legacy)',
     }),
-    defineField({
-      type: 'images',
-      name: 'images',
-      title: 'Images',
-    }),
-    defineField({
-      type: 'videos',
-      name: 'videos',
-      title: 'Videos',
-    }),
+
+    defineField({ type: 'images', name: 'images', title: 'Images' }),
+    defineField({ type: 'videos', name: 'videos', title: 'Videos' }),
     defineField({
       type: 'certifications',
       name: 'certifications',
@@ -74,14 +83,9 @@ export default defineType({
     }),
   ],
   preview: {
-    select: {
-      title: 'title',
-    },
+    select: { title: 'title' },
     prepare({ title }) {
-      return {
-        subtitle: 'Page',
-        title,
-      }
+      return { subtitle: 'Page', title }
     },
   },
 })

@@ -11,13 +11,15 @@ import Page from './Page'
 type Props = {
   params: { slug: string }
   initial: QueryResponseInitial<PagePayload | null>
+  dict?: any
+  lang?: 'en' | 'fr' | 'ar'
 }
 
 export default function PagePreview(props: Props) {
-  const { params, initial } = props
+  const { params, initial, dict, lang } = props
   const { data } = useQuery<PagePayload | null>(pagesBySlugQuery, params, {
     initial,
   })
 
-  return <Page data={data!} />
+  return <Page data={data!} dict={dict} lang={lang} />
 }

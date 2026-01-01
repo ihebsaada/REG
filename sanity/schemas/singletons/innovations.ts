@@ -6,25 +6,26 @@ export default defineType({
   title: 'Innovations Page',
   type: 'document',
   icon: PlugIcon,
-  // Uncomment below to have edits publish automatically as you type
-  // liveEdit: true,
   fields: [
+    // ===== LEGACY =====
     defineField({
       name: 'title',
-      description: 'This field is the title of your page.',
-      title: 'Title',
+      description: 'This field is the title of your page. (legacy)',
+      title: 'Title (legacy)',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: 'overview',
       description:
-        'Used both for the <meta> description tag for SEO, and the page subheader.',
-      title: 'Description',
+        'Used both for the <meta> description tag for SEO, and the page subheader. (legacy)',
+      title: 'Description (legacy)',
       type: 'array',
       of: [
-        // Paragraphs
         defineArrayMember({
+          type: 'block',
+          styles: [],
           lists: [],
           marks: {
             annotations: [
@@ -32,32 +33,38 @@ export default defineType({
                 name: 'link',
                 type: 'object',
                 title: 'Link',
-                fields: [
-                  {
-                    name: 'href',
-                    type: 'url',
-                    title: 'Url',
-                  },
-                ],
+                fields: [{ name: 'href', type: 'url', title: 'Url' }],
               },
             ],
             decorators: [
-              {
-                title: 'Italic',
-                value: 'em',
-              },
-              {
-                title: 'Strong',
-                value: 'strong',
-              },
+              { title: 'Italic', value: 'em' },
+              { title: 'Strong', value: 'strong' },
             ],
           },
-          styles: [],
-          type: 'block',
         }),
       ],
       validation: (rule) => rule.max(155).required(),
     }),
+
+    // ===== NOUVEAU LOCALISÉ =====
+    defineField({
+      name: 'titleLocalized',
+      description: 'Localized title (en / fr / ar).',
+      title: 'Title (localized)',
+      type: 'localeString', // { en?, fr?, ar? }
+      options: { collapsible: true, collapsed: true },
+    }),
+
+    defineField({
+      name: 'overviewLocalized',
+      description: 'Localized description (en / fr / ar).',
+      title: 'Description (localized)',
+      type: 'localeBlock', // { en?, fr?, ar? }
+      options: { collapsible: true, collapsed: true },
+      validation: (rule) => rule.required(),
+    }),
+
+    // ===== ITEMS =====
     defineField({
       name: 'items',
       title: 'Items',
@@ -74,7 +81,7 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'title',
+      title: 'title', // legacy pour l’instant
     },
     prepare({ title }) {
       return {

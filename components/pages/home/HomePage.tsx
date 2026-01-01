@@ -36,23 +36,24 @@ const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN
 export interface HomePageProps {
   data: HomePagePayload
   encodeDataAttribute?: EncodeDataAttributeCallback
+  dict?: any
 }
 
-export function HomePage({ data, encodeDataAttribute }: HomePageProps) {
+export function HomePage({ data, encodeDataAttribute, dict }: HomePageProps) {
   // Default to an empty object to allow previews on non-existent documents
   const { sections = [], partners } = data ?? {}
 
   const testimonials =
-    sections[6]?.blocks?.map((item) => {
-      return {
-        body: <CustomPortableText value={item.description ?? []} />,
+    sections
+      ?.find((section) => section.title === 'Testimonials')
+      ?.blocks?.map((item) => ({
+        body: <CustomPortableText value={item.description ?? []} inline />,
         author: {
           name: item.author?.name,
           handle: item.author?.name,
           imageUrl: urlForImage(item.author?.picture)?.url() || '',
         },
-      }
-    }) ?? []
+      })) ?? []
 
   const jsonLd =
     sections[0]?.blocks?.map((block) => ({
@@ -62,13 +63,15 @@ export function HomePage({ data, encodeDataAttribute }: HomePageProps) {
       description: toPlainText(block?.description ?? []),
     })) ?? []
 
+  const videoLink = sections?.[0]?.videos?.[0]?.asset?.url || ''
+
   return (
     <div className="space-y-10">
       <WebAnalytics value="/" event="Pageview" />
       <SectionHero
         title={sections[0]?.title}
         description={
-          <CustomPortableText value={sections[0]?.description ?? []} />
+          <CustomPortableText value={sections[0]?.description ?? []} inline />
         }
         blocks={
           sections[0]?.blocks?.map(
@@ -77,24 +80,26 @@ export function HomePage({ data, encodeDataAttribute }: HomePageProps) {
                 icon: block.icon,
                 title: block.title,
                 description: (
-                  <CustomPortableText value={block.description ?? []} />
+                  <CustomPortableText value={block.description ?? []} inline />
                 ),
               }) as any,
           ) ?? []
         }
-        video={sections[0]?.videoURL}
+        video={videoLink}
       />
 
       {/* Showcase posts */}
       <div className="container">
         <ShowcasePosts
-          title={sections[1]?.title}
+          title={sections[1]?.title ?? ''}
           blocks={sections[1]?.showcasePosts?.map((post, key) => {
             return {
               slug: post.slug ?? '',
               coverImage: urlForImage(post.coverImage)?.url() ?? '',
-              title: post.title,
-              description: <CustomPortableText value={post?.overview ?? []} />,
+              title: post?.title,
+              description: (
+                <CustomPortableText value={post?.overview ?? []} inline />
+              ),
             }
           })}
         />
@@ -106,7 +111,7 @@ export function HomePage({ data, encodeDataAttribute }: HomePageProps) {
         title={sections[2]?.title}
         subtitle={sections[2]?.subtitle}
         description={
-          <CustomPortableText value={sections[2]?.description ?? []} />
+          <CustomPortableText value={sections[2]?.description ?? []} inline />
         }
         coverImage={urlForImage(sections[2]?.coverImage)?.url() ?? ''}
         width={width}
@@ -119,13 +124,15 @@ export function HomePage({ data, encodeDataAttribute }: HomePageProps) {
           title={sections[4]?.title}
           subtitle={sections[4]?.subtitle}
           description={
-            <CustomPortableText value={sections[4]?.description ?? []} />
+            <CustomPortableText value={sections[4]?.description ?? []} inline />
           }
-          video={sections[4]?.videoURL}
+          video={sections[4]?.videos?.[0]?.asset?.url}
           stats={
             sections[4]?.blocks?.map((item) => ({
               value: item.title,
-              name: <CustomPortableText value={item.description ?? []} />,
+              name: (
+                <CustomPortableText value={item.description ?? []} inline />
+              ),
               unit: item.subtitle,
             })) ?? []
           }
@@ -135,16 +142,17 @@ export function HomePage({ data, encodeDataAttribute }: HomePageProps) {
       {/* Stats */}
       <Stats
         stats={
-          sections[3]?.blocks?.map((item) => ({
+          sections[3]?.blocks?.map((item, index) => ({
+            id: `${item.title}-${index}`,
             value: item.title,
-            name: <CustomPortableText value={item.description ?? []} />,
+            name: <CustomPortableText value={item.description ?? []} inline />,
             unit: item.subtitle,
           })) ?? []
         }
       />
 
       <div className="container">
-        <HomePageShowcases data={data} />
+        <HomePageShowcases data={data} dict={dict} />
       </div>
 
       {/* Boost */}
@@ -168,8 +176,10 @@ export function HomePage({ data, encodeDataAttribute }: HomePageProps) {
       {/* Testimonials */}
       <div className="container">
         <Testimonials
-          title={sections[6]?.title}
-          description={sections[6]?.subtitle}
+          title={sections.find((s) => s.title === 'Testimonials')?.title}
+          description={
+            sections.find((s) => s.title === 'Testimonials')?.subtitle
+          }
           testimonials={[
             [[testimonials[1]], [testimonials[2]]],
             [[testimonials[3]], [testimonials[4]]],

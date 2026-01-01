@@ -16,6 +16,10 @@
 # production
 /build
 /studio/dist
+dist/
+.next/
+out/
+build/
 
 # misc
 .DS_Store

@@ -17,7 +17,7 @@ export default defineType({
       name: 'title',
       description: 'This field is the title of your project.',
       title: 'Title',
-      type: 'string',
+      type: 'localeString',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -25,41 +25,50 @@ export default defineType({
       title: 'Slug',
       type: 'slug',
       options: {
-        source: 'title',
+        source: 'title.en',
         maxLength: 96,
         isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
       validation: (rule) => rule.required(),
     }),
+    // defineField({
+    //   name: 'overview',
+    //   description:
+    //     'Used both for the <meta> description tag for SEO, and project subheader.',
+    //   title: 'Overview',
+    //   type: 'array',
+    //   of: [
+    //     // Paragraphs
+    //     defineArrayMember({
+    //       lists: [],
+    //       marks: {
+    //         annotations: [],
+    //         decorators: [
+    //           {
+    //             title: 'Italic',
+    //             value: 'em',
+    //           },
+    //           {
+    //             title: 'Strong',
+    //             value: 'strong',
+    //           },
+    //         ],
+    //       },
+    //       styles: [],
+    //       type: 'block',
+    //     }),
+    //   ],
+    //   validation: (rule) => rule.max(155).required(),
+    // }),
     defineField({
       name: 'overview',
       description:
         'Used both for the <meta> description tag for SEO, and project subheader.',
       title: 'Overview',
-      type: 'array',
-      of: [
-        // Paragraphs
-        defineArrayMember({
-          lists: [],
-          marks: {
-            annotations: [],
-            decorators: [
-              {
-                title: 'Italic',
-                value: 'em',
-              },
-              {
-                title: 'Strong',
-                value: 'strong',
-              },
-            ],
-          },
-          styles: [],
-          type: 'block',
-        }),
-      ],
-      validation: (rule) => rule.max(155).required(),
+      type: 'localeBlock',
+      validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: 'coverImage',
       title: 'Cover Image',
@@ -83,7 +92,7 @@ export default defineType({
     defineField({
       name: 'description',
       title: 'Project Description',
-      type: 'blockContent',
+      type: 'localeBlock',
     }),
     defineField({
       name: 'date',
@@ -126,7 +135,7 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'title',
+      title: 'title.en',
       author: 'author.name',
       date: 'date',
       media: 'coverImage',

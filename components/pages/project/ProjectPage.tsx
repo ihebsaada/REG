@@ -3,8 +3,8 @@ import { format, parseISO } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { Download } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
 
+import HandleLink from '@/components/global/HandleLink'
 import { CustomPortableText } from '@/components/shared/CustomPortableText'
 import { AppBreadcrumb } from '@/components/shared/NextBreadcrumb'
 import { VideoInView } from '@/components/shared/VideoInView'
@@ -50,7 +50,8 @@ export function ProjectPage({ data, encodeDataAttribute }: ProjectPageProps) {
               src={urlForImage(coverImage)?.url() || ''}
               alt={title ?? ''}
               className="absolute inset-0 object-cover w-full h-full"
-              layout="fill"
+              fill
+              sizes="100vw"
             />
             <div className="absolute bottom-0 left-0 z-20 p-4 ">
               <h1 className="text-2xl font-semibold leading-tight text-gray-100 md:text-4xl">
@@ -59,7 +60,7 @@ export function ProjectPage({ data, encodeDataAttribute }: ProjectPageProps) {
               <div className="flex mt-3">
                 <div>
                   {duration && (
-                    <p className="text-sm font-semibold text-gray-200">
+                    <div className="text-sm font-semibold text-gray-200">
                       {format(parseISO(duration.start || ''), 'dd/LL/yyyy', {
                         locale: fr,
                       })}
@@ -67,12 +68,12 @@ export function ProjectPage({ data, encodeDataAttribute }: ProjectPageProps) {
                       {format(parseISO(duration.end || ''), 'dd/LL/yyyy', {
                         locale: fr,
                       })}
-                    </p>
+                    </div>
                   )}
                   {site && (
-                    <p className="text-sm font-semibold text-gray-200">
+                    <div className="text-sm font-semibold text-gray-200">
                       {site}
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -80,16 +81,16 @@ export function ProjectPage({ data, encodeDataAttribute }: ProjectPageProps) {
           </div>
           <div className="container">
             <div className="pb-6 mt-4 font-semibold text-gray-400 border-b-2 border-gray-200">
-              <p>{overview && <CustomPortableText value={overview} />}</p>
+              <div>{overview && <CustomPortableText value={overview} />}</div>
               {tags &&
                 tags.map((tag) => (
-                  <Link
+                  <HandleLink
                     href="#"
                     className="inline-flex items-center justify-center px-4 py-1 m-1 text-gray-200 bg-green-500 rounded-full dark:bg-green-500 dark:text-gray-200"
                     key={tag}
                   >
                     {tag}
-                  </Link>
+                  </HandleLink>
                 ))}
             </div>
             <div className="pb-6 mt-4 border-b-2 border-gray-200 dark:text-gray-400">

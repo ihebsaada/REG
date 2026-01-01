@@ -18,7 +18,6 @@ export function InnovationPage({
   data,
   encodeDataAttribute,
 }: InnovationPageProps) {
-  // Default to an empty object to allow previews on non-existent documents
   const {
     title,
     description,
@@ -39,9 +38,9 @@ export function InnovationPage({
               <h2 className="mb-4 text-xl font-semibold text-gray-600 dark:text-gray-300">
                 {title}
               </h2>
-              <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
+              <div className="mb-4 text-sm text-gray-500 dark:text-gray-400">
                 <CustomPortableText value={description ?? []} />
-              </p>
+              </div>
             </div>
             <hr className="mb-6 border-gray-200 dark:border-gray-700" />
             {images && (

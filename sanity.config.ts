@@ -27,6 +27,10 @@ import contact from '@/sanity/schemas/objects/contact'
 import duration from '@/sanity/schemas/objects/duration'
 import { images } from '@/sanity/schemas/objects/images'
 import internalLink from '@/sanity/schemas/objects/internalLink'
+import localeBlock from '@/sanity/schemas/objects/localeBlock'
+import localRichBlock from '@/sanity/schemas/objects/localeRichBlock'
+// worksanity language internationaalisation
+import localeString from '@/sanity/schemas/objects/localeString'
 import milestone from '@/sanity/schemas/objects/milestone'
 import socialNetwork from '@/sanity/schemas/objects/socialNetwork'
 import timeline from '@/sanity/schemas/objects/timeline'
@@ -81,6 +85,10 @@ export default defineConfig({
       contact,
       milestone,
       timeline,
+
+      localeString,
+      localeBlock,
+      localRichBlock,
     ],
   },
   plugins: [

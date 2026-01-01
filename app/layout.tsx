@@ -1,108 +1,160 @@
-'use client';
+import '@/styles/index.css'
+import '@/styles/index.css'
 
-import '@/styles/index.css';
-import { Inter as FontSans } from 'next/font/google';
-import { LanguageProvider, useLanguage } from '@/components/LanguageProvider';
-import { cn } from '@/lib/utils';
-import React, { useEffect, useState } from 'react';
+import { GoogleTagManager } from '@next/third-parties/google'
+import { toPlainText } from '@portabletext/react'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Metadata, Viewport } from 'next'
+import dynamic from 'next/dynamic'
+import { Inter as FontSans } from 'next/font/google'
+import { draftMode } from 'next/headers'
+import { headers } from 'next/headers'
+import { Suspense } from 'react'
+
+import { Footer } from '@/components/global/Footer'
+import { GlobalRequestLoader } from '@/components/global/GlobalRequestLoader'
+import { Navbar } from '@/components/global/Navbar'
+import { ThemeProvider } from '@/components/global/theme-provider'
+import { LanguageProvider } from '@/components/LanguageProvider'
+import { ScrollToTop } from '@/components/shared/ScrollToTop'
+import { Toaster } from '@/components/ui/toaster'
+import { urlForOpenGraphImage } from '@/sanity/lib/utils'
+import { loadHomePage, loadSettings } from '@/sanity/loader/loadQuery'
+
+const VisualEditing = dynamic(() => import('@/sanity/loader/VisualEditing'))
+const baseUrl = process.env.VERCEL_URL
+export const locales = ['en', 'fr', 'ar'] as const
+
+export async function generateMetadata(): Promise<Metadata> {
+  const lang = 'en'
+  const [{ data: settings }, { data: homePage }] = await Promise.all([
+    loadSettings(lang),
+    loadHomePage(lang),
+  ])
+  const ogImage = urlForOpenGraphImage(settings?.ogImage)
+
+  return {
+    title: homePage?.title
+      ? {
+          template: `%s`,
+          default: homePage.title || 'Personal website',
+        }
+      : undefined,
+    description: homePage?.overview
+      ? toPlainText(homePage.overview)
+      : undefined,
+    openGraph: {
+      title: homePage?.title || 'Respect Environment Group',
+      description: homePage?.overview
+        ? toPlainText(homePage.overview)
+        : 'Join REG in revolutionizing recycling and demolition practices across Tunisia!',
+      url: baseUrl,
+      siteName: 'Respect Environment Group',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: homePage?.title || 'Respect Environment Group',
+      description: homePage?.overview
+        ? toPlainText(homePage.overview)
+        : undefined,
+    },
+    metadataBase: new URL(`https://${baseUrl}`),
+    appleWebApp: {
+      capable: true,
+      title: homePage?.title,
+      statusBarStyle: 'black-translucent',
+    },
+    icons: [
+      { rel: 'icon', url: `https://${baseUrl}` },
+      { rel: 'icon', url: `https://${baseUrl}/metadata/favicon-16x16.png` },
+      {
+        rel: 'apple-touch-icon',
+        url: `https://${baseUrl}/metadata/apple-touch-icon.png`,
+      },
+      {
+        rel: 'mask-icon',
+        url: `https://${baseUrl}/metadata/safari-pinned-tab.svg`,
+        color: '#1e9146',
+      },
+      {
+        rel: 'shortcut icon',
+        url: `https://${baseUrl}/metadata/favicon.ico`,
+      },
+    ],
+    manifest: `https://${baseUrl}/manifest.json`,
+    robots: 'index, follow',
+    abstract: homePage?.overview ? toPlainText(homePage.overview) : undefined,
+    applicationName: homePage?.title,
+    authors: [{ name: homePage?.title, url: `https://${baseUrl}` }],
+    category: 'Services for renewable energy',
+    classification:
+      "Join REG in revolutionizing recycling and demolition practices across Tunisia! Let's build a greener, cleaner future together. #RecycleSmart #SustainableDemolition",
+    creator: 'Arfacod',
+    generator: 'Next.js',
+    publisher: 'Vercel',
+    keywords: ['Recycle Smart', 'Sustainable Demolition'],
+    referrer: 'origin',
+    other: {
+      'og:image:alt': 'My Website',
+      'apple-mobile-web-app-title': 'Respect Environment Group',
+      'application-name': 'Respect Environment Group',
+      'msapplication-TileColor': '#1e9146',
+      'theme-color': '#ffffff',
+    },
+  }
+}
+const GOOGLE_TAG_MANAGER_ID = process.env.GOOGLE_TAG_MANAGER_ID
 
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',
-});
+})
 
+export function generateStaticParams() {
+  return locales.map((l) => ({ locale: l }))
+}
+export const viewport: Viewport = {
+  themeColor: '#000',
+}
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return (
-    <LanguageProvider>
-      <InnerRootLayout>{children}</InnerRootLayout>
-    </LanguageProvider>
-  );
-}
-
-// Separate Inner Component to use `useLanguage` within `LanguageProvider`
-function InnerRootLayout({ children }: { children: React.ReactNode }) {
-  const { language, setLanguage } = useLanguage();
-  const [isTranslateLoaded, setTranslateLoaded] = useState(false);
-
-  // Load Google Translate script once
-  useEffect(() => {
-    const loadGoogleTranslate = () => {
-      if (isTranslateLoaded) return;
-      const script = document.createElement('script');
-      script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-      script.async = true;
-      document.head.appendChild(script);
-    };
-
-    window.googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
-        { pageLanguage: 'ar' },
-        'google_translate_element'
-      );
-      setTranslateLoaded(true);
-      setTimeout(removeGoogleTranslateElements, 800);
-    };
-
-    loadGoogleTranslate();
-  }, [isTranslateLoaded]);
-
-  // Function to remove Google Translate iframe and toolbar
-  const removeGoogleTranslateElements = () => {
-    const translateFrame = document.querySelector('iframe.skiptranslate');
-    if (translateFrame) translateFrame.remove();
-
-    const banner = document.querySelector('.goog-te-banner-frame.skiptranslate');
-    if (banner) banner.remove();
-  };
-
-  // Function to trigger language translation when language changes
-  const translateLanguage = (languageCode: string) => {
-    const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
-    if (select && select.value !== languageCode) {
-      select.value = languageCode;
-      select.dispatchEvent(new Event('change'));
-    }
-  };
-
-  // Trigger translation when `language` changes and adjust page direction
-  useEffect(() => {
-    if (isTranslateLoaded && (language === 'en' || language === 'ar' || language === 'fr' || language === 'it' )) {
-      translateLanguage(language);
-    }
-
-    const htmlElement = document.documentElement;
-    htmlElement.setAttribute('dir', language === 'ar' ? 'rtl' : 'ltr');
-  }, [language, isTranslateLoaded]);
+  const lang = 'en'
 
   return (
-    <html lang={language} suppressHydrationWarning className="text-inherit">
+    <html lang={lang} suppressHydrationWarning>
       <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          fontSans.variable
-        )}
+        className={`min-h-screen bg-background font-sans antialiased ${fontSans.variable}`}
       >
-        <style jsx global>{`
-          /* Hide Google Translate elements */
-          div#goog-gt-tt,
-          div.goog-te-banner-frame.skiptranslate,
-          iframe.skiptranslate,
-          .goog-te-menu-value {
-            display: none !important;
-          }
-          body {
-            top: 0px !important; /* Fixes any offset caused by the translate bar */
-          }
-        `}</style>
-        <div className="relative flex flex-col min-h-screen bg-background">
-          <div id="google_translate_element" style={{ display: 'none' }}></div>
-          <main className="flex-1">{children}</main>
-        </div>
+        <LanguageProvider initialLanguage={lang}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {/* 👇 Se monte une fois, patch fetch globalement */}
+            <GlobalRequestLoader />
+            <div className="flex flex-col min-h-screen">
+              <Suspense>
+                <Navbar />
+              </Suspense>
+              <Suspense>{children}</Suspense>
+              <Footer />
+              <Toaster />
+              <ScrollToTop />
+              <SpeedInsights />
+              <Analytics />
+              <GoogleTagManager gtmId={GOOGLE_TAG_MANAGER_ID as string} />
+            </div>
+            {draftMode().isEnabled && <VisualEditing />}
+          </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
-  );
+  )
 }

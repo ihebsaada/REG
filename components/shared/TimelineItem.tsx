@@ -28,6 +28,7 @@ export function TimelineItem({
             size="10vw"
             width={65}
             height={65}
+            src={''}
           />
         </div>
         {/* Vertical line */}

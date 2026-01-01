@@ -1,0 +1,106 @@
+{
+  "buttons": {
+    "share": "مشاركة",
+    "cancel": "إلغاء",
+    "readMore": "قراءة المزيد",
+    "learnMore": "تعلم المزيد",
+    "contactUs": "اتصل بنا",
+    "back": "رجوع",
+    "previous": "السابق",
+    "next": "التالي",
+    "submit": "إرسال",
+    "close": "إغلاق",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة",
+    "viewAll": "عرض الكل"
+  },
+  "messages": {
+    "linkCopied": "تم نسخ الرابط إلى الحافظة",
+    "pageNotFound": "الصفحة غير موجودة.",
+    "noContent": "لا توجد محتويات متاحة",
+    "loading": "جارٍ التحميل…",
+    "error": "حدث خطأ ما",
+    "createNow": "أنشئ واحد الآن",
+    "innovation": {
+      "emptyMessage": "ليس لديك ابتكار بعد"
+    },
+    "certifications": {
+      "emptyMessage": "ليس لديك شهادة بعد"
+    }
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "projects": "المشاريع",
+    "posts": "المنشورات",
+    "innovations": "الابتكارات",
+    "tenders": "المناقصات",
+    "certifications": "الشهادات",
+    "contact": "اتصل"
+  },
+  "footer": {
+    "menu": "القائمة",
+    "legal": "القانونية",
+    "connectWithUs": "تواصل معنا عبر وسائل التواصل الاجتماعي."
+  },
+  "breadcrumb": {
+    "home": "الرئيسية"
+  },
+  "theme": {
+    "system": "النظام",
+    "light": "وضع الضوء",
+    "dark": "وضع الظلام"
+  },
+  "textF": {
+    "latestPost": "أحدث المنشورات"
+  },
+  "certifications": {
+    "title": "الشهادات",
+    "intro": "تعرف على المزيد حول شهاداتنا وتعاوننا."
+  },
+  "contact": {
+    "title": "اتصل بنا",
+    "subtitle": "سنقوم بالرد عليك في أقرب وقت ممكن.",
+    "fields": {
+      "fullName": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "message": "رسالتك"
+    },
+    "placeholders": {
+      "fullName": "أدخل اسمك الكامل",
+      "email": "أدخل بريدك الإلكتروني",
+      "message": "أدخل رسالتك..."
+    },
+    "toast": {
+      "successTitle": "لقد استلمنا رسالتك",
+      "successDescription": "سنرد عليك في أقرب وقت. يمكنك أيضًا التواصل معنا عبر",
+      "errorTitle": "حدث خطأ ما"
+    },
+    "button": {
+      "send": "إرسال الرسالة",
+      "loading": "جاري الإرسال..."
+    }
+  },
+  "home": {
+    "showcases": {
+      "opportunity": {
+        "startDate": "تاريخ البداية",
+        "endDate": "تاريخ النهاية"
+      },
+      "innovation": {
+        "sectionTitle": "البحث والابتكار"
+      }
+    }
+  },
+  "opportunity": {
+    "attachmentsTitle": "المرفقات",
+    "fileLabel": "ملف",
+    "linksTitle": "الروابط"
+  },
+  "page": {
+    "imagesTitle": "الصور",
+    "videosTitle": "الفيديوهات",
+    "certificationsTitle": "الشهادات",
+    "attachmentsTitle": "المرفقات",
+    "fileLabel": "ملف"
+  }
+}

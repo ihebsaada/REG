@@ -1,5 +1,5 @@
-import { DocumentIcon, ImageIcon } from '@sanity/icons'
-import { format, parseISO } from 'date-fns'
+// sanity/schemas/documents/innovation.ts
+import { DocumentIcon } from '@sanity/icons'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
@@ -7,45 +7,83 @@ export default defineType({
   title: 'Innovation',
   type: 'document',
   icon: DocumentIcon,
-  // Uncomment below to have edits publish automatically as you type
-  // liveEdit: true,
   fields: [
+    // ===== LEGACY =====
     defineField({
       name: 'title',
-      description: 'This field is the title of your innovation.',
-      title: 'Title',
+      description: 'This field is the title of your innovation. (legacy)',
+      title: 'Title (legacy)',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: 'overview',
+      title: 'Overview (legacy)',
       description:
         'Used both for the <meta> description tag for SEO, and innovation subheader.',
-      title: 'Overview',
       type: 'array',
       of: [
-        // Paragraphs
         defineArrayMember({
+          type: 'block',
+          styles: [],
           lists: [],
           marks: {
-            annotations: [],
-            decorators: [
+            annotations: [
               {
-                title: 'Italic',
-                value: 'em',
-              },
-              {
-                title: 'Strong',
-                value: 'strong',
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [{ name: 'href', type: 'url', title: 'Url' }],
               },
             ],
+            decorators: [
+              { title: 'Italic', value: 'em' },
+              { title: 'Strong', value: 'strong' },
+            ],
           },
-          styles: [],
+        }),
+      ],
+      validation: (rule) => rule.required(),
+    }),
+
+    defineField({
+      name: 'description',
+      title: 'Project Description (legacy)',
+      type: 'array',
+      of: [
+        defineArrayMember({
           type: 'block',
         }),
       ],
-      validation: (rule) => rule.max(155).required(),
     }),
+
+    // ===== NOUVEAUX CHAMPS LOCALISÉS =====
+    defineField({
+      name: 'titleLocalized',
+      title: 'Title (localized)',
+      description: 'Localized title (en / fr / ar).',
+      type: 'localeString', // { en?, fr?, ar? }
+      options: { collapsible: true, collapsed: true },
+    }),
+
+    defineField({
+      name: 'overviewLocalized',
+      title: 'Overview (localized)',
+      description: 'Localized overview (en / fr / ar).',
+      type: 'localeBlock', // { en?, fr?, ar? } -> cf. ton schéma localeBlock
+      options: { collapsible: true, collapsed: true },
+    }),
+
+    defineField({
+      name: 'descriptionLocalized',
+      title: 'Project Description (localized)',
+      description: 'Localized project description (en / fr / ar).',
+      type: 'localeBlock',
+      options: { collapsible: true, collapsed: true },
+    }),
+
+    // ===== RESTE (inchangé) =====
     defineField({
       name: 'slug',
       title: 'Slug',
@@ -56,11 +94,6 @@ export default defineType({
         isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
       validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'description',
-      title: 'Project Description',
-      type: 'blockContent',
     }),
     defineField({
       type: 'images',
@@ -91,13 +124,14 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'title',
-      media: 'images',
+      titleLegacy: 'title',
+      titleEn: 'titleLocalized.en',
+      media: 'images.0',
     },
-    prepare({ title, media }) {
+    prepare({ titleLegacy, titleEn, media }) {
       return {
-        title,
-        media: media?.[0],
+        title: titleEn || titleLegacy || 'Untitled innovation',
+        media,
       }
     },
   },

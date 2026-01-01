@@ -1,0 +1,106 @@
+{
+  "buttons": {
+    "share": "Share",
+    "cancel": "Cancel",
+    "readMore": "Read more",
+    "learnMore": "Learn more",
+    "contactUs": "Contact us",
+    "back": "Back",
+    "previous": "Previous",
+    "next": "Next",
+    "submit": "Submit",
+    "close": "Close",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "viewAll": "View all"
+  },
+  "messages": {
+    "linkCopied": "Link copied to clipboard",
+    "pageNotFound": "Page not found.",
+    "noContent": "No content available",
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "createNow": "Create one now",
+    "innovation": {
+      "emptyMessage": "You don’t have a innovation yet"
+    },
+    "certifications": {
+      "emptyMessage": "You don’t have a certification yet"
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "posts": "Posts",
+    "innovations": "Innovations",
+    "tenders": "Tenders",
+    "certifications": "Certifications",
+    "contact": "Contact"
+  },
+  "footer": {
+    "menu": "Menu",
+    "legal": "Legal",
+    "connectWithUs": "Connect with us on social media."
+  },
+  "breadcrumb": {
+    "home": "Home"
+  },
+  "theme": {
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "textF": {
+    "latestPost": "latest Post"
+  },
+  "certifications": {
+    "title": "Certifications",
+    "intro": "Learn more about our certifications and collaborations."
+  },
+  "contact": {
+    "title": "Contact us",
+    "subtitle": "We will respond as soon as possible.",
+    "fields": {
+      "fullName": "Full name",
+      "email": "Email",
+      "message": "Your message"
+    },
+    "placeholders": {
+      "fullName": "Enter your full name",
+      "email": "Enter your email",
+      "message": "Enter your message..."
+    },
+    "toast": {
+      "successTitle": "We received your message",
+      "successDescription": "We will respond as soon as possible. You can also contact us at",
+      "errorTitle": "Something went wrong"
+    },
+    "button": {
+      "send": "Send message",
+      "loading": "Loading…"
+    }
+  },
+  "home": {
+    "showcases": {
+      "opportunity": {
+        "startDate": "Start date",
+        "endDate": "End date"
+      },
+      "innovation": {
+        "sectionTitle": "Research and Innovation"
+      }
+    }
+  },
+  "opportunity": {
+    "attachmentsTitle": "Attachments",
+    "fileLabel": "File",
+    "linksTitle": "Links"
+  },
+  "page": {
+    "imagesTitle": "Images",
+    "videosTitle": "Videos",
+    "certificationsTitle": "Certifications",
+    "attachmentsTitle": "Attachments",
+    "fileLabel": "File"
+  }
+}

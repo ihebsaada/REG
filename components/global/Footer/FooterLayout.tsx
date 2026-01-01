@@ -1,15 +1,15 @@
 import type { PortableTextBlock } from '@portabletext/types'
 
-import { CustomPortableText } from '@/components/shared/CustomPortableText'
 import { Footer1 } from '@/components/shared/Footer1'
 import type { SettingsPayload } from '@/types'
 
 interface FooterProps {
   data: SettingsPayload
 }
+
 export default function Footer(props: FooterProps) {
   const { data } = props
-  const footer = data?.footer || ([] as PortableTextBlock[])
+  const footer = (data?.footer || []) as PortableTextBlock[]
   const menuItems = data?.menuItems || []
   const legal = data?.legal || []
 
@@ -25,7 +25,7 @@ export default function Footer(props: FooterProps) {
       productsTitle="Menu"
       contact={data?.contacts?.fields}
       contactTitle={data?.contacts?.title}
-      copyright={<CustomPortableText value={footer} />}
+      copyright={footer[0]?.children[0]?.text}
     />
   )
 }

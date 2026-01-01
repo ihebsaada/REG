@@ -13,6 +13,8 @@ import {
   Text,
 } from '@react-email/components'
 
+import HandleLink from '../global/HandleLink'
+
 interface ReactEmailProps {
   logoUrl?: string
   fullName?: string
@@ -56,12 +58,12 @@ export const ReactEmail = ({
               <strong>Name:</strong> {fullName}
               <br />
               <strong>Email:</strong>
-              <Link
+              <HandleLink
                 className="text-blue-500 hover:underline"
                 href={`mailto:${email}`}
               >
                 {email}
-              </Link>
+              </HandleLink>
             </Text>
             <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
             <Text className="text-black text-[12px] leading-[24px]">

@@ -42,9 +42,10 @@ export function FramerCounter({
     () =>
       springValue.on('change', (latest) => {
         if (ref.current) {
-          ref.current.textContent = Intl.NumberFormat('en-US').format(
-            latest.toFixed(toFixed),
-          )
+          ref.current.textContent = Intl.NumberFormat('en-US', {
+            minimumFractionDigits: toFixed,
+            maximumFractionDigits: toFixed,
+          }).format(latest)
         }
       }),
     [springValue, toFixed],
@@ -52,8 +53,10 @@ export function FramerCounter({
 
   return (
     <div className={`flex gap-x-2`}>
-      <span ref={ref} className={` inline-block`} 
-      style={{width: `${value.toString().length * pxPerDigit}px`}}
+      <span
+        ref={ref}
+        className={` inline-block`}
+        style={{ width: `${value.toString().length * pxPerDigit}px` }}
       />
       {suffix && <span>{suffix}</span>}
     </div>

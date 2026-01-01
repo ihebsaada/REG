@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import Link from 'next/link'
 
+import HandleLink from '@/components/global/HandleLink'
 import { ApplicationPayload } from '@/types'
 
 import { Button } from '../ui/button'
@@ -26,12 +26,12 @@ export function SectionApplication({
         />
         {title}
       </h2>
-      <p className="max-w-xl mx-auto mt-6 text-lg leading-8 text-gray-300">
+      <div className="max-w-xl mx-auto mt-6 text-lg leading-8 text-gray-300">
         <CustomPortableText value={application?.description || []} />
-      </p>
+      </div>
       <div className="flex flex-col items-center justify-center gap-3 mt-6 text-white sm:flex-row sm:gap-6">
         {application?.ios && (
-          <Link href={application?.ios} target="_blank" className="">
+          <HandleLink href={application?.ios} target="_blank" className="">
             <Button
               variant="ghost"
               className="mt-3 bg-transparent border border-white h-14 rounded-xl"
@@ -51,10 +51,10 @@ export function SectionApplication({
                 </div>
               </div>
             </Button>
-          </Link>
+          </HandleLink>
         )}
         {application?.android && (
-          <Link href={application?.android} target="_blank" className="">
+          <HandleLink href={application?.android} target="_blank" className="">
             <Button
               variant="ghost"
               className="mt-3 bg-transparent border border-white h-14 rounded-xl"
@@ -76,17 +76,17 @@ export function SectionApplication({
                 </div>
               </div>
             </Button>
-          </Link>
+          </HandleLink>
         )}
       </div>
       {application?.site && (
-        <Link
+        <HandleLink
           href={application?.site}
           target="_blank"
           className="block col-span-2 mt-12 text-sm text-center text-white underline bg-transparent"
         >
           {application?.site}
-        </Link>
+        </HandleLink>
       )}
       <svg
         viewBox="0 0 1024 1024"

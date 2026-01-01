@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+'use client'
 import { Suspense } from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
@@ -29,16 +30,19 @@ export function SectionHero({
           <Skeleton className="absolute inset-0 object-cover object-right w-full h-full -z-10 md:object-center " />
         }
       >
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          tabIndex={-1}
-          className="absolute inset-0 object-cover object-right w-full h-full -z-10 md:object-center"
-        >
-          <source src={video} type="video/mp4" />
-        </video>
+        {video && (
+          <video
+            key={video}
+            autoPlay
+            loop
+            muted
+            playsInline
+            tabIndex={-1}
+            className="absolute inset-0 object-cover object-right w-full h-full -z-10 md:object-center"
+          >
+            <source src={video} type="video/mp4" />
+          </video>
+        )}
       </Suspense>
       <div className="px-6 mx-auto max-w-7xl lg:px-8">
         <div className="max-w-2xl mx-auto lg:mx-0">
@@ -46,23 +50,26 @@ export function SectionHero({
             {title}
           </h1>
           {description && (
-            <p className="mt-2 text-lg leading-8 text-gray-300 sm:mt-6">
+            <div className="mt-2 text-lg leading-8 text-gray-300 sm:mt-6">
               {description}
-            </p>
+            </div>
           )}
         </div>
         <div className="grid max-w-2xl grid-cols-1 gap-2 mx-auto mt-8 sm:gap-6 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8">
           {blocks?.map((card) => {
-            const Icon = Icons[card.icon]
+            // const Icon = Icons[card.icon]
+            const Icon = card.icon ? Icons[card.icon] : null
             return (
               <div
                 key={card.title}
                 className="flex p-2 bg-green-500 sm:p-6 gap-x-4 rounded-xl ring-1 ring-inset ring-white/10 bg-opacity-80 backdrop-blur-2px"
               >
-                <Icon
-                  className="flex-none w-6 h-6 text-yellow-400 sm:h-8 sm:w-8"
-                  aria-hidden="true"
-                />
+                {Icon && (
+                  <Icon
+                    className="flex-none w-6 h-6 text-yellow-400 sm:h-8 sm:w-8"
+                    aria-hidden="true"
+                  />
+                )}
                 <div className="text-sm sm:leading-7 sm:text-base">
                   <h2 className="font-semibold text-white">{card.title}</h2>
                   <p className="mt-2 text-gray-300">{card.description}</p>

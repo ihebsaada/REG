@@ -21,6 +21,5 @@ export default function PostListPagePreview(props: Props) {
       initial,
     },
   )
-
   return <PostListPage data={data!} encodeDataAttribute={encodeDataAttribute} />
 }

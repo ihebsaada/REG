@@ -20,7 +20,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
     params.type === 'project'
   ) {
     const doc$ = context.documentStore.listenQuery(
-      `*[_id==$id || references($id)]{_type,slug,title}`,
+      `*[_id==$id || references($id)]{_type,slug,title,locale}`,
       params,
       { perspective: 'previewDrafts' },
     ) as Observable<
@@ -28,6 +28,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
           _type: string
           slug: { current: string }
           title: string | null
+          locale?: string
         }[]
       | null
     >
@@ -36,6 +37,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
         const isReferencedBySettings = docs?.some(
           (doc) => doc._type === 'settings',
         )
+        const locale = docs?.[0]?.locale || 'en'
         switch (params.type) {
           case 'home':
             return isReferencedBySettings
@@ -45,7 +47,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
                       title:
                         docs?.find((doc) => doc._type === 'home')?.title ||
                         'Home',
-                      href: resolveHref(params.type)!,
+                      href: resolveHref(params.type, undefined, locale) ?? '#',
                     },
                   ],
                   tone: 'positive',
@@ -59,7 +61,8 @@ export const locate: DocumentLocationResolver = (params, context) => {
             return {
               locations: docs
                 ?.map((doc) => {
-                  const href = resolveHref(doc._type, doc?.slug?.current)
+                  const href =
+                    resolveHref(doc._type, doc?.slug?.current, locale) ?? '#'
                   return {
                     title: doc?.title || 'Untitled',
                     href: href!,
@@ -75,7 +78,8 @@ export const locate: DocumentLocationResolver = (params, context) => {
             return {
               locations: docs
                 ?.map((doc) => {
-                  const href = resolveHref(doc._type, doc?.slug?.current)
+                  const href =
+                    resolveHref(doc._type, doc?.slug?.current, locale) ?? '#'
                   return {
                     title: doc?.title || 'Untitled',
                     href: href!,

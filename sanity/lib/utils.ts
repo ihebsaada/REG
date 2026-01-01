@@ -29,21 +29,23 @@ export function urlForOpenGraphImage(image: Image | undefined) {
 export function resolveHref(
   documentType?: string,
   slug?: string,
+  locale: string = 'en',
 ): string | undefined {
+  const loc = locale.startsWith('/') ? locale.slice(1) : locale
   switch (documentType) {
     case 'home':
-      return '/'
+      return `/${loc}`
     case 'page':
     case 'internalLink':
-      return slug ? `/${slug}` : undefined
+      return slug ? `/${loc}/${slug}` : undefined
     case 'project':
-      return slug ? `/projects/${slug}` : undefined
+      return slug ? `/${loc}/projects/${slug}` : undefined
     case 'post':
-      return slug ? `/posts/${slug}` : undefined
+      return slug ? `/${loc}/posts/${slug}` : undefined
     case 'innovation':
-      return slug ? `/innovations/${slug}` : undefined
+      return slug ? `/${loc}/innovations/${slug}` : undefined
     case 'opportunity':
-      return slug ? `/tenders/${slug}` : undefined
+      return slug ? `/${loc}/tenders/${slug}` : undefined
     default:
       console.warn('Invalid document type:', documentType)
       return undefined

@@ -10,6 +10,7 @@ interface ImageBoxProps {
   size?: string
   classesWrapper?: string
   'data-sanity'?: string
+  src?: string
 }
 
 export default function ImageBox({

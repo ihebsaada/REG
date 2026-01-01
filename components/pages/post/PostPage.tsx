@@ -8,13 +8,13 @@ import readingTime from 'reading-time'
 
 import { CustomPortableText } from '@/components/shared/CustomPortableText'
 import { AppBreadcrumb } from '@/components/shared/NextBreadcrumb'
+import { ShareButton } from '@/components/shared/ShareButton'
 import { VideoInView } from '@/components/shared/VideoInView'
 import { urlForImage } from '@/sanity/lib/utils'
 import type { PostPayload } from '@/types'
 
 import WebAnalytics from '../../global/WebAnalytics'
 import GalleryImage from '../../shared/GalleryImage'
-import { ShareButton } from '@/components/shared/ShareButton'
 
 export interface PostPageProps {
   data: PostPayload | null
@@ -36,9 +36,7 @@ export function PostPage({ data, encodeDataAttribute }: PostPageProps) {
     files,
     slug,
   } = (data ?? {}) as Partial<PostPayload>
-  console.log('data', data)
   const stats = readingTime(toPlainText(description ?? []))
-  console.log(data)
   return (
     <div className="py-14 sm:py-22">
       <WebAnalytics value="/post" event="Pageview" />
@@ -53,7 +51,8 @@ export function PostPage({ data, encodeDataAttribute }: PostPageProps) {
               src={urlForImage(coverImage)?.url() || ''}
               alt={title ?? ''}
               className="absolute inset-0 object-cover w-full h-full"
-              layout="fill"
+              fill
+              sizes="100vw"
             />
           </div>
           <div className="container">
@@ -106,7 +105,7 @@ export function PostPage({ data, encodeDataAttribute }: PostPageProps) {
               </div>
             </div>
             <div className="pb-6 mt-4 font-semibold text-gray-400 border-b-2 border-gray-200">
-              <p>{overview && <CustomPortableText value={overview} />}</p>
+              <div>{overview && <CustomPortableText value={overview} />}</div>
               {/* {tags &&
                 tags.map((tag) => (
                   <Link
@@ -115,7 +114,7 @@ export function PostPage({ data, encodeDataAttribute }: PostPageProps) {
                     key={tag}
                   >
                     {tag}
-                  </Link>
+                  </HandleLink>
                 ))} */}
             </div>
             <div className="pb-6 mt-4 border-b-2 border-gray-200 dark:text-gray-200">

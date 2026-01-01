@@ -14,11 +14,14 @@ import WebAnalytics from '../../global/WebAnalytics'
 export interface OpportunityPageProps {
   data: OpportunityPayload | null
   encodeDataAttribute?: EncodeDataAttributeCallback
+  dict?: any
+  lang?: 'en' | 'fr' | 'ar'
 }
 
 export function OpportunityPage({
   data,
   encodeDataAttribute,
+  dict,
 }: OpportunityPageProps) {
   // Default to an empty object to allow previews on non-existent documents
   const { image, title, duration, links, files, description } = data ?? {}
@@ -55,14 +58,14 @@ export function OpportunityPage({
               <h2 className="mb-4 text-xl font-semibold text-gray-600 dark:text-gray-300">
                 {title}
               </h2>
-              <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
+              <div className="mb-4 text-sm text-gray-500 dark:text-gray-400">
                 <CustomPortableText value={description ?? []} />
-              </p>
+              </div>
             </div>
             <hr className="mb-6 border-gray-200 dark:border-gray-700" />
             {files?.length && (
               <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
-                Attachments
+                {dict.opportunity.attachmentsTitle}
               </h3>
             )}
             {files?.map((file, index) => {
@@ -75,14 +78,14 @@ export function OpportunityPage({
                     className="flex items-center mb-2 mr-4 text-sm text-gray-500 md:mb-0 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-100"
                   >
                     <Download size={16} className="mr-1" />
-                    file
+                    {dict.opportunity.fileLabel}
                   </a>
                 </div>
               )
             })}
             {links?.length && (
               <h3 className="mb-4 text-xl font-semibold text-gray-600 dark:text-gray-300">
-                Liens
+                {dict.opportunity.linksTitle}
               </h3>
             )}
             {links?.map((link, index) => {

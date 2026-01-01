@@ -11,6 +11,14 @@ export default defineType({
   // Uncomment below to have edits publish automatically as you type
   // liveEdit: true,
   fields: [
+    // 🆕 Nouveau champ : Titre multilingue
+    defineField({
+      name: 'titleLocalized',
+      title: 'Title (localized)',
+      description:
+        'Multilingual title (en / fr / ar). If filled, it will be used instead of the old "Title" field.',
+      type: 'localeString',
+    }),
     defineField({
       name: 'title',
       description: 'This field is the title of your opportunity.',
@@ -40,6 +48,16 @@ export default defineType({
       },
       validation: (rule) => rule.required(),
     }),
+
+    // 🆕 Nouveau champ : Overview multilingue
+    defineField({
+      name: 'overviewLocalized',
+      title: 'Overview (localized)',
+      description:
+        'Multilingual short description (en / fr / ar). If filled, it will be used instead of the legacy overview.',
+      type: 'localeBlock',
+    }),
+
     defineField({
       name: 'overview',
       description:
@@ -69,6 +87,16 @@ export default defineType({
       ],
       validation: (rule) => rule.max(155).required(),
     }),
+
+    // 🆕 Nouveau champ : Description multilingue riche
+    defineField({
+      name: 'descriptionLocalized',
+      title: 'Project Description (localized)',
+      description:
+        'Multilingual rich content (en / fr / ar). If filled, it will be used instead of the legacy description.',
+      type: 'localeRichBlock',
+    }),
+
     defineField({
       name: 'description',
       title: 'Project Description',

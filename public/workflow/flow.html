@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>REG – Workflow Animation</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      svg {
+        width: 90vw;
+        max-width: 1600px;
+        height: auto;
+        display: block;
+      }
+
+      .logo-wrapp {
+        height: auto;
+        display: flex;
+        justify-content: space-between;
+        padding: 1.5rem 2rem 0 0;
+      }
+
+      .logo-wrapp button {
+        background: none;
+        border: 0;
+        cursor: pointer;
+        outline: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- =====================================
+         🌱 MAIN WORKFLOW SVG ANIMATION
+         (version clean – même rendu)
+    ====================================== -->
+    <div>
+      <div class="logo-wrapp">
+        <button onClick="smartClose()">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50"
+            height="50"
+            style="width: 3rem"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                opacity="0.4"
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                fill="#1e9146"
+              ></path>
+              <path
+                d="M13.0594 12.0001L15.3594 9.70011C15.6494 9.41011 15.6494 8.93011 15.3594 8.64011C15.0694 8.35011 14.5894 8.35011 14.2994 8.64011L11.9994 10.9401L9.69937 8.64011C9.40937 8.35011 8.92937 8.35011 8.63938 8.64011C8.34938 8.93011 8.34938 9.41011 8.63938 9.70011L10.9394 12.0001L8.63938 14.3001C8.34938 14.5901 8.34938 15.0701 8.63938 15.3601C8.78938 15.5101 8.97937 15.5801 9.16937 15.5801C9.35937 15.5801 9.54937 15.5101 9.69937 15.3601L11.9994 13.0601L14.2994 15.3601C14.4494 15.5101 14.6394 15.5801 14.8294 15.5801C15.0194 15.5801 15.2094 15.5101 15.3594 15.3601C15.6494 15.0701 15.6494 14.5901 15.3594 14.3001L13.0594 12.0001Z"
+                fill="#1e9146"
+              ></path>
+            </g>
+          </svg>
+        </button>
+        <img src="../images/reg.png" style="width: 6rem" />
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 -8 55 140"
+        width="205"
+        height="350"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <!-- 🔵 Background green circles -->
+        <circle cx="3.5" cy="8.4" r="1.8" fill="#69be58" opacity="0">
+          <set attributeName="opacity" to="0.9" begin="1.8s" />
+        </circle>
+
+        <circle cx="-1" cy="9.8" r="1" fill="#69be58" opacity="0">
+          <set attributeName="opacity" to="0.9" begin="2.2s" />
+        </circle>
+
+        <circle cx="11.7" cy="12.8" r="1.25" fill="#69be58" opacity="0">
+          <set attributeName="opacity" to="0.9" begin="4.5s" />
+        </circle>
+
+        <circle cx="23" cy="12.7" r="2.4" fill="#69be58" opacity="0">
+          <set attributeName="opacity" to="0.9" begin="6.2s" />
+        </circle>
+
+        <circle cx="34" cy="14" r="1.8" fill="#69be58" opacity="0">
+          <set attributeName="opacity" to="0.9" begin="8s" />
+        </circle>
+
+        <circle cx="61.95" cy="12.5" r="1.4" fill="#69be58" opacity="0">
+          <set attributeName="opacity" to="0.9" begin="10.6s" />
+        </circle>
+
+        <circle cx="33.5" cy="43.5" r="1.2" fill="#69be58" opacity="0">
+          <set attributeName="opacity" to="0.9" begin="13.7s" />
+        </circle>
+
+        <circle cx="13.5" cy="51.35" r="3" fill="#69be58" opacity="0">
+          <set attributeName="opacity" to="0.9" begin="15.5s" />
+        </circle>
+
+        <circle cx="39.6" cy="72" r="1.6" fill="#69be58" opacity="0">
+          <set attributeName="opacity" to="0.9" begin="17.8s" />
+        </circle>
+
+        <circle cx="48" cy="88" r="1.6" fill="#69be58" opacity="0">
+          <set attributeName="opacity" to="0.9" begin="18.2s" />
+        </circle>
+
+        <!-- ⚪ Background white circles -->
+        <image href="./c5.png" x="41" y="-2" width="10" height="10" opacity="0">
+          <set attributeName="opacity" to="1" begin="9s" />
+        </image>
+
+        <image href="./c5.png" x="13" y="0.5" width="10" height="6" opacity="0">
+          <set attributeName="opacity" to="1" begin="5.5s" />
+        </image>
+
+        <image href="./c5.png" x="0.5" y="11" width="7" height="7" opacity="0">
+          <set attributeName="opacity" to="1" begin="4.3s" />
+        </image>
+
+        <image href="./c5.png" x="52" y="19.5" width="9" height="9" opacity="0">
+          <set attributeName="opacity" to="1" begin="12s" />
+        </image>
+
+        <image href="./c5.png" x="19" y="45.5" width="7" height="7" opacity="0">
+          <set attributeName="opacity" to="1" begin="15s" />
+        </image>
+
+        <image href="./c5.png" x="-9" y="54" width="9" height="9" opacity="0">
+          <set attributeName="opacity" to="1" begin="16.5s" />
+        </image>
+
+        <image href="./c5.png" x="26" y="62" width="9" height="9" opacity="0">
+          <set attributeName="opacity" to="1" begin="17.5s" />
+        </image>
+
+        <!-- 🟩 MAIN ANIMATED PATH -->
+        <path
+          d="M -6 -2
+           C -10 -2 -10 4 -6 4
+           H 2
+           C 6 4 6 10 2 10
+           L -6 10
+           C -10 10 -10 16 -6 16
+           L 2 16
+           C 9 16 12 18 12 13
+           L 12 10
+           C 12 5 23 5 23 10
+           L 23 19
+           C 23 23 34 23 34 19
+           L 34 10
+           C 34 7 37 7 37 7
+           L 59 7
+           C 62 7 62 10 62 10
+           L 62 25
+           C 62 25 62 28 59 28"
+          fill="none"
+          stroke="#1B9145"
+          stroke-width=".2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          pathLength="300"
+          stroke-dasharray="300"
+          stroke-dashoffset="300"
+        >
+          <animate
+            id="drawFull"
+            attributeName="stroke-dashoffset"
+            from="300"
+            to="0"
+            dur="12s"
+            fill="freeze"
+          />
+        </path>
+        <image href="./c5.png" x="24.5" y="19" width="8" height="8" opacity="0">
+          <set attributeName="opacity" to="1" begin="7s" />
+        </image>
+
+        <!-- 🏷️ Header & Titles -->
+        <image
+          href="./Workflow.png"
+          x="-5.8"
+          y="-6.5"
+          width="24"
+          height="5.8"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="0s" />
+        </image>
+
+        <image
+          href="./C1.png"
+          x="-10.7"
+          y="5"
+          width="1.5"
+          height="1.5"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="0.7s" />
+        </image>
+
+        <image
+          href="./t2.png"
+          x="-10"
+          y="5.4"
+          width="8.5"
+          height="2.2"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="0.7s" />
+        </image>
+
+        <!-- STEP 1 -->
+        <image
+          href="./1.png"
+          x="5.969"
+          y="20.585"
+          width="1"
+          height="1.8"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="4.1s" />
+        </image>
+
+        <image href="./C2.png" x="5.1" y="20" width="3" height="3" opacity="0">
+          <set attributeName="opacity" to="1" begin="4.1s" />
+        </image>
+
+        <image
+          href="./Stockpile.png"
+          x="8.5"
+          y="19.85"
+          width="9"
+          height="1.6"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="4.2s" />
+        </image>
+
+        <image
+          href="./t3.png"
+          x="8.5"
+          y="21.7"
+          width="15"
+          height="4"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="4.3s" />
+        </image>
+
+        <!-- STEP 2 -->
+        <image
+          href="./2.png"
+          x="26.06"
+          y="-0.4"
+          width="3"
+          height="1.8"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="5.6s" />
+        </image>
+
+        <image href="./C2.png" x="26" y="-1" width="3" height="3" opacity="0">
+          <set attributeName="opacity" to="1" begin="5.6s" />
+        </image>
+
+        <image
+          href="./Manual.png"
+          x="29.5"
+          y="-1"
+          width="6"
+          height="3"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="5.7s" />
+        </image>
+
+        <image href="./t4.png" x="29.5" y="2" width="10" height="4" opacity="0">
+          <set attributeName="opacity" to="1" begin="5.8s" />
+        </image>
+
+        <!-- STEP 3 -->
+        <image
+          href="./3.png"
+          x="47"
+          y="34.7"
+          width="1.4"
+          height="1.6"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="12.1s" />
+        </image>
+
+        <image
+          href="./C2.png"
+          x="46.15"
+          y="34"
+          width="3"
+          height="3"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="12.1s" />
+        </image>
+
+        <image
+          href="./Mechanical.png"
+          x="50"
+          y="33.6"
+          width="14"
+          height="1"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="12.2s" />
+        </image>
+
+        <image
+          href="./tf.png"
+          x="49.87"
+          y="35"
+          width="14"
+          height="2"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="12.3s" />
+        </image>
+
+        <!-- CLEAN STOCKPILE TITLE -->
+        <image
+          href="./t1.png"
+          x="48.9"
+          y="-3.4"
+          width="10"
+          height="1.5"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="9.1s" />
+        </image>
+
+        <image
+          href="./allwood.png"
+          x="49"
+          y="-2"
+          width="15"
+          height="3.5"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="9.1s" />
+        </image>
+
+        <!-- ARROWS -->
+        <image
+          href="./fleche1.png"
+          x="-9.9"
+          y="12.8"
+          width="2.7"
+          height="4"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="3s" />
+        </image>
+
+        <image
+          href="./fleche2.png"
+          x="12.7"
+          y="9"
+          width="0.4"
+          height="4"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="4.9s" />
+        </image>
+
+        <image
+          href="./fleche3.png"
+          x="22.6"
+          y="14"
+          width="2.7"
+          height="4"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="6.3s" />
+        </image>
+
+        <image
+          href="./fleche3.png"
+          x="33.7"
+          y="45.9"
+          width="1.4"
+          height="3.5"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="13.8s" />
+        </image>
+
+        <image
+          href="./fleche3.png"
+          x="62"
+          y="14.8"
+          width="1.4"
+          height="3.5"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="10.7s" />
+        </image>
+
+        <image
+          href="./flech4.png"
+          x="-3"
+          y="63"
+          width="4"
+          height="4"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="16.85s" />
+        </image>
+
+        <image
+          href="./flech4.png"
+          x="23"
+          y="59"
+          width="4"
+          height="4"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="18s" />
+        </image>
+
+        <image
+          href="./fleche5.png"
+          x="37.3"
+          y="69.9"
+          width="5"
+          height="5"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="17.8s" />
+        </image>
+
+        <image
+          href="./fleche3.png"
+          x="48"
+          y="86.8"
+          width="1.4"
+          height="3.5"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="18.25s" />
+        </image>
+
+        <image
+          href="./fleche6.png"
+          x="8.7"
+          y="49.9"
+          width="6"
+          height="1.3"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="15.8s" />
+        </image>
+
+        <!-- MAIN SCENES / OBJECTS -->
+        <image
+          href="./L1.png"
+          x="-0.3"
+          y="9.5"
+          width="11"
+          height="10"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="4s" />
+        </image>
+
+        <image
+          href="./waste.png"
+          x="23"
+          y="19.4"
+          width="11"
+          height="7.1"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="7s" />
+        </image>
+
+        <image href="./L2.png" x="12.5" y="0" width="14" height="9" opacity="0">
+          <set attributeName="opacity" to="1" begin="5.5s" />
+        </image>
+
+        <image href="./L5.png" x="40" y="1" width="16" height="8" opacity="0">
+          <set attributeName="opacity" to="1" begin="9s" />
+        </image>
+
+        <image
+          href="./L6.png"
+          x="41.7"
+          y="16.28"
+          width="20"
+          height="14.7"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="12s" />
+        </image>
+
+        <!-- SECONDARY PATH (clean concrete fraction) -->
+        <path
+          d="M 0 0
+           L -6 0
+           C -9 0 -9 2 -9 4
+           L -9 12
+           L -9 17
+           C -9 19 -11 19 -13 19
+           L -39 19
+           C -42 19 -42 21 -42 24"
+          stroke="#1B9145"
+          stroke-width=".2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="100"
+          stroke-dashoffset="100"
+          transform="translate(42.5, 32.5)"
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="0"
+            begin="12.5s"
+            dur="6.5s"
+            fill="freeze"
+          />
+        </path>
+
+        <image
+          href="./L7.png"
+          x="38.5"
+          y="29.65"
+          width="7"
+          height="4"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="12.5s" />
+        </image>
+
+        <!-- CLEAN CONCRETE FRACTION BLOCK -->
+        <image
+          href="./L7.png"
+          x="17.6"
+          y="46"
+          width="14.6"
+          height="8"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="15s" />
+        </image>
+
+        <image
+          href="./Clean-Concrete-Fraction.png"
+          x="17"
+          y="55"
+          width="20"
+          height="3"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="14.5s" />
+        </image>
+
+        <image
+          href="./8050D.png"
+          x="-9"
+          y="53"
+          width="24"
+          height="9.18"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="16.5s" />
+        </image>
+
+        <!-- STEP 4 -->
+        <image
+          href="./4.png"
+          x="-12"
+          y="61.05"
+          width="1.5"
+          height="1.6"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="16.7s" />
+        </image>
+
+        <image
+          href="./C2.png"
+          x="-12.7"
+          y="60.34"
+          width="3"
+          height="3"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="16.7s" />
+        </image>
+
+        <image
+          href="./8050D(080mm).png"
+          x="-9.1"
+          y="60.5"
+          width="8"
+          height="3"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="16.75s" />
+        </image>
+
+        <!-- STEP 5 -->
+        <image
+          href="./5.png"
+          x="2.5"
+          y="68.3"
+          width="1.5"
+          height="1.6"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="17s" />
+        </image>
+
+        <image
+          href="./C2.png"
+          x="1.67"
+          y="67.55"
+          width="3"
+          height="3"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="17s" />
+        </image>
+
+        <image
+          href="./8050D(080mm).png"
+          x="5"
+          y="67.5"
+          width="8"
+          height="3"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="17.2s" />
+        </image>
+
+        <image
+          href="./RL8476H.png"
+          x="17.3"
+          y="63.2"
+          width="25"
+          height="8.2"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="17.5s" />
+        </image>
+
+        <!-- small curved path to stockpile -->
+        <path
+          d="M 0 0 C 3 -2 7 2 5 5"
+          stroke="#1B9145"
+          stroke-width=".2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="100"
+          stroke-dashoffset="100"
+          transform="translate(35, 71)"
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="0"
+            begin="17.55s"
+            dur="3s"
+            fill="freeze"
+          />
+        </path>
+
+        <image
+          href="./Layer8.png"
+          x="39.8"
+          y="71"
+          width="16"
+          height="8"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="18s" />
+        </image>
+
+        <!-- third PATH (vertical to truck) -->
+        <path
+          d="M 0 0 L 0 12"
+          stroke="#1B9145"
+          stroke-width=".2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="100"
+          stroke-dashoffset="100"
+          transform="translate(48, 78.7)"
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="0"
+            begin="18.1s"
+            dur="5s"
+            fill="freeze"
+          />
+        </path>
+
+        <image
+          href="./10.png"
+          x="29"
+          y="90.3"
+          width="27"
+          height="8"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="18.5s" />
+        </image>
+
+        <image
+          href="./Layer11.png"
+          x="21.19"
+          y="94.3"
+          width="16"
+          height="8"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="19s" />
+        </image>
+
+        <!-- three straight final paths (towards 3 products) -->
+        <path
+          d="M 0 0 L -15 15"
+          stroke="#1B9145"
+          stroke-width=".2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="100"
+          stroke-dashoffset="100"
+          transform="translate(23.5, 101.3)"
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="0"
+            begin="19.5s"
+            dur="5s"
+            fill="freeze"
+          />
+        </path>
+
+        <image
+          href="./Layer12.png"
+          x="-3.5"
+          y="110.8"
+          width="12"
+          height="8"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="19.7s" />
+        </image>
+
+        <image
+          href="./Layer13.png"
+          x="-5"
+          y="113"
+          width="7.5"
+          height="7.5"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="19.7s" />
+        </image>
+
+        <image
+          href="./Barrier_mould.png"
+          x="-4.5"
+          y="121.3"
+          width="15"
+          height="10"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="19.7s" />
+        </image>
+
+        <path
+          d="M 0 0 L 0 9"
+          stroke="#1B9145"
+          stroke-width=".2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="100"
+          stroke-dashoffset="100"
+          transform="translate(29.3, 102.3)"
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="0"
+            begin="19.7s"
+            dur="5s"
+            fill="freeze"
+          />
+        </path>
+
+        <image
+          href="./Layer14.png"
+          x="26.4"
+          y="107.5"
+          width="9.5"
+          height="8"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="19.9s" />
+        </image>
+
+        <image
+          href="./Layer16.png"
+          x="24.1"
+          y="110.5"
+          width="9"
+          height="10"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="19.9s" />
+        </image>
+
+        <image
+          href="./Tetrapod_mould_1T.png"
+          x="22.5"
+          y="121.3"
+          width="15"
+          height="10"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="19.9s" />
+        </image>
+
+        <path
+          d="M 0 0 L 14 15"
+          stroke="#1B9145"
+          stroke-width=".2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="100"
+          stroke-dashoffset="100"
+          transform="translate(35, 101.45)"
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="0"
+            begin="19.9s"
+            dur="5s"
+            fill="freeze"
+          />
+        </path>
+
+        <image
+          href="./Layer15.png"
+          x="48"
+          y="112.5"
+          width="16"
+          height="8"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="20.1s" />
+        </image>
+
+        <image
+          href="./Concrete_block_mould_BB.png"
+          x="48.65"
+          y="121.3"
+          width="15"
+          height="10"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="20.1s" />
+        </image>
+
+        <!-- vertical path from roller to truck -->
+        <path
+          d="M 0 0 L 0 -19"
+          stroke="#1B9145"
+          stroke-width=".2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-dasharray="100"
+          stroke-dashoffset="100"
+          transform="translate(55.7, 76)"
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            from="100"
+            to="0"
+            begin="20.1s"
+            dur="5s"
+            fill="freeze"
+          />
+        </path>
+
+        <image
+          href="./Layer17.png"
+          x="47"
+          y="51"
+          width="16"
+          height="11"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="20.3s" />
+        </image>
+
+        <!-- STEP 6 -->
+        <image
+          href="./6.png"
+          x="43.8"
+          y="66.3"
+          width="1.4"
+          height="1.6"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="17.7s" />
+        </image>
+
+        <image href="./C2.png" x="43" y="65.6" width="3" height="3" opacity="0">
+          <set attributeName="opacity" to="1" begin="17.7s" />
+        </image>
+
+        <image
+          href="./StockpilingDedicatedBays.png"
+          x="47"
+          y="65.5"
+          width="8"
+          height="3"
+          opacity="0"
+        >
+          <set attributeName="opacity" to="1" begin="17.8s" />
+        </image>
+      </svg>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        function smartClose() {
+          window.close()
+          history.back()
+        }
+        const svg = document.querySelector('svg')
+        const images = svg.querySelectorAll('image')
+
+        if (!svg || images.length === 0) return
+
+        // lock lowel
+        document.body.style.overflow = 'hidden'
+
+        const viewportBottom = window.innerHeight
+        let nearestImage = null
+        let minDist = Infinity
+
+        images.forEach((img) => {
+          const rect = img.getBoundingClientRect()
+          const dist = Math.abs(rect.bottom - viewportBottom)
+          if (dist < minDist) {
+            minDist = dist
+            nearestImage = img
+          }
+        })
+
+        if (!nearestImage) return
+
+        const setTag = nearestImage.querySelector('set')
+        let delayMs = 0
+        if (setTag) {
+          const begin = parseFloat(setTag.getAttribute('begin')) || 0
+          delayMs = begin * 1000
+        }
+        function autoScroll(speed = 1) {
+          if (
+            window.scrollY + window.innerHeight >=
+            document.body.scrollHeight
+          ) {
+            document.body.style.overflow = 'auto'
+            return
+          }
+          window.scrollBy(0, speed)
+          requestAnimationFrame(() => autoScroll(speed))
+        }
+
+        setTimeout(() => {
+          autoScroll(3)
+        }, delayMs)
+      })
+    </script>
+    <script>
+      function smartClose() {
+        window.close()
+        history.back()
+      }
+    </script>
+  </body>
+</html>

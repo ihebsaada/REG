@@ -34,8 +34,8 @@ export const Default: Story = {
       <BlockBenefits {...args}>
         <div className="w-full mt-5">
           {bullets.map((item, index) => (
-            <Bullet key={index} title={item.title} icon={item.icon}>
-              {item.desc}
+            <Bullet key={index} title={item.title as string} icon={item.icon}>
+              {item.desc as string}
             </Bullet>
           ))}
         </div>

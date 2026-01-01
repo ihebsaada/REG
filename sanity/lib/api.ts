@@ -4,7 +4,7 @@
  */
 
 export const dataset = assertValue(
-  'production',
+  'development',
   'Missing environment variable: NEXT_PUBLIC_SANITY_DATASET',
 )
 

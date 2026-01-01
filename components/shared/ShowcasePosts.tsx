@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import HandleLink from '@/components/global/HandleLink'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 import { Button } from '../ui/button'
@@ -43,25 +44,26 @@ export function ShowcasePosts({
                       fill
                       src={blocks?.[0].coverImage || ''}
                       alt={blocks?.[0].title || ''}
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                   </AspectRatio>
                 </div>
                 <div className="flex items-center ">
                   <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                    <Link
+                    <HandleLink
                       href={`/posts/${blocks?.[0].slug}`}
                       aria-description={blocks?.[0].title}
                     >
                       {blocks?.[0].title}
-                    </Link>
+                    </HandleLink>
                   </h3>
                 </div>
                 <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
                   ------------
                 </p>
-                <p className="pb-6 mb-2 text-gray-600 ">
+                <div className="pb-6 mb-2 text-gray-600 ">
                   {blocks?.[0].description}
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -76,22 +78,23 @@ export function ShowcasePosts({
                       fill
                       src={blocks?.[1].coverImage || ''}
                       alt={blocks?.[1].title || ''}
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                   </AspectRatio>
                 </div>
                 <div className="flex items-center ">
                   <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                    <Link href={`/posts/${blocks?.[1].slug}`}>
+                    <HandleLink href={`/posts/${blocks?.[1].slug}`}>
                       {blocks?.[1].title}
-                    </Link>
+                    </HandleLink>
                   </h3>
                 </div>
                 <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
                   ------------
                 </p>
-                <p className="pb-6 mb-2 text-gray-600">
+                <div className="pb-6 mb-2 text-gray-600">
                   {blocks?.[1].description}
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -108,22 +111,23 @@ export function ShowcasePosts({
                       fill
                       src={blocks?.[2].coverImage || ''}
                       alt={blocks?.[2].title || ''}
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                   </AspectRatio>
                 </div>
                 <div className="flex items-center ">
                   <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                    <Link href={`/posts/${blocks?.[2].slug}`}>
+                    <HandleLink href={`/posts/${blocks?.[2].slug}`}>
                       {blocks?.[2].title}
-                    </Link>
+                    </HandleLink>
                   </h3>
                 </div>
                 <p className="mt-3 mb-1 text-xs font-medium text-green-400 uppercase">
                   ------------
                 </p>
-                <p className="pb-6 mb-2 text-gray-600">
+                <div className="pb-6 mb-2 text-gray-600">
                   {blocks?.[2].description}
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -138,22 +142,23 @@ export function ShowcasePosts({
                       fill
                       src={blocks?.[3].coverImage || ''}
                       alt={blocks?.[3].title || ''}
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                   </AspectRatio>
                 </div>
                 <div className="flex items-center ">
                   <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                    <Link href={`/posts/${blocks?.[3].slug}`}>
+                    <HandleLink href={`/posts/${blocks?.[3].slug}`}>
                       {blocks?.[3].title}
-                    </Link>
+                    </HandleLink>
                   </h3>
                 </div>
                 <p className="mt-3 mb-1 text-xs font-medium text-green-400 uppercase">
                   ------------
                 </p>
-                <p className="pb-6 mb-2 text-gray-600">
+                <div className="pb-6 mb-2 text-gray-600">
                   {blocks?.[3].description}
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -168,22 +173,23 @@ export function ShowcasePosts({
                       fill
                       src={blocks?.[4].coverImage || ''}
                       alt={blocks?.[4].title || ''}
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                   </AspectRatio>
                 </div>
                 <div className="flex items-center ">
                   <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                    <Link href={`/posts/${blocks?.[4].slug}`}>
+                    <HandleLink href={`/posts/${blocks?.[4].slug}`}>
                       {blocks?.[4].title}
-                    </Link>
+                    </HandleLink>
                   </h3>
                 </div>
                 <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
                   ------------
                 </p>
-                <p className="pb-6 mb-2 text-gray-600">
+                <div className="pb-6 mb-2 text-gray-600">
                   {blocks?.[4].description}
-                </p>
+                </div>
               </div>
             </div>
           </div>

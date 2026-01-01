@@ -1,0 +1,103 @@
+{
+  "buttons": {
+    "share": "Partager",
+    "cancel": "Annuler",
+    "readMore": "Lire la suite",
+    "learnMore": "En savoir plus",
+    "contactUs": "Nous contacter",
+    "back": "Retour",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "submit": "Envoyer",
+    "close": "Fermer",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "viewAll": "Voir tout"
+  },
+  "messages": {
+    "linkCopied": "Lien copié dans le presse-papiers",
+    "pageNotFound": "Page introuvable.",
+    "noContent": "Pas de contenu disponible",
+    "loading": "Chargement…",
+    "error": "Une erreur s’est produite",
+    "createNow": "Créer maintenant",
+    "certifications": {
+      "emptyMessage": "Vous n’avez pas encore de certification"
+    }
+  },
+  "nav": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "posts": "Articles",
+    "innovations": "Innovations",
+    "tenders": "Appels d’offres",
+    "certifications": "Certifications",
+    "contact": "Contact"
+  },
+  "footer": {
+    "menu": "Menu",
+    "legal": "Mentions légales",
+    "connectWithUs": "Suivez-nous sur les réseaux sociaux."
+  },
+  "breadcrumb": {
+    "home": "Accueil"
+  },
+  "theme": {
+    "system": "Système",
+    "light": "Clair",
+    "dark": "Sombre"
+  },
+  "textF": {
+    "latestPost": "Récente Articles"
+  },
+  "certifications": {
+    "title": "Certifications",
+    "intro": "Découvrez nos certifications et collaborations."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Nous vous répondrons dans les plus brefs délais.",
+    "fields": {
+      "fullName": "Nom complet",
+      "email": "Email",
+      "message": "Votre message"
+    },
+    "placeholders": {
+      "fullName": "Entrez votre nom complet",
+      "email": "Entrez votre adresse email",
+      "message": "Entrez votre message..."
+    },
+    "toast": {
+      "successTitle": "Nous avons bien reçu votre message",
+      "successDescription": "Nous vous répondrons dès que possible. Vous pouvez aussi nous écrire à",
+      "errorTitle": "Une erreur est survenue"
+    },
+    "button": {
+      "send": "Envoyer le message",
+      "loading": "Envoi..."
+    }
+  },
+  "home": {
+    "showcases": {
+      "opportunity": {
+        "startDate": "Date de début",
+        "endDate": "Date de fin"
+      },
+      "innovation": {
+        "sectionTitle": "Recherche et innovation"
+      }
+    }
+  },
+  "opportunity": {
+    "attachmentsTitle": "Pièces jointes",
+    "fileLabel": "Fichier",
+    "linksTitle": "Liens"
+  },
+  "page": {
+    "imagesTitle": "Images",
+    "videosTitle": "Vidéos",
+    "certificationsTitle": "Certifications",
+    "attachmentsTitle": "Pièces jointes",
+    "fileLabel": "Fichier"
+  }
+}

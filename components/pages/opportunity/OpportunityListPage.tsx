@@ -27,9 +27,9 @@ export function OpportunityListPage({
           <h2 className="mt-8 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-gray-300">
             {data.title}
           </h2>
-          <p className="mt-2 text-lg leading-8 text-gray-600">
+          <div className="mt-2 text-lg leading-8 text-gray-600">
             {data.overview && <CustomPortableText value={data.overview} />}
-          </p>
+          </div>
           <div className="mt-16 sm:mt-20 lg:mx-0 lg:max-w-none">
             {data.items?.map((opportunity, i) => {
               const href = resolveHref(opportunity._type, opportunity.slug)

@@ -1,8 +1,11 @@
 'use client'
-import React from 'react'
-import { Button } from '../ui/button'
-import { Facebook, Twitter, Linkedin, Copy, Share2 } from 'lucide-react'
 import clsx from 'clsx'
+import { Copy, Facebook, Linkedin, Share2,Twitter } from 'lucide-react'
+import React from 'react'
+
+import { useDictionary } from '@/lib/useDictionary'
+
+import { Button } from '../ui/button'
 
 interface ShareButtonProps {
   slug?: string | { current: string }
@@ -12,6 +15,7 @@ interface ShareButtonProps {
 export function ShareButton({ slug, title, description }: ShareButtonProps) {
   const [isOpen, setIsOpen] = React.useState(false)
   const [origin, setOrigin] = React.useState<string>('')
+  const { dict } = useDictionary()
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -21,9 +25,7 @@ export function ShareButton({ slug, title, description }: ShareButtonProps) {
 
   // normalize slug string and make sure path matches your route
   const slugStr = typeof slug === 'string' ? slug : slug?.current ?? ''
-  const shareUrl = origin
-    ? `${origin}/posts/${encodeURIComponent(slugStr)}`
-    : '' // empty until hydrated
+  const shareUrl = origin ? `${origin}/posts/${slugStr}` : '' // empty until hydrated
 
   const titles = title
     ? title.length > 60
@@ -31,22 +33,21 @@ export function ShareButton({ slug, title, description }: ShareButtonProps) {
       : title
     : ''
   const desc = description ?? ''
+  // elBey
   const listShareButton = [
     {
       name: 'Facebook',
       icon: <Facebook className="w-[15px]" />,
-      link: shareUrl
-        ? `https://www.facebook.com/sharer/sharer.php?u=https://3586f5b35d7a.ngrok-free.app/posts/reg-partner-of-the-creer-bim-ec-project-towards-sustainable-road-infrastructure-through-bim-and`
-        : '#',
+      link: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        shareUrl,
+      )}`,
     },
     {
       name: 'Twitter',
       icon: <Twitter className="w-[15px]" />,
-      link: shareUrl
-        ? `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-            shareUrl,
-          )}&text=${encodeURIComponent(titles)}`
-        : '#',
+      link: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        shareUrl,
+      )}`,
     },
     {
       name: 'Linkedin',
@@ -66,7 +67,7 @@ export function ShareButton({ slug, title, description }: ShareButtonProps) {
       onClick: () => {
         if (!shareUrl) return
         navigator.clipboard.writeText(shareUrl)
-        alert('Link copied to clipboard!')
+        alert(dict.messages.linkCopied)
       },
     },
   ]
@@ -82,10 +83,10 @@ export function ShareButton({ slug, title, description }: ShareButtonProps) {
           onClick={toggleShareIcons}
           className="text-white focus:text-green bg-green-500 hover:bg-white-800 font-medium rounded-lg text-sm h-8 px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 gap-2"
           type="button"
-          disabled={!origin} // avoids "#" links pre-hydration
+          disabled={false} // avoids "#" links pre-hydration
         >
           <Share2 className="bx h-4 w-4 bxs-share-alt text-xs text-black ²"></Share2>
-          Share
+          {dict.buttons.share}
         </Button>
         <div
           className={`z-10 ${

@@ -1,6 +1,7 @@
 import { LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 
+import HandleLink from '@/components/global/HandleLink'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -90,7 +91,7 @@ export function CardNavigation({
               active ? 'text-yellow-400' : 'text-green-500'
             }`}
           >
-            <Link href={buttonLink || '#'}>{buttonText}</Link>
+            <HandleLink href={buttonLink || '#'}>{buttonText}</HandleLink>
           </Button>
         )}
       </CardContent>

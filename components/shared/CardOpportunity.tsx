@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import HandleLink from '@/components/global/HandleLink'
 import { Button } from '@/components/ui/button'
 
 interface CardOpportunityProps {
@@ -41,14 +42,14 @@ export function CardOpportunity({
       <h2 className="mb-4 text-xl font-semibold text-gray-600 dark:text-gray-300">
         {title}
       </h2>
-      <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
+      <div className="mb-4 text-sm text-gray-500 dark:text-gray-400">
         {overview}
-      </p>
+      </div>
       <div className="flex flex-wrap items-center">
         {readMoreLink && (
-          <Link href={readMoreLink} className="ml-auto">
+          <HandleLink href={readMoreLink} className="ml-auto">
             <Button variant="secondary">{readMoreLabel}</Button>
-          </Link>
+          </HandleLink>
         )}
       </div>
     </div>

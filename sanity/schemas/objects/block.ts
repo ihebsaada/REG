@@ -10,6 +10,33 @@ export default defineType({
   icon: LinkIcon,
   type: 'document',
   fields: [
+    // Champs localisés pour customBlock
+
+    defineField({
+      name: 'titleLocalized',
+      title: 'Title (localized)',
+      type: 'localeString', // { en?, fr?, ar? }
+    }),
+
+    defineField({
+      name: 'subtitleLocalized',
+      title: 'Subtitle (localized)',
+      type: 'localeString', // { en?, fr?, ar? }
+    }),
+
+    defineField({
+      name: 'overviewLocalized',
+      title: 'Overview (localized)',
+      type: 'localeBlock', // PortableText[]
+    }),
+
+    // 🆕 CTA localisé
+    defineField({
+      name: 'ctaLocalized',
+      title: 'CTA (localized)',
+      type: 'localeString', // { en?, fr?, ar? }
+    }),
+
     defineField({
       name: 'title',
       title: 'Title',
@@ -34,7 +61,7 @@ export default defineType({
     }),
     defineField({
       name: 'cta',
-      title: 'CTA',
+      title: 'CTA(legacy)',
       type: 'string',
     }),
     defineField({

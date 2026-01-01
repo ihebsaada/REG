@@ -10,9 +10,11 @@ import WebAnalytics from '../../global/WebAnalytics'
 
 export interface PageProps {
   data: PagePayload | null
+  dict?: any
+  lang?: 'en' | 'fr' | 'ar'
 }
 
-export function Page({ data }: PageProps) {
+export function Page({ data, dict }: PageProps) {
   // Default to an empty object to allow previews on non-existent documents
   const { body, overview, title, images, videos, certifications, files } =
     data ?? {}
@@ -53,7 +55,7 @@ export function Page({ data }: PageProps) {
             {videos && (
               <div className="container mt-4">
                 <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
-                  Videos
+                  {dict.page.videosTitle}
                 </h2>
                 <div className="grid gap-4 md:grid-cols-2">
                   {videos?.map((video) => (
@@ -84,7 +86,7 @@ export function Page({ data }: PageProps) {
             )}
             {files?.length && (
               <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
-                Attachments
+                {dict.page.attachmentsTitle}
               </h3>
             )}
             {files?.map((file, index) => {
@@ -97,7 +99,7 @@ export function Page({ data }: PageProps) {
                     className="flex items-center mb-2 mr-4 text-sm text-gray-500 md:mb-0 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-100"
                   >
                     <Download size={16} className="mr-1" />
-                    file
+                    {dict.page.fileLabel}
                   </a>
                 </div>
               )

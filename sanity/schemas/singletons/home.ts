@@ -6,9 +6,8 @@ export default defineType({
   title: 'Home',
   type: 'document',
   icon: HomeIcon,
-  // Uncomment below to have edits publish automatically as you type
-  // liveEdit: true,
   fields: [
+    // ===== Legacy (on garde) =====
     defineField({
       name: 'title',
       description: 'This field is the title of your personal website.',
@@ -16,6 +15,7 @@ export default defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: 'overview',
       description:
@@ -23,41 +23,45 @@ export default defineType({
       title: 'Description',
       type: 'array',
       of: [
-        // Paragraphs
         defineArrayMember({
+          type: 'block',
+          styles: [],
           lists: [],
           marks: {
+            decorators: [
+              { title: 'Italic', value: 'em' },
+              { title: 'Strong', value: 'strong' },
+            ],
             annotations: [
               {
                 name: 'link',
                 type: 'object',
                 title: 'Link',
-                fields: [
-                  {
-                    name: 'href',
-                    type: 'url',
-                    title: 'Url',
-                  },
-                ],
-              },
-            ],
-            decorators: [
-              {
-                title: 'Italic',
-                value: 'em',
-              },
-              {
-                title: 'Strong',
-                value: 'strong',
+                fields: [{ name: 'href', type: 'url', title: 'Url' }],
               },
             ],
           },
-          styles: [],
-          type: 'block',
         }),
       ],
       validation: (rule) => rule.max(155).required(),
     }),
+
+    // ===== Nouveau: localisé =====
+    defineField({
+      name: 'titleLocalized',
+      title: 'Title (localized)',
+      type: 'localeString', // { en?, fr?, ar? }
+      options: { collapsible: true, collapsed: true },
+    }),
+
+    defineField({
+      name: 'overviewLocalized',
+      title: 'Description (localized)',
+      type: 'localeBlock', // { en?, fr?, ar? } -> PortableText[]
+      options: { collapsible: true, collapsed: true },
+    }),
+
+    // ===== Le reste (inchangé) =====
     defineField({
       name: 'sections',
       title: 'Sections',
@@ -102,14 +106,9 @@ export default defineType({
     }),
   ],
   preview: {
-    select: {
-      title: 'title',
-    },
+    select: { title: 'title' },
     prepare({ title }) {
-      return {
-        subtitle: 'Home',
-        title,
-      }
+      return { subtitle: 'Home', title }
     },
   },
 })

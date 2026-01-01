@@ -19,6 +19,7 @@ import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
 import { sendEmail } from '@/lib/send-email'
+import { useDictionary } from '@/lib/useDictionary'
 import { ContactFormSchema } from '@/types/zod'
 
 interface FormContactProps {
@@ -33,15 +34,16 @@ export function FormContact({
   const form = useForm<z.infer<typeof ContactFormSchema>>({
     resolver: zodResolver(ContactFormSchema),
   })
+  const { dict } = useDictionary()
 
   async function onSubmit(data: z.infer<typeof ContactFormSchema>) {
     try {
       await sendEmail(data)
       toast({
-        title: 'We received your message',
+        title: dict.contact.toast.successTitle,
         description: (
           <p>
-            We will respond as soon as possible. You can also contact us at{' '}
+            {dict.contact.toast.successDescription}{' '}
             <a
               href="mailto:contact@s-reg.tn"
               className="text-blue-500 hover:underline"
@@ -53,7 +55,7 @@ export function FormContact({
       })
     } catch (error) {
       toast({
-        title: 'Something went wrong',
+        title: dict.contact.toast.errorTitle,
         description: error.message,
       })
     } finally {
@@ -71,11 +73,9 @@ export function FormContact({
     >
       <div>
         <h3 className="text-lg font-medium text-muted-foreground">
-          Contact us
+          {dict.contact.title}
         </h3>
-        <p className="text-sm text-muted-foreground">
-          We will respond as soon as possible.
-        </p>
+        <p className="text-sm text-muted-foreground">{dict.contact.subtitle}</p>
       </div>
       <Separator />
       <Form {...form}>
@@ -88,9 +88,12 @@ export function FormContact({
             name="fullName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Full name</FormLabel>
+                <FormLabel>{dict.contact.fields.fullName}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your full name" {...field} />
+                  <Input
+                    placeholder={dict.contact.placeholders.fullName}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,9 +104,12 @@ export function FormContact({
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{dict.contact.fields.email}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your email" {...field} />
+                  <Input
+                    placeholder={dict.contact.placeholders.email}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -114,10 +120,10 @@ export function FormContact({
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Your message</FormLabel>
+                <FormLabel>{dict.contact.fields.message}</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Enter your message..."
+                    placeholder={dict.contact.placeholders.message}
                     className="resize"
                     {...field}
                   />
@@ -132,10 +138,10 @@ export function FormContact({
               {form.formState.isSubmitting ? (
                 <>
                   <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                  Loading...
+                  {dict.contact.button.loading}
                 </>
               ) : (
-                'Send message'
+                dict.contact.button.send
               )}
             </Button>
           </div>

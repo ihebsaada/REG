@@ -9,6 +9,15 @@ export default defineType({
   // Uncomment below to have edits publish automatically as you type
   // liveEdit: true,
   fields: [
+    // 🆕 Nouveau champ : Titre multilingue
+    defineField({
+      name: 'titleLocalized',
+      description:
+        'Multilingual page title (en / fr / ar). If filled, it will be used instead of the legacy Title.',
+      title: 'Title (localized)',
+      type: 'localeString',
+    }),
+
     defineField({
       name: 'title',
       description: 'This field is the title of your page.',
@@ -16,6 +25,16 @@ export default defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
+
+    // 🆕 Nouveau champ : Overview multilingue
+    defineField({
+      name: 'overviewLocalized',
+      description:
+        'Multilingual description (en / fr / ar). If filled, it will be used instead of the legacy Description.',
+      title: 'Description (localized)',
+      type: 'localeBlock',
+    }),
+
     defineField({
       name: 'overview',
       description:

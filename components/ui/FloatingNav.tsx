@@ -8,6 +8,7 @@ import {
 import Link from 'next/link'
 import React, { useState } from 'react'
 
+import HandleLink from '@/components/global/HandleLink'
 import { cn } from '@/lib/utils'
 
 export const FloatingNav = ({
@@ -26,7 +27,7 @@ export const FloatingNav = ({
   const [visible, setVisible] = useState(false)
 
   useMotionValueEvent(scrollYProgress, 'change', (current) => {
-    let direction = current - scrollYProgress.getPrevious()
+    let direction = current - (scrollYProgress.getPrevious() || 0)
 
     if (scrollYProgress.get() < 0.05) {
       setVisible(false)
@@ -58,7 +59,7 @@ export const FloatingNav = ({
         )}
       >
         {navItems.map((navItem: any, idx: number) => (
-          <Link
+          <HandleLink
             key={`link=${idx}`}
             href={navItem.link}
             className={cn(
@@ -68,7 +69,7 @@ export const FloatingNav = ({
             <span className="block sm:hidden">{navItem.icon}</span>
             <span className="hidden text-sm sm:block">{navItem.name}</span>
             <span className="absolute inset-x-0 h-px mx-auto -bottom-px bg-gradient-to-r from-transparent via-green-500 to-transparent" />
-          </Link>
+          </HandleLink>
         ))}
         <button className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full">
           <span>Login</span>

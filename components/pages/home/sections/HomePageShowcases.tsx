@@ -3,17 +3,18 @@ import fr from 'date-fns/locale/fr'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import HandleLink from '@/components/global/HandleLink'
 import { CustomPortableText } from '@/components/shared/CustomPortableText'
 import { MotionDiv } from '@/components/shared/MotionDiv'
-import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { urlForImage } from '@/sanity/lib/utils'
 import type { HomePagePayload } from '@/types'
 
 export interface HomePageProps {
   data: HomePagePayload | null
+  dict?: any
 }
 
-export function HomePageShowcases({ data }: HomePageProps) {
+export function HomePageShowcases({ data, dict }: HomePageProps) {
   // Default to an empty object to allow previews on non-existent documents
   const { opportunity, innovation } = data ?? {}
 
@@ -44,7 +45,9 @@ export function HomePageShowcases({ data }: HomePageProps) {
             />
             <div className="flex flex-row gap-4">
               <div className="flex flex-col gap-2 md:flex-row">
-                <span className="text-lg font-bold">Start Date</span>
+                <span className="text-lg font-bold">
+                  {dict.home.showcases.opportunity.startDate}
+                </span>
                 <span>
                   {opportunity?.duration?.start
                     ? format(
@@ -58,7 +61,9 @@ export function HomePageShowcases({ data }: HomePageProps) {
                 </span>
               </div>
               <div className="flex flex-col gap-2 md:flex-row">
-                <span className="text-lg font-bold">End Date</span>
+                <span className="text-lg font-bold">
+                  {dict.home.showcases.opportunity.endDate}
+                </span>
                 <span>
                   {opportunity?.duration?.end
                     ? format(
@@ -78,13 +83,13 @@ export function HomePageShowcases({ data }: HomePageProps) {
             <CustomPortableText value={opportunity?.overview ?? []} />
           </div>
           <div className="flex flex-col self-end gap-2 mr-6">
-            <Link
+            <HandleLink
               href={`/tenders/${opportunity?.slug}`}
               className="underline "
               aria-label="Read more"
             >
-              Read more
-            </Link>
+              {dict.buttons.readMore}
+            </HandleLink>
           </div>
         </div>
       </MotionDiv>
@@ -104,17 +109,25 @@ export function HomePageShowcases({ data }: HomePageProps) {
         className="w-full md:w-1/2"
       >
         <div className="flex flex-col w-full h-full gap-4 p-4 shadow-lg rounded-2xl ring-1 ring-gray-900/5">
-          <h2 className="text-xl font-bold text-green-500">Research and Innovation</h2>
-          <h3 className="font-bold text-md">{innovation?.title}</h3>
+          <h2 className="text-xl font-bold text-green-500">
+            {dict.home.showcases.innovation.sectionTitle}
+          </h2>
+          <h3 className="font-bold text-md">
+            {innovation?.title
+              ? typeof innovation?.title !== 'string'
+                ? innovation?.title['en']
+                : innovation?.title
+              : ''}
+          </h3>
           <CustomPortableText value={innovation?.overview ?? []} />
           <div className="flex flex-col self-end gap-2 mr-6">
-            <Link
+            <HandleLink
               href={`/innovations/${innovation?.slug}`}
               className="underline"
               aria-label="Read more"
             >
-              Read more
-            </Link>
+              {dict.buttons.readMore}
+            </HandleLink>
           </div>
         </div>
       </MotionDiv>

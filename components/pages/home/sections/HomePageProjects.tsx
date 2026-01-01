@@ -32,6 +32,7 @@ export function HomePageProjects({
       <div className="absolute inset-0 object-cover object-right w-full h-full -z-10 md:object-center filter brightness-50">
         <Image
           fill
+          sizes="100vw"
           className="object-cover"
           src={coverImage || ''}
           alt="projects showcase cover"
@@ -71,7 +72,7 @@ export function HomePageProjects({
                 <CardNavigation
                   title={project.title}
                   description={
-                    <CustomPortableText value={project.overview ?? []} />
+                    <CustomPortableText value={project.overview ?? []} inline />
                   }
                   buttonText="Learn more"
                   buttonLink={href}

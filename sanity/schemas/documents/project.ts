@@ -1,5 +1,5 @@
-import { getExtension } from '@sanity/asset-utils'
-import { DocumentIcon, ImageIcon } from '@sanity/icons'
+// sanity/schemas/documents/project.ts
+import { DocumentIcon } from '@sanity/icons'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
@@ -7,16 +7,26 @@ export default defineType({
   title: 'Project',
   type: 'document',
   icon: DocumentIcon,
-  // Uncomment below to have edits publish automatically as you type
   // liveEdit: true,
   fields: [
+    // 🔹 Nouveau titre localisé
+    defineField({
+      name: 'titleLocalized',
+      title: 'Title (localized)',
+      type: 'localeString',
+      description: 'Localized title (en / fr / ar).',
+    }),
+
+    // 🔹 Ancien titre (legacy, non localisé)
     defineField({
       name: 'title',
-      description: 'This field is the title of your project.',
-      title: 'Title',
+      description:
+        'This field is the title of your project. (legacy, non localized)',
+      title: 'Title (legacy)',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: 'slug',
       title: 'Slug',
@@ -28,11 +38,36 @@ export default defineType({
       },
       validation: (rule) => rule.required(),
     }),
+
+    // 🆕 champs qui existaient déjà dans la data (client, site)
+    defineField({
+      name: 'client',
+      title: 'Client',
+      type: 'string',
+      description: 'Name of the client for this project.',
+    }),
+
+    defineField({
+      name: 'site',
+      title: 'Project URL',
+      type: 'url',
+      description: 'Website or external link related to this project.',
+    }),
+
+    // 🔹 Nouveau overview localisé (portable text simple)
+    defineField({
+      name: 'overviewLocalized',
+      title: 'Overview (localized)',
+      type: 'localeBlock',
+      description: 'Localized overview (en / fr / ar).',
+    }),
+
+    // 🔹 Ancien overview (legacy)
     defineField({
       name: 'overview',
       description:
-        'Used both for the <meta> description tag for SEO, and project subheader.',
-      title: 'Overview',
+        'Used both for the <meta> description tag for SEO, and project subheader. (legacy, non localized)',
+      title: 'Overview (legacy)',
       type: 'array',
       of: [
         // Paragraphs
@@ -41,14 +76,8 @@ export default defineType({
           marks: {
             annotations: [],
             decorators: [
-              {
-                title: 'Italic',
-                value: 'em',
-              },
-              {
-                title: 'Strong',
-                value: 'strong',
-              },
+              { title: 'Italic', value: 'em' },
+              { title: 'Strong', value: 'strong' },
             ],
           },
           styles: [],
@@ -57,6 +86,7 @@ export default defineType({
       ],
       validation: (rule) => rule.max(155).required(),
     }),
+
     defineField({
       name: 'coverImage',
       title: 'Cover Image',
@@ -68,11 +98,13 @@ export default defineType({
       },
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: 'duration',
       title: 'Duration',
       type: 'duration',
     }),
+
     defineField({
       name: 'tags',
       title: 'Tags',
@@ -82,11 +114,22 @@ export default defineType({
         layout: 'tags',
       },
     }),
+
+    // 🔹 Nouvelle description localisée RICHE (texte + vidéos + images + timeline)
+    defineField({
+      name: 'descriptionLocalized',
+      title: 'Project Description (localized)',
+      type: 'localeRichBlock',
+      description: 'Localized description (en / fr / ar).',
+    }),
+
+    // 🔹 Ancienne description (blockContent avec vidéos) gardée pour fallback
     defineField({
       name: 'description',
-      title: 'Project Description',
+      title: 'Project Description (legacy)',
       type: 'blockContent',
     }),
+
     defineField({
       type: 'images',
       name: 'images',

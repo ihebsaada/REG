@@ -53,7 +53,10 @@ queryStore.setServerClient(serverClient)
 
 const usingCdn = serverClient.config().useCdn
 // Automatically handle draft mode
-export const loadQuery = ((query, params = {}, options = {}) => {
+export const loadQuery = ((query, params: any = {}, options = {}) => {
+  // Always provide default language
+  params.lang = params.lang ?? 'en'
+
   const {
     perspective = draftMode().isEnabled ? 'previewDrafts' : 'published',
   } = options
@@ -81,30 +84,30 @@ export const loadQuery = ((query, params = {}, options = {}) => {
  * Loaders that are used in more than one place are declared here, otherwise they're colocated with the component
  */
 
-export function loadSettings() {
-  return loadQuery<SettingsPayload>(settingsQuery, {}, {})
+export function loadSettings(lang: string = 'en') {
+  return loadQuery<SettingsPayload>(settingsQuery, { lang }, {})
 }
 
-export function loadHomePage() {
-  return loadQuery<HomePagePayload>(homePageQuery, {}, {})
+export function loadHomePage(lang: string) {
+  return loadQuery<HomePagePayload>(homePageQuery, { lang }, {})
 }
 
-export function loadProjects() {
-  return loadQuery<ProjectsPayload>(projectsQuery, {}, {})
+export function loadProjects(lang: string) {
+  return loadQuery<ProjectsPayload>(projectsQuery, { lang }, {})
 }
 
-export function loadProjectBySlug(slug: string) {
-  return loadQuery<ProjectPayload>(projectBySlugQuery, { slug }, {})
+export function loadProjectBySlug(slug: string, lang: string) {
+  return loadQuery<ProjectPayload>(projectBySlugQuery, { slug, lang }, {})
 }
 
-export function loadInnovations() {
-  return loadQuery<InnovationsPayload>(innovationsQuery, {}, {})
+export function loadInnovations(lang: string) {
+  return loadQuery<InnovationsPayload>(innovationsQuery, { lang }, {})
 }
 
-export function loadInnovationBySlug(slug: string) {
+export function loadInnovationBySlug(slug: string, lang: string) {
   return loadQuery<InnovationPayload | null>(
     innovationBySlugQuery,
-    { slug },
+    { slug, lang },
     {},
   )
 }
@@ -121,26 +124,26 @@ export function loadCertificationBySlug(slug: string) {
   )
 }
 
-export function loadOpportunities() {
-  return loadQuery<OpportunitiesPayload>(opportunitiesPageQuery, {}, {})
+export function loadOpportunities(lang: string) {
+  return loadQuery<OpportunitiesPayload>(opportunitiesPageQuery, { lang }, {})
 }
 
-export function loadOpportunityBySlug(slug: string) {
+export function loadOpportunityBySlug(slug: string, lang: string) {
   return loadQuery<OpportunityPayload | null>(
     opportunityBySlugQuery,
-    { slug },
+    { slug, lang },
     {},
   )
 }
 
-export function loadPosts() {
-  return loadQuery<PostsPayload>(postsQuery, {}, {})
+export function loadPosts(lang: string = 'en') {
+  return loadQuery<PostsPayload>(postsQuery, { lang }, {})
 }
 
-export function loadPostBySlug(slug: string) {
-  return loadQuery<PostPayload | null>(postBySlugQuery, { slug }, {})
+export function loadPostBySlug(slug: string, lang: string = 'en') {
+  return loadQuery<PostPayload | null>(postBySlugQuery, { slug, lang }, {})
 }
 
-export function loadPage(slug: string) {
-  return loadQuery<PagePayload | null>(pagesBySlugQuery, { slug }, {})
+export function loadPage(slug: string, lang: string = 'en') {
+  return loadQuery<PagePayload | null>(pagesBySlugQuery, { slug, lang }, {})
 }

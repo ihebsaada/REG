@@ -1,11 +1,10 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import * as React from 'react'
 
-import { Icons } from '@/components/shared/icons'
+import HandleLink from '@/components/global/HandleLink'
+import { useLanguage } from '@/components/LanguageProvider'
 /* import { siteConfig } from '@/config/site' */
 import { cn } from '@/lib/utils'
 import { resolveHref } from '@/sanity/lib/utils'
@@ -20,19 +19,30 @@ export function MainNav(props: Props) {
   const pathname = usePathname()
 
   const { menuItems, className } = props
+  const { language } = useLanguage()
 
   const restItems = menuItems.filter((item) => item?._type !== 'home')
-
   return (
     <div className={className}>
       <nav className="flex items-center gap-8 text-sm">
+        <HandleLink
+          key="workflow"
+          href={'/workflow/flow.html'}
+          target="_blank"
+          className={cn(
+            'transition-colors hover:text-green-500 no-wrap',
+            'text-foreground',
+          )}
+        >
+          WorkFlow
+        </HandleLink>
         {restItems.map((item, key) => {
-          const href = resolveHref(item?._type, item?.slug)
+          const href = resolveHref(item?._type, item?.slug, language)
           if (!href) {
             return null
           }
           return (
-            <Link
+            <HandleLink
               key={key}
               href={href}
               className={cn(
@@ -43,7 +53,7 @@ export function MainNav(props: Props) {
               )}
             >
               {item.title}
-            </Link>
+            </HandleLink>
           )
         })}
       </nav>

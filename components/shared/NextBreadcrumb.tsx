@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { ReactNode } from 'react'
 
+import HandleLink from '@/components/global/HandleLink'
+import { useDictionary } from '@/lib/useDictionary'
+
 type NextBreadcrumbProps = {
   homeElement: ReactNode
   separator: ReactNode
@@ -29,14 +32,13 @@ export const NextBreadcrumb = ({
     <div>
       <ul className={containerClasses}>
         <li className={listClasses}>
-          <Link href={'/'}>{homeElement}</Link>
+          <HandleLink href={'/'}>{homeElement}</HandleLink>
         </li>
         {pathNames && pathNames.length > 0 && separator}
         {pathNames?.map((link, index) => {
           let href = `/${pathNames?.slice(0, index + 1).join('/')}`
 
-          let itemClasses =
-            paths === href ? `${activeClasses}` : listClasses
+          let itemClasses = paths === href ? `${activeClasses}` : listClasses
           let itemLink = capitalizeLinks
             ? link[0].toUpperCase() + link.slice(1, link.length)
             : link
@@ -45,7 +47,7 @@ export const NextBreadcrumb = ({
             <React.Fragment key={index}>
               <li className={itemClasses}>
                 {index < pathNames.length - 1 ? (
-                  <Link href={href}>{itemLink}</Link>
+                  <HandleLink href={href}>{itemLink}</HandleLink>
                 ) : (
                   itemLink
                 )}
@@ -60,12 +62,14 @@ export const NextBreadcrumb = ({
 }
 
 export const AppBreadcrumb = () => {
+  const { dict } = useDictionary()
+
   return (
     <NextBreadcrumb
       homeElement={
         <span className="text-gray-400 hover:text-gray-500">
           <HomeIcon className="flex-shrink-0 w-5 h-5" aria-hidden="true" />
-          <span className="sr-only">Home</span>
+          <span className="sr-only">{dict.breadcrumb.home}</span>
         </span>
       }
       separator="/"

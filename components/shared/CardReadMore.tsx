@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
 
+import HandleLink from '@/components/global/HandleLink'
+
 import { Button } from '../ui/button'
 import {
   Card,
@@ -35,7 +37,6 @@ export function CardReadMore({
   readMoreLabel = 'Read more',
   readMoreLink = '',
 }: CardReadMoreProps) {
-  console.log('readMoreLink: ', readMoreLink)
   return (
     <Card className={`${className} overflow-hidden flex flex-col`}>
       <Image src={image} width={width} height={height} alt={title} />
@@ -63,13 +64,13 @@ export function CardReadMore({
           </div>
         )} */}
         {readMoreLink && (
-          <Link
+          <HandleLink
             href={readMoreLink}
             className="text-sm font-medium lowercase md:text-lg"
             aria-label="Read more"
           >
             <Button>{readMoreLabel}</Button>
-          </Link>
+          </HandleLink>
         )}
       </CardFooter>
     </Card>

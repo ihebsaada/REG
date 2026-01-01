@@ -35,7 +35,8 @@ export function CertificationPage({
               src={url ?? ''}
               alt={title ?? ''}
               className="absolute inset-0 object-cover w-full h-full"
-              layout="fill"
+              fill
+              sizes="100vw"
             />
           </div>
           <div className="container">

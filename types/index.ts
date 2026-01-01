@@ -1,6 +1,18 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { File, Image } from 'sanity'
 
+export type LocaleString = {
+  en?: string
+  fr?: string
+  ar?: string
+}
+
+export type LocaleBlock = {
+  en?: PortableTextBlock[]
+  fr?: PortableTextBlock[]
+  ar?: PortableTextBlock[]
+}
+
 export interface MenuItem {
   _type: string
   slug?: string
@@ -52,25 +64,23 @@ export interface ShowcasePost {
 export interface CustomBlock {
   _type: string
   _id: string
+  // ✅ customBlock fields are PLAIN STRINGS
   title?: string
   subtitle?: string
+  // ✅ description is plain Portable Text
   description?: PortableTextBlock[]
+  icon?: string
+  blocks?: CustomBlock[]
   author?: Author
   cta?: string
   ctaLink?: string
-  icon?: string
-  link?: MenuItem
-  tags?: string[]
-  images?: Image[]
   videoURL?: string
   coverImage?: Image
   showcaseProjects?: ShowcaseProject[]
   showcasePosts?: PostPayload[]
   showcaseApplications?: ApplicationPayload[]
-  blocks?: CustomBlock[]
+  videos?: any
 }
-
-// Page payloads
 
 export interface HomePagePayload {
   footer?: PortableTextBlock[]
@@ -92,6 +102,8 @@ export interface PagePayload {
   videos: File[]
   certifications: CertificationPayload[]
   files: File[]
+  // content?: any
+  locale?: string
 }
 
 export interface ProjectPayload {
@@ -183,8 +195,8 @@ export interface InnovationsPayload {
 }
 
 export interface PostPayload {
-  _type: string
-  _id: string
+  _type?: string
+  _id?: string
   date?: string
   _updatedAt?: string
   author?: Author
@@ -198,12 +210,15 @@ export interface PostPayload {
   images?: Image[]
   videos?: File[]
   files?: File[]
+  titleRaw?: any
+  titleLocalized?: any
 }
 
 export interface PostsPayload {
   title?: string
   overview?: PortableTextBlock[]
   items: PostPayload[]
+  debugLang?: any
 }
 
 export interface SettingsPayload {
