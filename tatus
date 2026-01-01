@@ -1,0 +1,191 @@
+[33mcommit c874626f1dbb13deb2d902fe7bc80ed693eab738[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mhubo[m[33m)[m
+Author: iheb <iheb.saada97@gmail.com>
+Date:   Thu Jan 1 22:41:05 2026 +0100
+
+    update: i18n + workflow, without export archives
+
+ .gitignore                                         |     4 [32m+[m
+ LanguageProvider.tsx                               |    47 [31m-[m
+ app/(personal)/[slug]/page.tsx                     |    46 [31m-[m
+ app/(personal)/layout.tsx                          |   152 [31m-[m
+ app/(site)/[locale]/[...slug]/page.tsx             |    94 [32m+[m
+ .../[locale]}/certifications/[slug]/page.tsx       |     0
+ .../[locale]}/certifications/page.tsx              |    25 [32m+[m[31m-[m
+ .../[locale]}/innovations/[slug]/page.tsx          |    11 [32m+[m[31m-[m
+ .../[locale]}/innovations/page.tsx                 |    20 [32m+[m[31m-[m
+ app/{ => (site)/[locale]}/not-found.tsx            |    12 [32m+[m[31m-[m
+ app/(site)/[locale]/page.tsx                       |    14 [32m+[m
+ .../[locale]}/posts/[slug]/page.tsx                |    14 [32m+[m[31m-[m
+ app/{(personal) => (site)/[locale]}/posts/page.tsx |    14 [32m+[m[31m-[m
+ .../[locale]}/projects/[slug]/page.tsx             |    10 [32m+[m[31m-[m
+ .../[locale]}/projects/page.tsx                    |    13 [32m+[m[31m-[m
+ .../[locale]}/tenders/[slug]/page.tsx              |    16 [32m+[m[31m-[m
+ .../[locale]}/tenders/page.tsx                     |    18 [32m+[m[31m-[m
+ app/{ => (site)}/api/disable-draft/route.ts        |     0
+ app/{ => (site)}/api/draft/route.ts                |     0
+ app/{ => (site)}/api/email/route.tsx               |     0
+ app/{ => (site)}/api/revalidate/route.ts           |     0
+ app/{ => (site)}/favicon.ico                       |   Bin
+ app/{ => (site)}/icon.svg                          |     0
+ app/{ => (site)}/manifest.json                     |     0
+ app/(site)/page.tsx                                |     6 [32m+[m
+ app/{ => (site)}/robots.txt                        |     0
+ app/{ => (site)}/sitemap.ts                        |     0
+ app/(studio)/layout.tsx                            |    16 [32m+[m
+ .../[[...index]] => (studio)/studio}/Studio.tsx    |     0
+ app/{ => (studio)}/studio/[[...index]]/page.tsx    |     2 [32m+[m[31m-[m
+ app/layout.tsx                                     |   234 [32m+[m[31m-[m
+ components/LanguageProvider.tsx                    |   105 [32m+[m[31m-[m
+ components/global/Footer/FooterLayout.tsx          |     6 [32m+[m[31m-[m
+ components/global/Footer/FooterPreview.tsx         |     1 [31m-[m
+ components/global/GlobalRequestLoader.tsx          |    34 [32m+[m
+ components/global/HandleLink.tsx                   |    70 [32m+[m
+ components/global/Navbar/NavbarLayout.tsx          |   110 [32m+[m[31m-[m
+ components/global/Navbar/main-nav.tsx              |    24 [32m+[m[31m-[m
+ .../pages/certification/CertificationListPage.tsx  |     9 [32m+[m[31m-[m
+ .../pages/certification/CertificationPage.tsx      |     3 [32m+[m[31m-[m
+ components/pages/home/HomePage.tsx                 |    52 [32m+[m[31m-[m
+ .../pages/home/HomePageContainer.tsx               |    11 [32m+[m[31m-[m
+ components/pages/home/sections/FormContact.tsx     |    36 [32m+[m[31m-[m
+ .../pages/home/sections/HomePageProjects.tsx       |     3 [32m+[m[31m-[m
+ .../pages/home/sections/HomePageShowcases.tsx      |    37 [32m+[m[31m-[m
+ components/pages/innovation/InnovationListPage.tsx |     5 [32m+[m[31m-[m
+ components/pages/innovation/InnovationPage.tsx     |     5 [32m+[m[31m-[m
+ .../pages/opportunity/OpportunityListPage.tsx      |     4 [32m+[m[31m-[m
+ components/pages/opportunity/OpportunityPage.tsx   |    13 [32m+[m[31m-[m
+ components/pages/page/Page.tsx                     |    10 [32m+[m[31m-[m
+ components/pages/page/PagePreview.tsx              |     6 [32m+[m[31m-[m
+ components/pages/post/PostListPage.tsx             |    40 [32m+[m[31m-[m
+ components/pages/post/PostListPagePreview.tsx      |     1 [31m-[m
+ components/pages/post/PostPage.tsx                 |    11 [32m+[m[31m-[m
+ components/pages/project/ProjectListPage.tsx       |     4 [32m+[m[31m-[m
+ components/pages/project/ProjectPage.tsx           |    19 [32m+[m[31m-[m
+ components/pages/workflow/C1.png                   |   Bin [31m0[m -> [32m1441[m bytes
+ components/pages/workflow/L1.png                   |   Bin [31m0[m -> [32m441420[m bytes
+ components/pages/workflow/L2.png                   |   Bin [31m0[m -> [32m439418[m bytes
+ components/pages/workflow/L5.png                   |   Bin [31m0[m -> [32m235041[m bytes
+ components/pages/workflow/L6.png                   |   Bin [31m0[m -> [32m421977[m bytes
+ components/pages/workflow/L7.png                   |   Bin [31m0[m -> [32m505157[m bytes
+ components/pages/workflow/Mock.tsx                 |    16 [32m+[m
+ components/pages/workflow/WorkflowPage.tsx         |    13 [32m+[m
+ components/pages/workflow/t1.png                   |   Bin [31m0[m -> [32m2732[m bytes
+ components/pages/workflow/t2.png                   |   Bin [31m0[m -> [32m5232[m bytes
+ components/shared/BlockBenefits.stories.tsx        |     4 [32m+[m[31m-[m
+ components/shared/CardNavigation.tsx               |     3 [32m+[m[31m-[m
+ components/shared/CardOpportunity.tsx              |     9 [32m+[m[31m-[m
+ components/shared/CardReadMore.tsx                 |     7 [32m+[m[31m-[m
+ components/shared/Copyright.tsx                    |     9 [32m+[m[31m-[m
+ components/shared/CustomPortableText.tsx           |   129 [32m+[m[31m-[m
+ components/shared/FramerCounter.tsx                |    13 [32m+[m[31m-[m
+ components/shared/ImageBox.tsx                     |     1 [32m+[m
+ components/shared/LineWithIcon.tsx                 |     6 [32m+[m[31m-[m
+ components/shared/MobileNav.tsx                    |   223 [32m+[m[31m-[m
+ components/shared/NextBreadcrumb.tsx               |    14 [32m+[m[31m-[m
+ components/shared/ReactEmail.tsx                   |     6 [32m+[m[31m-[m
+ components/shared/SectionApplication.tsx           |    18 [32m+[m[31m-[m
+ components/shared/SectionHero.tsx                  |    41 [32m+[m[31m-[m
+ components/shared/ShareButton.tsx                  |    33 [32m+[m[31m-[m
+ components/shared/ShowcasePosts.tsx                |    46 [32m+[m[31m-[m
+ components/shared/SocialNetwork.tsx                |     6 [32m+[m[31m-[m
+ components/shared/Stats.tsx                        |    13 [32m+[m[31m-[m
+ components/shared/StatsBlock.tsx                   |     6 [32m+[m[31m-[m
+ components/shared/TimelineItem.tsx                 |     1 [32m+[m
+ components/ui/AnimatedWorkflow.tsx                 |    65 [32m+[m
+ components/ui/FloatingNav.tsx                      |     7 [32m+[m[31m-[m
+ i18n.ts                                            |    20 [31m-[m
+ i18n/en/translation.json                           |     1 [31m-[m
+ i18next-scanner.config.json                        |    69 [31m-[m
+ lib/getDictionary.ts                               |    29 [32m+[m
+ lib/i18n-utils.ts                                  |    37 [32m+[m
+ lib/i18n.ts                                        |    20 [32m+[m
+ lib/loadingBus.tsx                                 |    18 [32m+[m
+ lib/svgPaths.ts                                    |    70 [32m+[m
+ lib/useDictionary.tsx                              |    26 [32m+[m
+ middleware.ts                                      |    52 [32m+[m
+ mutations.json                                     |  2159 [32m+++[m
+ netlify.toml                                       |     6 [32m+[m[31m-[m
+ next-i18next.config.mjs                            |     8 [31m-[m
+ next.config.mjs                                    |    18 [32m+[m[31m-[m
+ nodemon.json                                       |     6 [32m+[m
+ package-lock.json                                  | 18146 [32m+++++++++[m[31m----------[m
+ package.json                                       |    30 [32m+[m[31m-[m
+ public/images/reg.png                              |   Bin [31m0[m -> [32m4424[m bytes
+ public/locales/ar/ar.json                          |   106 [32m+[m
+ public/locales/ar/translation.json                 |    30 [31m-[m
+ public/locales/en/en.json                          |   106 [32m+[m
+ public/locales/en/translation.json                 |    30 [31m-[m
+ public/locales/fr/fr.json                          |   103 [32m+[m
+ public/workflow/1.png                              |   Bin [31m0[m -> [32m373[m bytes
+ public/workflow/10.png                             |   Bin [31m0[m -> [32m912182[m bytes
+ public/workflow/2.png                              |   Bin [31m0[m -> [32m642[m bytes
+ public/workflow/3.png                              |   Bin [31m0[m -> [32m883[m bytes
+ public/workflow/4.png                              |   Bin [31m0[m -> [32m569[m bytes
+ public/workflow/5.png                              |   Bin [31m0[m -> [32m788[m bytes
+ public/workflow/6.png                              |   Bin [31m0[m -> [32m962[m bytes
+ public/workflow/8050D(080mm).png                   |   Bin [31m0[m -> [32m4719[m bytes
+ public/workflow/8050D.png                          |   Bin [31m0[m -> [32m413186[m bytes
+ public/workflow/Barrier_mould.png                  |   Bin [31m0[m -> [32m429983[m bytes
+ public/workflow/C1.png                             |   Bin [31m0[m -> [32m1441[m bytes
+ public/workflow/C2.png                             |   Bin [31m0[m -> [32m3243[m bytes
+ public/workflow/Clean-Concrete-Fraction.png        |   Bin [31m0[m -> [32m7040[m bytes
+ public/workflow/Concrete_block_mould_BB.png        |   Bin [31m0[m -> [32m308369[m bytes
+ public/workflow/L1.png                             |   Bin [31m0[m -> [32m441420[m bytes
+ public/workflow/L2.png                             |   Bin [31m0[m -> [32m439418[m bytes
+ public/workflow/L5.png                             |   Bin [31m0[m -> [32m235041[m bytes
+ public/workflow/L6.png                             |   Bin [31m0[m -> [32m421977[m bytes
+ public/workflow/L7.png                             |   Bin [31m0[m -> [32m505157[m bytes
+ public/workflow/Layer11.png                        |   Bin [31m0[m -> [32m387669[m bytes
+ public/workflow/Layer12.png                        |   Bin [31m0[m -> [32m190665[m bytes
+ public/workflow/Layer13.png                        |   Bin [31m0[m -> [32m66154[m bytes
+ public/workflow/Layer14.png                        |   Bin [31m0[m -> [32m131254[m bytes
+ public/workflow/Layer15.png                        |   Bin [31m0[m -> [32m180223[m bytes
+ public/workflow/Layer16.png                        |   Bin [31m0[m -> [32m121738[m bytes
+ public/workflow/Layer17.png                        |   Bin [31m0[m -> [32m506614[m bytes
+ public/workflow/Layer8.png                         |   Bin [31m0[m -> [32m487903[m bytes
+ public/workflow/Manual.png                         |   Bin [31m0[m -> [32m2734[m bytes
+ public/workflow/Mechanical.png                     |   Bin [31m0[m -> [32m3159[m bytes
+ public/workflow/RL8476H.png                        |   Bin [31m0[m -> [32m471906[m bytes
+ public/workflow/Stockpile.png                      |   Bin [31m0[m -> [32m1723[m bytes
+ public/workflow/StockpilingDedicatedBays.png       |   Bin [31m0[m -> [32m4660[m bytes
+ public/workflow/Tetrapod_mould_1T.png              |   Bin [31m0[m -> [32m448358[m bytes
+ public/workflow/Workflow.png                       |   Bin [31m0[m -> [32m4716[m bytes
+ public/workflow/allwood.png                        |   Bin [31m0[m -> [32m9811[m bytes
+ public/workflow/c5.png                             |   Bin [31m0[m -> [32m6073[m bytes
+ public/workflow/flech4.png                         |   Bin [31m0[m -> [32m4926[m bytes
+ public/workflow/fleche1.png                        |   Bin [31m0[m -> [32m3492[m bytes
+ public/workflow/fleche2.png                        |   Bin [31m0[m -> [32m604[m bytes
+ public/workflow/fleche3.png                        |   Bin [31m0[m -> [32m632[m bytes
+ public/workflow/fleche5.png                        |   Bin [31m0[m -> [32m4165[m bytes
+ public/workflow/fleche6.png                        |   Bin [31m0[m -> [32m1766[m bytes
+ public/workflow/flow.html                          |  1026 [32m++[m
+ public/workflow/line9.png                          |   Bin [31m0[m -> [32m5062[m bytes
+ public/workflow/t1.png                             |   Bin [31m0[m -> [32m2732[m bytes
+ public/workflow/t2.png                             |   Bin [31m0[m -> [32m5232[m bytes
+ public/workflow/t3.png                             |   Bin [31m0[m -> [32m9794[m bytes
+ public/workflow/t4.png                             |   Bin [31m0[m -> [32m7551[m bytes
+ public/workflow/tf.png                             |   Bin [31m0[m -> [32m6487[m bytes
+ public/workflow/waste.png                          |   Bin [31m0[m -> [32m38638[m bytes
+ sanity.config.ts                                   |     8 [32m+[m
+ sanity/lib/api.ts                                  |     2 [32m+[m[31m-[m
+ sanity/lib/queries.ts                              |   990 [32m+[m[31m-[m
+ sanity/lib/sanity-i18n.ts                          |    21 [32m+[m
+ sanity/lib/utils.ts                                |    14 [32m+[m[31m-[m
+ sanity/loader/loadQuery.ts                         |    49 [32m+[m[31m-[m
+ sanity/plugins/locate.ts                           |    12 [32m+[m[31m-[m
+ sanity/schemas/documents/application.ts            |   207 [32m+[m[31m-[m
+ sanity/schemas/documents/innovation.ts             |    90 [32m+[m[31m-[m
+ sanity/schemas/documents/opportunity.ts            |    28 [32m+[m
+ sanity/schemas/documents/page.ts                   |    76 [32m+[m[31m-[m
+ sanity/schemas/documents/post.ts                   |    63 [32m+[m[31m-[m
+ sanity/schemas/documents/project.ts                |    75 [32m+[m[31m-[m
+ sanity/schemas/objects/block.ts                    |    29 [32m+[m[31m-[m
+ sanity/schemas/objects/localeBlock.ts              |    29 [32m+[m
+ sanity/schemas/objects/localeRichBlock.ts          |    87 [32m+[m
+ sanity/schemas/objects/localeString.ts             |    25 [32m+[m
+ sanity/schemas/singletons/home.ts                  |    57 [32m+[m[31m-[m
+ sanity/schemas/singletons/innovations.ts           |    57 [32m+[m[31m-[m
+ sanity/schemas/singletons/opportunities.ts         |    19 [32m+[m
+ sanity/schemas/singletons/posts.ts                 |    87 [32m+[m[31m-[m
+ sanity/schemas/singletons/projects.ts              |    41 [32m+[m[31m-[m
+ types/index.ts                                     |    33 [32m+[m[31m-[m
+ 184 files changed, 15163 insertions(+), 11128 deletions(-)

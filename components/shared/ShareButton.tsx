@@ -1,6 +1,6 @@
 'use client'
 import clsx from 'clsx'
-import { Copy, Facebook, Linkedin, Share2,Twitter } from 'lucide-react'
+import { Copy, Facebook, Linkedin, Share2, Twitter } from 'lucide-react'
 import React from 'react'
 
 import { useDictionary } from '@/lib/useDictionary'
@@ -45,9 +45,7 @@ export function ShareButton({ slug, title, description }: ShareButtonProps) {
     {
       name: 'Twitter',
       icon: <Twitter className="w-[15px]" />,
-      link: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-        shareUrl,
-      )}`,
+      link: `https://x.com/intent/post?url=${encodeURIComponent(shareUrl)}`,
     },
     {
       name: 'Linkedin',
