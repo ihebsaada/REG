@@ -3,7 +3,6 @@ import type { EncodeDataAttributeCallback } from '@sanity/react-loader'
 import { format, parseISO } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import Image from 'next/image'
-import Link from 'next/link'
 import { toPlainText } from 'next-sanity'
 import readingTime from 'reading-time'
 
@@ -37,8 +36,12 @@ export function PostListPage({ data, encodeDataAttribute }: PostListPageProps) {
           <div className="mt-8 space-y-20 lg:space-y-20">
             {data.items?.map((post, id) => {
               const coverImage = urlForImage(post.coverImage)?.url()
-              const postDescription = post?.overview[0]?.children[0]?.text || ''
-              const stats = readingTime(toPlainText(postDescription))
+              // const postDescription = post?.overview[0]?.children[0]?.text || ''
+              const stats = readingTime(toPlainText(post?.overview))
+              console.log(
+                'statesssssss',
+                readingTime(toPlainText(post?.overview)),
+              )
               const imageUrl =
                 urlForImage(post?.author?.picture)?.url() || '/images/reg.png'
               return (
