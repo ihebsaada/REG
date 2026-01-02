@@ -36,10 +36,10 @@ interface NavbarProps {
 export function MobileNav(props: NavbarProps) {
   const { data } = props
   const pathname = usePathname()
-  const router = useRouter() // ⬅️ ajouté
-  const { language, setLanguage } = useLanguage() // ⬅️ ajouté
+  const router = useRouter()
+  const { language, setLanguage } = useLanguage()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false) // State for dropdown
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const menuItems = data?.menuItems || []
   const socialNetworks = data?.socialNetworks?.fields || []
 
@@ -84,7 +84,6 @@ export function MobileNav(props: NavbarProps) {
 
     loadingBus.emit(true)
 
-    // 🚀 navigue vers la nouvelle route
     router.push(newPath)
   }
 
@@ -95,7 +94,15 @@ export function MobileNav(props: NavbarProps) {
     // { code: 'it', icon: '/images/ita.png' },
   ]
 
-  const currentLanguage = languageOptions.find((lang) => false)
+  const currentLanguage = languageOptions.find(
+    (lang) => lang.code === language.toLowerCase(),
+  )
+
+  useEffect(() => {
+    if (!isDropdownOpen) {
+      setIsDrawerOpen(false)
+    }
+  }, [isDropdownOpen])
 
   return (
     <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>

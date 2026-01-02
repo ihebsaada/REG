@@ -88,7 +88,7 @@ export function PostListPage({ data, encodeDataAttribute }: PostListPageProps) {
                       />
                     </div>
                     <div className="flex justify-between pt-6 mt-6 border-t border-gray-900/5">
-                      <div className="fffffffffffffffffff relative flex items-center gap-x-4">
+                      <div className="relative flex items-center gap-x-4">
                         <Image
                           src={imageUrl}
                           alt={post?.author?.name || ''}
@@ -111,7 +111,7 @@ export function PostListPage({ data, encodeDataAttribute }: PostListPageProps) {
                           {stats.words} words - {stats.text}
                         </p>
                         <ShareButton
-                          slug={post?.slug ? `posts/${post.slug}` : undefined}
+                          slug={post?.slug ? `/${post.slug}` : undefined}
                           title={post?.title}
                           description={
                             post?.overview ? toPlainText(post.overview) : ''

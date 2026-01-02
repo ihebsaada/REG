@@ -17,10 +17,8 @@ export function GlobalRequestLoader() {
   }, [])
 
   useEffect(() => {
-    if (active) {
-      setActive(false)
-    }
-  }, [pathname, active])
+    setActive((prev) => (prev ? false : prev))
+  }, [pathname])
 
   // UI
   return active ? (

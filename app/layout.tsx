@@ -52,6 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
       url: baseUrl,
       siteName: 'Respect Environment Group',
       type: 'website',
+      images: ogImage ? [ogImage] : [],
     },
     twitter: {
       card: 'summary_large_image',
