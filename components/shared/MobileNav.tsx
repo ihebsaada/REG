@@ -82,7 +82,10 @@ export function MobileNav(props: NavbarProps) {
     segments[1] = langCode
     const newPath = segments.join('/')
 
-    loadingBus.emit(true)
+    if (newPath === pathname) {
+      loadingBus.emit(false)
+      return
+    }
 
     router.push(newPath)
   }

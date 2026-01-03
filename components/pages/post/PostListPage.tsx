@@ -38,10 +38,6 @@ export function PostListPage({ data, encodeDataAttribute }: PostListPageProps) {
               const coverImage = urlForImage(post.coverImage)?.url()
               // const postDescription = post?.overview[0]?.children[0]?.text || ''
               const stats = readingTime(toPlainText(post?.overview))
-              console.log(
-                'statesssssss',
-                readingTime(toPlainText(post?.overview)),
-              )
               const imageUrl =
                 urlForImage(post?.author?.picture)?.url() || '/images/reg.png'
               return (

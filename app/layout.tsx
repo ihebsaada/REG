@@ -138,7 +138,6 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {/* 👇 Se monte une fois, patch fetch globalement */}
             <GlobalRequestLoader />
             <div className="flex flex-col min-h-screen">
               <Suspense>
