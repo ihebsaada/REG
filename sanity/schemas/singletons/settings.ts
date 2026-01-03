@@ -10,20 +10,34 @@ export default defineType({
   // liveEdit: true,
   fields: [
     // brand as string
+    // ✅ Brand
     defineField({
       name: 'brand',
       title: 'Brand',
-      description: 'Your brand name.',
+      description: 'Default brand name (fallback if localized is missing).',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
-    // slogan as string
+    defineField({
+      name: 'brandLocalized',
+      title: 'Brand (localized)',
+      type: 'localeString',
+      description: 'Localized brand name (en / fr / ar). Overrides "brand".',
+    }),
+
+    // ✅ Slogan
     defineField({
       name: 'slogan',
       title: 'Slogan',
-      description: 'Your slogan.',
+      description: 'Default slogan (fallback if localized is missing).',
       type: 'string',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'sloganLocalized',
+      title: 'Slogan (localized)',
+      type: 'localeString',
+      description: 'Localized slogan (en / fr / ar). Overrides "slogan".',
     }),
     defineField({
       name: 'menuItems',

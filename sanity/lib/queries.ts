@@ -889,8 +889,24 @@ export const postBySlugQuery = groq`
 
 export const settingsQuery = groq`
   *[_type == "settings"][0]{
-    brand,
-    slogan,
+    "brand": coalesce(
+      brandLocalized[$lang],
+      brandLocalized.en,
+      brandLocalized.fr,
+      brandLocalized.ar,
+      // fallback legacy : string simple
+      brand
+    ),
+
+    "slogan": coalesce(
+     // modèle actuel : localeString
+      sloganLocalized[$lang],
+      sloganLocalized.en,
+      sloganLocalized.fr,
+      sloganLocalized.ar,
+      // fallback legacy : string simple
+      slogan
+    ),
     footer,
     menuItems[]->{
       _type,
