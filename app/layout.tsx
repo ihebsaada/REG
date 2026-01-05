@@ -1,5 +1,4 @@
 import '@/styles/index.css'
-import '@/styles/index.css'
 
 import { GoogleTagManager } from '@next/third-parties/google'
 import { toPlainText } from '@portabletext/react'
@@ -23,8 +22,13 @@ import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 import { loadHomePage, loadSettings } from '@/sanity/loader/loadQuery'
 
 const VisualEditing = dynamic(() => import('@/sanity/loader/VisualEditing'))
-const baseUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
+// const siteUrl =
+//   process.env.NEXT_PUBLIC_SITE_URL ||
+//   (process.env.VERCEL_URL
+//     ? `https://${process.env.VERCEL_URL}`
+//     : 'http://localhost:3000')
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ||
   (process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : 'http://localhost:3000')
@@ -54,7 +58,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: homePage?.overview
         ? toPlainText(homePage.overview)
         : 'Join REG in revolutionizing recycling and demolition practices across Tunisia!',
-      url: baseUrl,
+      url: siteUrl,
       siteName: 'Respect Environment Group',
       type: 'website',
       images: ogImage ? [ogImage] : [],
@@ -66,34 +70,38 @@ export async function generateMetadata(): Promise<Metadata> {
         ? toPlainText(homePage.overview)
         : undefined,
     },
-    metadataBase: new URL(`https://${baseUrl}`),
+    // metadataBase: new URL(`https://${siteUrl}`),
+    metadataBase: new URL(`https://${siteUrl}`),
     appleWebApp: {
       capable: true,
       title: homePage?.title,
       statusBarStyle: 'black-translucent',
     },
     icons: [
-      { rel: 'icon', url: `https://${baseUrl}` },
-      { rel: 'icon', url: `https://${baseUrl}/metadata/favicon-16x16.png` },
+      { rel: 'icon', url: siteUrl },
+      {
+        rel: 'icon',
+        url: new URL('/metadata/favicon-16x16.png', siteUrl).toString(),
+      },
       {
         rel: 'apple-touch-icon',
-        url: `https://${baseUrl}/metadata/apple-touch-icon.png`,
+        url: new URL('/metadata/apple-touch-icon.png', siteUrl).toString(),
       },
       {
         rel: 'mask-icon',
-        url: `https://${baseUrl}/metadata/safari-pinned-tab.svg`,
+        url: new URL('/metadata/safari-pinned-tab.svg', siteUrl).toString(),
         color: '#1e9146',
       },
       {
         rel: 'shortcut icon',
-        url: `https://${baseUrl}/metadata/favicon.ico`,
+        url: new URL('/metadata/favicon.ico', siteUrl).toString(),
       },
     ],
-    manifest: `https://${baseUrl}/manifest.json`,
+    manifest: new URL('/manifest.json', siteUrl).toString(),
     robots: 'index, follow',
     abstract: homePage?.overview ? toPlainText(homePage.overview) : undefined,
     applicationName: homePage?.title,
-    authors: [{ name: homePage?.title, url: `https://${baseUrl}` }],
+    authors: [{ name: homePage?.title, url: siteUrl }],
     category: 'Services for renewable energy',
     classification:
       "Join REG in revolutionizing recycling and demolition practices across Tunisia! Let's build a greener, cleaner future together. #RecycleSmart #SustainableDemolition",
