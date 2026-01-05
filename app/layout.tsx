@@ -23,7 +23,12 @@ import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 import { loadHomePage, loadSettings } from '@/sanity/loader/loadQuery'
 
 const VisualEditing = dynamic(() => import('@/sanity/loader/VisualEditing'))
-const baseUrl = process.env.VERCEL_URL
+const baseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000')
+
 export const locales = ['en', 'fr', 'ar'] as const
 
 export async function generateMetadata(): Promise<Metadata> {
