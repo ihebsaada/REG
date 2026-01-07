@@ -64,6 +64,7 @@ export interface ShowcasePost {
 export interface CustomBlock {
   _type: string
   _id: string
+  key?: string
   // ✅ customBlock fields are PLAIN STRINGS
   title?: string
   subtitle?: string

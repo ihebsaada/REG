@@ -33,6 +33,7 @@ export const homePageQuery = groq`
   sections[]->{
     _id,
     _type,
+    key,
 
     // ===== SECTION TITLE =====
     "title": coalesce(

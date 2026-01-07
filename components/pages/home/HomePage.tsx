@@ -42,18 +42,31 @@ export interface HomePageProps {
 export function HomePage({ data, encodeDataAttribute, dict }: HomePageProps) {
   // Default to an empty object to allow previews on non-existent documents
   const { sections = [], partners } = data ?? {}
+  const testimonialsSection = sections.find(
+    (section) => section.key === 'testimonials',
+  )
 
   const testimonials =
-    sections
-      ?.find((section) => section.title === 'Testimonials')
-      ?.blocks?.map((item) => ({
+    (testimonialsSection?.blocks ?? [])
+      .filter(
+        (item) =>
+          item &&
+          (item.author?.name ||
+            item.author?.picture ||
+            (item.description?.length ?? 0) > 0),
+      )
+      .map((item) => ({
         body: <CustomPortableText value={item.description ?? []} inline />,
         author: {
-          name: item.author?.name,
-          handle: item.author?.name,
-          imageUrl: urlForImage(item.author?.picture)?.url() || '',
+          name: item.author?.name ?? '',
+          handle: item.author?.name ?? '',
+          imageUrl: item.author?.picture
+            ? urlForImage(item.author.picture)?.url() || ''
+            : '',
         },
       })) ?? []
+
+  const featuredTestimonial = testimonials[0]
 
   const jsonLd =
     sections[0]?.blocks?.map((block) => ({
@@ -64,7 +77,7 @@ export function HomePage({ data, encodeDataAttribute, dict }: HomePageProps) {
     })) ?? []
 
   const videoLink = sections?.[0]?.videos?.[0]?.asset?.url || ''
-
+  console.log('sction0 home', sections[0])
   return (
     <div className="space-y-10">
       <WebAnalytics value="/" event="Pageview" />
@@ -172,21 +185,26 @@ export function HomePage({ data, encodeDataAttribute, dict }: HomePageProps) {
           <FormContact />
         </div>
       </div>
+      {featuredTestimonial && testimonialsSection && (
+        <div className="container">
+          <Testimonials
+            title={testimonialsSection.title}
+            description={testimonialsSection.subtitle}
+            testimonials={[
+              [
+                testimonials[1] ? [testimonials[1]] : [],
+                testimonials[2] ? [testimonials[2]] : [],
+              ],
+              [
+                testimonials[3] ? [testimonials[3]] : [],
+                testimonials[4] ? [testimonials[4]] : [],
+              ],
+            ]}
+            featuredTestimonial={featuredTestimonial}
+          />
+        </div>
+      )}
 
-      {/* Testimonials */}
-      <div className="container">
-        <Testimonials
-          title={sections.find((s) => s.title === 'Testimonials')?.title}
-          description={
-            sections.find((s) => s.title === 'Testimonials')?.subtitle
-          }
-          testimonials={[
-            [[testimonials[1]], [testimonials[2]]],
-            [[testimonials[3]], [testimonials[4]]],
-          ]}
-          featuredTestimonial={testimonials[0]}
-        />
-      </div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

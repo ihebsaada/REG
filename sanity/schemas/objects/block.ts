@@ -11,6 +11,27 @@ export default defineType({
   type: 'document',
   fields: [
     // Champs localisés pour customBlock
+    //=================================================
+    defineField({
+      name: 'key',
+      title: 'Section key (static)',
+      type: 'string',
+      description:
+        'Stable identifier for code. Do NOT translate (hero, testimonials, stats...).',
+      options: {
+        list: [
+          { title: 'Hero', value: 'hero' },
+          { title: 'News', value: 'news' },
+          { title: 'Projects', value: 'projects' },
+          { title: 'Stats', value: 'stats' },
+          { title: 'Testimonials', value: 'testimonials' },
+          { title: 'Applications', value: 'applications' },
+        ],
+        layout: 'dropdown',
+      },
+    }),
+
+    //=================================================
 
     defineField({
       name: 'titleLocalized',

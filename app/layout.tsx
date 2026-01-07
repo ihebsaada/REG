@@ -22,11 +22,7 @@ import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 import { loadHomePage, loadSettings } from '@/sanity/loader/loadQuery'
 
 const VisualEditing = dynamic(() => import('@/sanity/loader/VisualEditing'))
-// const siteUrl =
-//   process.env.NEXT_PUBLIC_SITE_URL ||
-//   (process.env.VERCEL_URL
-//     ? `https://${process.env.VERCEL_URL}`
-//     : 'http://localhost:3000')
+
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ||
   (process.env.VERCEL_URL
