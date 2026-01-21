@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>REG – Mobile Workflow</title>
+
+    <style>
+      body {
+        margin: 0;
+        background: #fff;
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Arial,
+          sans-serif;
+      }
+
+      /* Container principal du workflow */
+      .workflow-container {
+        position: relative;
+        width: 100%;
+        max-width: 390px;
+        margin: 0 auto;
+        /* ratio du SVG: 242.25 x 881.999 -> ~ 0.2746 */
+        aspect-ratio: 242.25 / 881.999977;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      /* SVG en fond (path) */
+      .workflow-path {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        z-index: 0;
+      }
+
+      /* Assets au-dessus */
+      .asset {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        height: auto;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      /* helpers */
+      .tiny {
+        width: 6%;
+      }
+      .small {
+        width: 14%;
+      }
+      .med {
+        width: 22%;
+      }
+      .large {
+        width: 30%;
+      }
+      .xl {
+        width: 40%;
+      }
+
+      /* Step badges (C2 + number) */
+      .badge-ring {
+        z-index: 4;
+        width: 7.5%;
+      }
+      .badge-num {
+        z-index: 5;
+        width: 2.5%;
+      }
+
+      /* =========================
+   WORKFLOW ANIMATION (MOBILE)
+   - draw path
+   - reveal assets async
+========================= */
+
+      /* 1) Draw effect for the main path */
+      .workflow-path path {
+        /* JS va set dasharray/dashoffset */
+        will-change: stroke-dashoffset;
+      }
+
+      /* 2) Assets reveal (global) */
+      .asset {
+        opacity: 0;
+        transform: translate(-50%, -50%) translateY(10px);
+        animation: assetIn 700ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        animation-delay: var(--d, 0s);
+      }
+
+      /* keyframes */
+      @keyframes assetIn {
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) translateY(0);
+        }
+      }
+
+      /* 3) SVG green nodes reveal (optional async) */
+      #flow-nodes circle {
+        opacity: 0;
+        animation: nodeIn 500ms ease forwards;
+        animation-delay: var(--nd, 0s);
+      }
+      @keyframes nodeIn {
+        to {
+          opacity: 0.95;
+        }
+      }
+
+      /* 4) Timing map (NO HTML changes): set delays per asset by src */
+      img[src='Workflow.png'] {
+        --d: 0s;
+      }
+
+      img[src='C1.png'],
+      img[src='t2.png'] {
+        --d: 0.5s;
+      }
+      img[src='L2.png'] {
+        --d: 0.9s;
+      }
+
+      img[src='C2.png'][alt='Step ring'].n0 {
+        --d: 2.1s;
+      }
+      img[src='C2.png'][alt='Step ring'].n1 {
+        --d: 1.4s;
+      }
+      img[src='C2.png'][alt='Step ring'].n2 {
+        --d: 4.2s;
+      }
+      img[src='C2.png'][alt='Step ring'].n3 {
+        --d: 6.8s;
+      }
+      img[src='C2.png'][alt='Step ring'].n4 {
+        --d: 7s;
+      }
+      img[src='C2.png'][alt='Step ring'].n5 {
+        --d: 8s;
+      }
+
+      img[src='2.png'][alt='2'] {
+        --d: 1.38s;
+      }
+      img[src='Manual.png'] {
+        --d: 1.43s;
+      }
+      img[src='t4.png'] {
+        --d: 1.55s;
+      }
+
+      img[src='L1.png'] {
+        --d: 1.9s;
+      }
+      img[src='1.png'][alt='1'],
+      img[src='Stockpile.png'] {
+        --d: 2.1s;
+      }
+      img[src='t3.png'] {
+        --d: 2.25s;
+      }
+
+      img[src='waste.png'] {
+        --d: 3.6s;
+      }
+
+      img[src='t1.png'],
+      img[src='allwood.png'],
+      img[src='L5.png'] {
+        --d: 3.8s;
+      }
+
+      img[src='3.png'][alt='3'],
+      img[src='Mechanical.png'],
+      img[src='tf.png'],
+      img[src='L6_rotated.png'] {
+        --d: 4.2s;
+      }
+
+      img[src='L7.png'],
+      img[src='Clean-Concrete-Fraction.png'] {
+        --d: 4.8s;
+      }
+      img[src='L7.png'],
+      img[src='Clean-Concrete-Fraction.png'].next {
+        --d: 5.2s;
+      }
+
+      img[src='4.png'][alt='4'],
+      img[src='8050D(080mm).png'],
+      img[src='8050D.png'] {
+        --d: 6.8s;
+      }
+
+      img[src='5.png'][alt='5'],
+      img[src='Hammer_Crushing_RL8476H_(0-37mm).png'],
+      img[src='RL8476H.png'] {
+        --d: 7s;
+      }
+
+      img[src='6.png'][alt='6'],
+      img[src='StockpilingDedicatedBays.png'] {
+        --d: 8s;
+      }
+
+      img[src='Layer8.png'] {
+        /* --d: 8.6s; */
+        --d: 7s;
+      }
+      img[src='./10.png'],
+      img[src='Layer11.png'] {
+        --d: 7.2s;
+      }
+
+      img[src='Layer12.png'] {
+        --d: 8s;
+      }
+      img[src='Layer13.png'] {
+        --d: 8s;
+      }
+      img[src='Layer17.png'] {
+        --d: 8s;
+      }
+      img[src='Layer14.png'],
+      img[src='Layer16.png'] {
+        --d: 8.6s;
+      }
+      img[src='Layer15.png'] {
+        --d: 9.2s;
+      }
+
+      /* Arrows timing (adapt if you want earlier/later) */
+      img[src='fleche3.png'] {
+        --d: 3.9s;
+      }
+      img[src='fleche3.png'][alt='arrow3'] {
+        --d: 6.9s;
+      }
+      img[src='fleche3.png'][alt='arrow4'] {
+        --d: 7.2s;
+      }
+      img[src='flech4.png'] {
+        --d: 6.95s;
+      }
+      img[src='fleche6.png'] {
+        --d: 3.9s;
+      }
+      /* 5) Node delays by nth-child (no HTML change) */
+      #flow-nodes circle:nth-child(1) {
+        --nd: 0.9s;
+      }
+      #flow-nodes circle:nth-child(2) {
+        --nd: 1.4s;
+      }
+      #flow-nodes circle:nth-child(3) {
+        --nd: 2s;
+      }
+      #flow-nodes circle:nth-child(4) {
+        --nd: 2.8s;
+      }
+      #flow-nodes circle:nth-child(5) {
+        --nd: 3.8s;
+      }
+      #flow-nodes circle:nth-child(6) {
+        --nd: 4.6s;
+      }
+      #flow-nodes circle:nth-child(7) {
+        --nd: 5.3s;
+      }
+      #flow-nodes circle:nth-child(8) {
+        --nd: 6.8s;
+      }
+      #flow-nodes circle:nth-child(9) {
+        --nd: 7.2s;
+      }
+
+      /* Accessibility: reduce motion */
+      @media (prefers-reduced-motion: reduce) {
+        .asset {
+          animation: none;
+          opacity: 1;
+          transform: translate(-50%, -50%);
+        }
+        #flow-nodes circle {
+          animation: none;
+          opacity: 0.95;
+        }
+      }
+      /* Background path (static) */
+      .workflow-path .path-bg {
+        opacity: 0.22;
+      }
+
+      /* Animated segments */
+      .workflow-path .path-seg {
+        will-change: stroke-dashoffset;
+        opacity: 1;
+      }
+      /* GLOBAL PLAY/PAUSE */
+      :root {
+        --play: running; /* running | paused */
+      }
+      .asset,
+      #flow-nodes circle {
+        animation-play-state: var(--play);
+      }
+      /* Le path "background" devient blanc (comme le fond) */
+      .workflow-path .path-bg {
+        stroke: #fff !important;
+        opacity: 1 !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="workflow-container">
+      <!-- PATH -->
+      <svg
+        class="workflow-path"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 242.25 881.999977"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <g id="flow-nodes" fill="#69C24A" opacity="0.95">
+          <!-- TOP / LOOP AREA -->
+          <circle cx="116.1" cy="116.1" r="14.5" />
+          <circle cx="85.7" cy="129.6" r="5.9" />
+          <circle cx="132.4" cy="144" r="7.2" />
+          <circle cx="211.5" cy="139.6" r="19.3" />
+
+          <!-- STOCKPILE ZONE -->
+          <circle cx="168.1" cy="248.9" r="13" />
+          <circle cx="107.2" cy="315.7" r="7" />
+          <!-- CLEAN STOCKPILE / MID PATH -->
+          <circle cx="128" cy="385.3" r="7.5" />
+
+          <!-- LOWER SECTION -->
+          <circle cx="208.6" cy="592.3" r="7.5" />
+          <circle cx="156.6" cy="664.1" r="6.3" />
+        </g>
+
+        <path
+          id="mainPath"
+          d="M 69.102 86.102 L 106.723 86.102 C 112.508 86.102 118.055 88.398 122.145 92.492 C 126.238 96.582 128.535 102.129 128.535 107.914 C 128.535 113.699 126.238 119.246 122.145 123.336 C 118.055 127.426 112.508 129.727 106.723 129.727 L 75.785 129.727 C 75.746 129.727 75.715 129.695 75.715 129.656 L 75.715 129.586 M 132.410 146.781 L 132.410 116.961 M 211.512 129.586 L 211.512 117.035 C 211.512 113.703 210.191 110.512 207.836 108.156 C 205.480 105.805 202.289 104.480 198.961 104.480 L 144.969 104.480 C 141.637 104.480 138.445 105.805 136.090 108.156 C 133.734 110.512 132.414 113.703 132.414 117.035 L 132.414 129.586 M 211.512 129.590 L 212.707 170.340 M 212.703 170.340 C 212.949 181.238 218.219 188.477 228.520 192.055 M 187.797 214.598 L 176.961 214.598 C 170.977 214.598 166.125 219.449 166.125 225.430 L 166.125 250.465 M 166.125 233.914 L 166.125 273.523 M 166.125 259.750 L 166.125 277.715 C 166.125 282.480 164.234 287.051 160.863 290.422 C 157.496 293.789 152.926 295.684 148.160 295.684 L 107.203 295.684 M 107.203 295.684 L 107.203 323.273 C 107.203 329.879 101.848 335.234 95.242 335.234 L 48.656 335.234 M 49.602 334.859 L 49.602 335.047 C 49.602 335.152 49.520 335.234 49.414 335.234 L 34.871 335.234 C 26.738 335.234 20.141 341.828 20.141 349.965 L 20.141 371.941 C 20.141 375.492 21.551 378.898 24.062 381.406 C 26.574 383.918 29.980 385.328 33.531 385.328 L 46.922 385.328 M 191.992 385.328 L 217.484 385.328 C 227.395 385.328 235.426 393.363 235.426 403.273 L 235.426 437.062 M 235.426 417.457 L 235.426 435.453 C 235.426 444.594 228.020 452.000 218.879 452.000 L 202.332 452.000 M 203.082 452.000 L 162.648 452.000 C 159.016 452.000 155.531 453.445 152.961 456.016 C 150.391 458.582 148.949 462.070 148.949 465.703 L 148.949 479.406 M 208.570 554.918 L 208.570 639.254 M 156.605 639.254 L 87.746 639.254 M 156.605 639.254 L 156.605 678.133 M 45.723 745.750 L 45.723 790.160 M 186.012 798.684 L 186.012 760.969 C 186.012 751.059 177.977 743.023 168.066 743.023 L 47.684 743.023 C 46.602 743.023 45.723 743.902 45.723 744.984 L 45.723 746.945 M 130.172 793.898 L 130.172 766.461 C 130.172 756.961 122.473 749.262 112.973 749.262 L 80.816 749.262 M 58.734 43.254 L 38.121 43.254 C 32.652 43.254 27.410 45.426 23.543 49.289 C 19.676 53.156 17.504 58.398 17.504 63.867 L 17.504 64.676 C 17.504 70.359 19.762 75.809 23.781 79.828 C 27.797 83.844 33.246 86.102 38.930 86.102 L 107.020 86.102 C 107.121 86.102 107.203 86.020 107.203 85.914 L 107.203 85.727 M 75.715 129.727 L 38.930 129.727 C 33.246 129.727 27.797 131.980 23.781 136.000 C 19.762 140.020 17.504 145.469 17.504 151.148 C 17.504 156.832 19.762 162.281 23.781 166.301 C 27.797 170.316 33.246 172.574 38.930 172.574 L 114.430 172.574 C 114.531 172.574 114.617 172.656 114.617 172.762 L 114.617 172.949 M 132.414 116.965 L 132.414 154.527 C 132.414 164.496 124.332 172.574 114.367 172.574 L 96.320 172.574 M 45.723 385.328 L 217.352 385.328"
+          fill="none"
+          stroke="#1e9040"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+
+      <!-- ARROWS (mobile) - INSERT RIGHT AFTER </svg> -->
+
+      <img
+        src="fleche3.png"
+        class="asset"
+        style="top: 18.4%; left: 90.5%; width: 2%; z-index: 3"
+        alt="arrow"
+      />
+      <img
+        src="flech4.png"
+        class="asset"
+        style="top: 57.9%; left: 56.5%; width: 12%; z-index: 3"
+        alt="arrow2"
+      />
+      <img
+        src="fleche3.png"
+        class="asset"
+        style="top: 67.4%; left: 87.7%; width: 1.7%; z-index: 3"
+        alt="arrow3"
+      />
+      <img
+        src="fleche3.png"
+        class="asset"
+        style="top: 75.4%; left: 66.1%; width: 1.3%; z-index: 3"
+        alt="arrow4"
+      />
+
+      <img
+        src="fleche6.png"
+        class="asset"
+        style="top: 37%; left: 16%; width: 9%; z-index: 3"
+        alt="arrow5"
+      />
+
+      <!-- =========================
+           ASSETS (mobile)
+           -> positions calées sur la maquette
+      ========================== -->
+
+      <!-- Header -->
+      <img
+        src="Workflow.png"
+        class="asset xl"
+        style="top: 4.6%; left: 42.1%; width: 65%"
+        alt="WORKFLOW"
+      />
+
+      <!-- Collection & pre-sorting (petit point + label) -->
+      <img
+        src="C1.png"
+        class="asset tiny"
+        style="top: 10.65%; left: 9%"
+        alt="Dot"
+      />
+      <img
+        src="t2.png"
+        class="asset med"
+        style="top: 11.25%; left: 20%"
+        alt="COLLECTION & PRE-SORTING"
+      />
+      <!-- Workers -->
+      <img
+        src="L2.png"
+        class="asset med"
+        style="top: 10%; left: 71%; width: 27%"
+        alt="Workers"
+      />
+
+      <!-- Step 2 badge + Manual selection -->
+      <img
+        src="C2.png"
+        class="asset badge-ring n1"
+        style="top: 13.9%; left: 60.5%; width: 7.5%"
+        alt="Step ring"
+      />
+      <img
+        src="2.png"
+        class="asset badge-num"
+        style="top: 13.9%; left: 60.5%; width: 3%"
+        alt="2"
+      />
+      <img
+        src="Manual.png"
+        class="asset med"
+        style="top: 14.5%; left: 74%; width: 18%"
+        alt="MANUAL SELECTION"
+      />
+      <img
+        src="t4.png"
+        class="asset med"
+        style="top: 16.8%; left: 76%"
+        alt="Manual description"
+      />
+
+      <!-- Stockpile (step 1) -->
+      <img
+        src="L1.png"
+        class="asset med"
+        style="top: 18%; left: 36%; width: 27%"
+        alt="Stockpile"
+      />
+      <img
+        src="C2.png"
+        class="asset badge-ring n0"
+        style="top: 22.8%; left: 29.5%; width: 8.5%"
+        alt="Step ring"
+      />
+      <img
+        src="1.png"
+        class="asset badge-num"
+        style="top: 22.8%; left: 29.5%; width: 2.5%"
+        alt="1"
+      />
+      <img
+        src="Stockpile.png"
+        class="asset small"
+        style="top: 21.8%; left: 43.5%; width: 18%"
+        alt="STOCKPILE"
+      />
+      <img
+        src="t3.png"
+        class="asset med"
+        style="top: 23.5%; left: 48.7%; width: 28%"
+        alt="Stockpile description"
+      />
+
+      <!-- Waste icons -->
+      <img
+        src="waste.png"
+        class="asset small"
+        style="top: 23%; left: 88%; width: 25%"
+        alt="Waste"
+      />
+
+      <!-- Clean stockpile (title + text + pile) -->
+      <img
+        src="t1.png"
+        class="asset med"
+        style="top: 28.5%; left: 14.3%; width: 25%"
+        alt="Clean stockpile"
+      />
+      <img
+        src="allwood.png"
+        class="asset med"
+        style="top: 30%; left: 17%; width: 30%"
+        alt="Clean stockpile text"
+      />
+      <img
+        src="L5.png"
+        class="asset large"
+        style="top: 31.5%; left: 45%; width: 45%"
+        alt="Clean pile"
+      />
+
+      <!-- Mechanical segregation (excavator) -->
+      <img
+        src="C2.png"
+        class="asset badge-ring n2"
+        style="top: 46.2%; left: 5.8%"
+        alt="Step ring"
+      />
+      <img
+        src="3.png"
+        class="asset badge-num"
+        style="top: 46.2%; left: 5.8%"
+        alt="3"
+      />
+      <img
+        src="Mechanical.png"
+        class="asset med"
+        style="top: 45.8%; left: 28.5%; width: 31%"
+        alt="MECHANICAL SEGREGATION"
+      />
+      <img
+        src="tf.png"
+        class="asset med"
+        style="top: 47%; left: 29.5%; width: 33%"
+        alt="Mechanical description"
+      />
+      <img
+        src="L6_rotated.png"
+        class="asset large"
+        style="top: 39.5%; left: 18%; width: 35%"
+        alt="Excavator"
+      />
+
+      <!-- Clean concrete fraction (pile + label) -->
+      <img
+        src="L7.png"
+        class="asset med"
+        style="top: 43.3%; left: 36%; width: 16%"
+        alt="Clean concrete pile"
+      />
+      <img
+        src="L7.png"
+        class="asset med next"
+        style="top: 42.5%; left: 79%; width: 33%"
+        alt="Clean concrete pile"
+      />
+      <img
+        src="Clean-Concrete-Fraction.png"
+        class="asset med"
+        style="top: 45.8%; left: 76%; width: 40%"
+        alt="Clean concrete fraction"
+      />
+
+      <!-- Step 4 Jaw crusher -->
+      <img
+        src="C2.png"
+        class="asset badge-ring n3"
+        style="top: 56.4%; left: 20.8%"
+        alt="Step ring"
+      />
+      <img
+        src="4.png"
+        class="asset badge-num"
+        style="top: 56.4%; left: 20.8%"
+        alt="4"
+      />
+      <img
+        src="8050D(080mm).png"
+        class="asset med"
+        style="top: 56.5%; left: 37%"
+        alt="JAW CRUSHER 8050D (0-80mm)"
+      />
+      <img
+        src="8050D.png"
+        class="asset xl"
+        style="top: 53.5%; left: 55%; width: 50%"
+        alt="Jaw crusher"
+      />
+
+      <!-- Step 5 Hammer crushing -->
+      <img
+        src="C2.png"
+        class="asset badge-ring n4"
+        style="top: 63.2%; left: 7.3%"
+        alt="Step ring"
+      />
+      <img
+        src="5.png"
+        class="asset badge-num"
+        style="top: 63.2%; left: 7.3%"
+        alt="5"
+      />
+      <img
+        src="Hammer_Crushing_RL8476H_(0-37mm).png"
+        class="asset med"
+        style="top: 63.3%; left: 31%; width: 35%"
+        alt="Hammer crushing"
+      />
+      <img
+        src="RL8476H.png"
+        class="asset xl"
+        style="top: 62%; left: 73%; width: 50%"
+        alt="Hammer crushing"
+      />
+
+      <!-- Step 6 Stockpiling dedicated bays -->
+      <img
+        src="C2.png"
+        class="asset badge-ring n5"
+        style="top: 68.1%; left: 42%"
+        alt="Step ring"
+      />
+      <img
+        src="6.png"
+        class="asset badge-num"
+        style="top: 68.1%; left: 42%"
+        alt="6"
+      />
+      <img
+        src="StockpilingDedicatedBays.png"
+        class="asset med"
+        style="top: 68%; left: 57.5%"
+        alt="Stockpiling (Dedicated bays)"
+      />
+
+      <!-- Road roller + Gravel pile -->
+      <img
+        src="Layer8.png"
+        class="asset large"
+        style="top: 71.2%; left: 74%; width: 45%"
+        alt="Gravel pile"
+      />
+
+      <!-- Truck -->
+      <img
+        src="./10.png"
+        class="asset med"
+        style="top: 79.4%; left: 59%; width: 81%"
+        alt="Road"
+      />
+      <img
+        src="Layer11.png"
+        class="asset xl"
+        style="top: 82.7%; left: 19%"
+        alt="Truck"
+      />
+
+      <!-- Bottom outputs (3 branches) -->
+      <!-- Left: barrier + mould + road image -->
+      <!-- <img
+        src="Barrier_mould.png"
+        class="asset med"
+        style="top: 97%; left: 20%"
+        alt="Barrier mould"
+      /> -->
+      <img
+        src="Layer12.png"
+        class="asset med"
+        style="top: 91.3%; left: 20%"
+        alt="Blocks"
+      />
+      <img
+        src="Layer13.png"
+        class="asset small"
+        style="top: 92.25%; left: 14.7%"
+        alt="Barrier"
+      />
+      <img
+        src="Layer17.png"
+        class="asset med"
+        style="top: 72.4%; left: 21%; width: 35%"
+        alt="Road"
+      />
+      <img
+        src="Layer14.png"
+        class="asset small"
+        style="top: 90.5%; left: 54%"
+        alt="Tetrapod base"
+      />
+
+      <img
+        src="Layer16.png"
+        class="asset small"
+        style="top: 92%; left: 53%"
+        alt="Tetrapod"
+      />
+      <img
+        src="Layer15.png"
+        class="asset med"
+        style="top: 91.8%; left: 81%"
+        alt="Blocks"
+      />
+    </div>
+    <script>
+      ;(function () {
+        const prefersReduced = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches
+        if (prefersReduced) return
+
+        // ================
+        // CONFIG
+        // ================
+        const TOTAL_MS = 9800
+        const SCROLL_TOTAL_MS = 11500
+        const EASING = 'linear'
+
+        const container = document.querySelector('.workflow-container')
+        const svg = document.querySelector('.workflow-path')
+        const path = document.getElementById('mainPath')
+        if (!container || !svg || !path) return
+
+        // global play/pause via CSS
+        const setGlobalPlayState = (running) => {
+          document.documentElement.style.setProperty(
+            '--play',
+            running ? 'running' : 'paused',
+          )
+        }
+
+        // ================
+        // BUILD + ANIMATE PATH SEGMENTS (your logic + we STORE animations)
+        // ================
+        const nodes = svg.querySelector('#flow-nodes')
+        const d = path.getAttribute('d') || ''
+        if (!nodes || !d.trim()) return
+
+        // original path becomes background
+        path.classList.add('path-bg')
+        path.removeAttribute('mask')
+        svg.insertBefore(path, nodes)
+
+        const parts = d
+          .split(/(?=M\s)/g)
+          .map((s) => s.trim())
+          .filter(Boolean)
+
+        const stroke = path.getAttribute('stroke') || '#1e9040'
+        const strokeWidth = path.getAttribute('stroke-width') || '2'
+        const linecap = path.getAttribute('stroke-linecap') || 'round'
+        const linejoin = path.getAttribute('stroke-linejoin') || 'round'
+
+        const NS = 'http://www.w3.org/2000/svg'
+
+        const mkTemp = (segD) => {
+          const p = document.createElementNS(NS, 'path')
+          p.setAttribute('d', segD)
+          const len = p.getTotalLength()
+          const s = p.getPointAtLength(0)
+          const e = p.getPointAtLength(len)
+          return { d: segD, len, s, e }
+        }
+        const segs = parts.map(mkTemp)
+
+        const segTopMetric = (seg) => Math.min(seg.s.y, seg.e.y)
+        let startIdx = 0
+        for (let i = 1; i < segs.length; i++) {
+          if (segTopMetric(segs[i]) < segTopMetric(segs[startIdx])) startIdx = i
+        }
+
+        const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y)
+
+        const used = new Array(segs.length).fill(false)
+        const ordered = []
+
+        const delta = 0.75
+        const vec = (a, b) => ({ x: b.x - a.x, y: b.y - a.y })
+        const dot = (u, v) => u.x * v.x + u.y * v.y
+        const mag = (u) => Math.hypot(u.x, u.y) || 1
+        const cosSim = (u, v) => dot(u, v) / (mag(u) * mag(v))
+
+        const segOutDir = (seg) => {
+          const p = document.createElementNS(NS, 'path')
+          p.setAttribute('d', seg.d)
+          const L = p.getTotalLength()
+          const a = p.getPointAtLength(Math.min(delta, L))
+          const b = p.getPointAtLength(0)
+          return vec(b, a)
+        }
+        const segInDir = (seg) => {
+          const p = document.createElementNS(NS, 'path')
+          p.setAttribute('d', seg.d)
+          const L = p.getTotalLength()
+          const a = p.getPointAtLength(Math.max(0, L - delta))
+          const b = p.getPointAtLength(L)
+          return vec(a, b)
+        }
+
+        used[startIdx] = true
+        ordered.push({ idx: startIdx, reversed: false })
+
+        let current = segs[startIdx].e
+        let currentDir = segInDir(segs[startIdx])
+
+        for (let step = 1; step < segs.length; step++) {
+          let best = -1
+          let bestRev = false
+          let bestScore = Infinity
+
+          for (let i = 0; i < segs.length; i++) {
+            if (used[i]) continue
+
+            const ds = dist(current, segs[i].s)
+            const dirA = segOutDir(segs[i])
+            const alignA = cosSim(currentDir, dirA)
+            const scoreA = ds + (1 - alignA) * 12
+
+            const de = dist(current, segs[i].e)
+            const dirB0 = segInDir(segs[i])
+            const dirB = { x: -dirB0.x, y: -dirB0.y }
+            const alignB = cosSim(currentDir, dirB)
+            const scoreB = de + (1 - alignB) * 12
+
+            if (scoreA < bestScore) {
+              bestScore = scoreA
+              best = i
+              bestRev = false
+            }
+            if (scoreB < bestScore) {
+              bestScore = scoreB
+              best = i
+              bestRev = true
+            }
+          }
+
+          used[best] = true
+          ordered.push({ idx: best, reversed: bestRev })
+
+          if (!bestRev) {
+            current = segs[best].e
+            currentDir = segInDir(segs[best])
+          } else {
+            current = segs[best].s
+            const d0 = segOutDir(segs[best])
+            currentDir = { x: -d0.x, y: -d0.y }
+          }
+        }
+
+        // Snap orientation
+        const EPS = 2.5
+        let curPoint = ordered[0].reversed
+          ? segs[ordered[0].idx].s
+          : segs[ordered[0].idx].e
+        for (let k = 1; k < ordered.length; k++) {
+          const i = ordered[k].idx
+          const ds = dist(curPoint, segs[i].s)
+          const de = dist(curPoint, segs[i].e)
+          if (ds + EPS < de) ordered[k].reversed = false
+          else if (de + EPS < ds) ordered[k].reversed = true
+          curPoint = ordered[k].reversed ? segs[i].s : segs[i].e
+        }
+        // ✅ FORCE orientation for very bottom segments (final branches)
+        // - vertical: top -> bottom
+        // - horizontal: left -> right
+        const isBottomZone = (seg) => {
+          const maxY = Math.max(seg.s.y, seg.e.y)
+          const minY = Math.min(seg.s.y, seg.e.y)
+          // bottom area of your 0..882 viewBox
+          return maxY > 820 || (maxY > 760 && minY > 700)
+        }
+
+        for (let k = 0; k < ordered.length; k++) {
+          const i = ordered[k].idx
+          const seg = segs[i]
+          if (!isBottomZone(seg)) continue
+
+          const dx = seg.e.x - seg.s.x
+          const dy = seg.e.y - seg.s.y
+
+          // mostly vertical
+          if (Math.abs(dy) >= Math.abs(dx)) {
+            const topToBottom = seg.s.y <= seg.e.y
+            ordered[k].reversed = !topToBottom
+          } else {
+            // mostly horizontal
+            const leftToRight = seg.s.x <= seg.e.x
+            ordered[k].reversed = !leftToRight
+          }
+        }
+
+        // Create animated group
+        const g = document.createElementNS(NS, 'g')
+        svg.insertBefore(g, nodes)
+
+        const segEls = ordered.map(({ idx }) => {
+          const p = document.createElementNS(NS, 'path')
+          p.setAttribute('d', segs[idx].d)
+          p.setAttribute('fill', 'none')
+          p.setAttribute('stroke', stroke)
+          p.setAttribute('stroke-width', strokeWidth)
+          p.setAttribute('stroke-linecap', linecap)
+          p.setAttribute('stroke-linejoin', linejoin)
+          p.classList.add('path-seg')
+          g.appendChild(p)
+          return p
+        })
+
+        // Animate segments and STORE animation objects
+        const lengths = segEls.map((p) => p.getTotalLength())
+        const totalLen = lengths.reduce((a, b) => a + b, 0) || 1
+
+        const pathAnimations = []
+        let delaySum = 0
+
+        ordered.forEach(({ reversed }, k) => {
+          const p = segEls[k]
+          const len = Math.max(0.0001, lengths[k])
+
+          p.style.strokeDasharray = `${len}`
+          const from = reversed ? -len : len
+          p.style.strokeDashoffset = `${from}`
+
+          const dur = Math.max(80, (len / totalLen) * TOTAL_MS)
+
+          const anim = p.animate(
+            [{ strokeDashoffset: from }, { strokeDashoffset: 0 }],
+            {
+              duration: dur,
+              delay: delaySum,
+              easing: EASING,
+              fill: 'forwards',
+            },
+          )
+
+          pathAnimations.push(anim)
+          delaySum += dur
+        })
+
+        // ================
+        // AUTO SCROLL (STORE RAF state)
+        // ================
+        const clamp = (v, a, b) => Math.max(a, Math.min(b, v))
+        const easeInOut = (x) =>
+          x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2
+
+        function getScrollRange() {
+          const rect = container.getBoundingClientRect()
+          const top = window.scrollY + rect.top
+          const bottom = top + rect.height
+          const maxY = bottom - window.innerHeight + 8
+          return { top, maxY }
+        }
+
+        let running = true
+        let rafId = 0
+        let t0 = performance.now()
+        let pausedAt = 0
+
+        function step(now) {
+          if (!running) return
+
+          const { top, maxY } = getScrollRange()
+          const p = clamp((now - t0) / SCROLL_TOTAL_MS, 0, 1)
+          const pe = easeInOut(p)
+          window.scrollTo(0, top + (maxY - top) * pe)
+
+          if (p < 1) rafId = requestAnimationFrame(step)
+          else {
+            // finished -> Play should reload
+            btn.textContent = '↻ Replay'
+            running = false
+          }
+        }
+
+        function startScrollFromZero() {
+          const { top } = getScrollRange()
+          window.scrollTo(0, top)
+          t0 = performance.now()
+          running = true
+          rafId = requestAnimationFrame(step)
+        }
+
+        function pauseScroll() {
+          running = false
+          cancelAnimationFrame(rafId)
+          pausedAt = performance.now()
+        }
+
+        function resumeScroll() {
+          const pauseDuration = performance.now() - pausedAt
+          t0 += pauseDuration
+          running = true
+          rafId = requestAnimationFrame(step)
+        }
+
+        // ================
+        // PLAY/STOP BUTTON
+        // ================
+        const btn = document.createElement('button')
+        btn.type = 'button'
+        btn.textContent = '⏸ Stop'
+        Object.assign(btn.style, {
+          position: 'fixed',
+          right: '14px',
+          bottom: '14px',
+          zIndex: 9999,
+          padding: '10px 12px',
+          borderRadius: '999px',
+          border: '1px solid rgba(0,0,0,0.12)',
+          background: 'rgba(255,255,255,0.92)',
+          backdropFilter: 'blur(6px)',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+          font: '600 14px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
+        })
+        document.body.appendChild(btn)
+
+        // helper: check if finished
+        const isFinished = () => {
+          // if last animation is finished or scroll ended
+          const last = pathAnimations[pathAnimations.length - 1]
+          return last && last.playState === 'finished'
+        }
+
+        function pauseAll() {
+          setGlobalPlayState(false) // assets + nodes
+          pathAnimations.forEach((a) => a.pause())
+          pauseScroll()
+          btn.textContent = '▶︎ Play'
+        }
+
+        function resumeAll() {
+          setGlobalPlayState(true)
+          pathAnimations.forEach((a) => a.play())
+          resumeScroll()
+          btn.textContent = '⏸ Stop'
+        }
+
+        function reloadFromZero() {
+          // full restart: simplest and stable
+          location.reload()
+        }
+
+        btn.addEventListener('click', () => {
+          // If finished -> replay = reload
+          if (isFinished()) {
+            reloadFromZero()
+            return
+          }
+
+          // toggle pause/resume
+          const anyRunning = pathAnimations.some(
+            (a) => a.playState === 'running',
+          )
+          if (anyRunning) pauseAll()
+          else resumeAll()
+        })
+
+        // ================
+        // AUTO START on page load
+        // ================
+        // start at top of container
+        const { top } = getScrollRange()
+        window.scrollTo(0, top)
+
+        setGlobalPlayState(true)
+        // ensure path anims are running already (they are)
+        startScrollFromZero()
+      })()
+    </script>
+  </body>
+</html>

@@ -124,6 +124,18 @@ export function MobileNav(props: NavbarProps) {
           <DrawerClose aria-label="Close menu" />
         </DrawerHeader>
         <DrawerDescription className="container flex flex-col justify-center">
+          {/* ✅ WorkFlow link (static) */}
+          <HandleLink
+            href="/workflow/mobileFlow.html"
+            target="_blank"
+            className={cn(
+              'py-2 text-lg font-bold text-center transition-colors hover:text-foreground',
+              'text-foreground/60',
+            )}
+            onClick={() => setIsDrawerOpen(false)}
+          >
+            WorkFlow
+          </HandleLink>
           {menuItems
             .filter((item) => item?._type !== 'home')
             .map((item, key) => {
