@@ -97,7 +97,11 @@ export function loadProjects(lang: string) {
 }
 
 export function loadProjectBySlug(slug: string, lang: string) {
-  return loadQuery<ProjectPayload>(projectBySlugQuery, { slug, lang }, {})
+  return loadQuery<ProjectPayload>(
+    projectBySlugQuery,
+    { slug, lang },
+    { next: { tags: [`project:${slug}`] } },
+  )
 }
 
 export function loadInnovations(lang: string) {
@@ -132,7 +136,7 @@ export function loadOpportunityBySlug(slug: string, lang: string) {
   return loadQuery<OpportunityPayload | null>(
     opportunityBySlugQuery,
     { slug, lang },
-    {},
+    { next: { tags: [`opportunity:${slug}`] } },
   )
 }
 

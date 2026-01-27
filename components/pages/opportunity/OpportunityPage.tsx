@@ -42,6 +42,7 @@ export function OpportunityPage({
                     width={100}
                     height={100}
                     className="mb-2"
+                    priority
                   />
                 )}
                 <span className="mb-2 ml-auto text-xs text-gray-500 dark:text-gray-400">

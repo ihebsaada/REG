@@ -1,6 +1,6 @@
 import '@/styles/index.css'
 
-import { GoogleTagManager } from '@next/third-parties/google'
+import Script from 'next/script'
 import { toPlainText } from '@portabletext/react'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -8,7 +8,7 @@ import { Metadata, Viewport } from 'next'
 import dynamic from 'next/dynamic'
 import { Inter as FontSans } from 'next/font/google'
 import { draftMode } from 'next/headers'
-import { headers } from 'next/headers'
+// import { headers } from 'next/headers'
 import { Suspense } from 'react'
 
 import { Footer } from '@/components/global/Footer'
@@ -158,7 +158,21 @@ export default function RootLayout({
               <ScrollToTop />
               <SpeedInsights />
               <Analytics />
-              <GoogleTagManager gtmId={GOOGLE_TAG_MANAGER_ID as string} />
+              <Script
+                id="gtm-init"
+                strategy="lazyOnload"
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+                  `,
+                }}
+              />
+              <Script
+                id="gtm-script"
+                strategy="lazyOnload"
+                src={`https://www.googletagmanager.com/gtm.js?id=${GOOGLE_TAG_MANAGER_ID}`}
+              />
             </div>
             {draftMode().isEnabled && <VisualEditing />}
           </ThemeProvider>

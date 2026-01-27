@@ -50,8 +50,9 @@ export function ProjectPage({ data, encodeDataAttribute }: ProjectPageProps) {
               src={urlForImage(coverImage)?.url() || ''}
               alt={title ?? ''}
               className="absolute inset-0 object-cover w-full h-full"
+              priority
               fill
-              sizes="100vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
             />
             <div className="absolute bottom-0 left-0 z-20 p-4 ">
               <h1 className="text-2xl font-semibold leading-tight text-gray-100 md:text-4xl">
