@@ -77,7 +77,6 @@ export function HomePage({ data, encodeDataAttribute, dict }: HomePageProps) {
     })) ?? []
 
   const videoLink = sections?.[0]?.videos?.[0]?.asset?.url || ''
-  console.log('sction0 home', sections[0])
   return (
     <div className="space-y-10">
       <WebAnalytics value="/" event="Pageview" />

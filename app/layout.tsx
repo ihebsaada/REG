@@ -74,7 +74,10 @@ export async function generateMetadata(): Promise<Metadata> {
       statusBarStyle: 'black-translucent',
     },
     icons: [
-      { rel: 'icon', url: siteUrl },
+      {
+        rel: 'icon',
+        url: new URL('/metadata/favicon-32x32.png', siteUrl).toString(),
+      },
       {
         rel: 'icon',
         url: new URL('/metadata/favicon-16x16.png', siteUrl).toString(),
@@ -93,7 +96,8 @@ export async function generateMetadata(): Promise<Metadata> {
         url: new URL('/metadata/favicon.ico', siteUrl).toString(),
       },
     ],
-    manifest: new URL('/manifest.json', siteUrl).toString(),
+    // manifest: new URL('/manifest.json', siteUrl).toString(),
+    manifest: new URL('/manifest.webmanifest', siteUrl).toString(),
     robots: 'index, follow',
     abstract: homePage?.overview ? toPlainText(homePage.overview) : undefined,
     applicationName: homePage?.title,
