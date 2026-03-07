@@ -32,6 +32,7 @@ import localRichBlock from '@/sanity/schemas/objects/localeRichBlock'
 // worksanity language internationaalisation
 import localeString from '@/sanity/schemas/objects/localeString'
 import milestone from '@/sanity/schemas/objects/milestone'
+import sectionStatItem from '@/sanity/schemas/objects/sectionStatItem'
 import socialNetwork from '@/sanity/schemas/objects/socialNetwork'
 import timeline from '@/sanity/schemas/objects/timeline'
 import { videos } from '@/sanity/schemas/objects/videos'
@@ -84,6 +85,7 @@ export default defineConfig({
       videoType,
       contact,
       milestone,
+      sectionStatItem,
       timeline,
 
       localeString,

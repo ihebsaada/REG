@@ -137,6 +137,43 @@ export const homePageQuery = groq`
       ctaLink
     },
 
+    // ===== STAT ITEMS (sectionStatItem[], inline) =====
+    statsItems[]{
+      _key,
+
+      "title": coalesce(
+        titleLocalized[$lang],
+        title[$lang],
+        titleLocalized.en,
+        title.en,
+        titleLocalized.fr,
+        title.fr,
+        titleLocalized.ar,
+        title.ar,
+        title
+      ),
+
+      "subtitle": coalesce(
+        subtitleLocalized[$lang],
+        subtitle[$lang],
+        subtitleLocalized.en,
+        subtitle.en,
+        subtitleLocalized.fr,
+        subtitle.fr,
+        subtitleLocalized.ar,
+        subtitle.ar,
+        subtitle
+      ),
+
+      "description": coalesce(
+        overviewLocalized[$lang],
+        overviewLocalized.en,
+        overviewLocalized.fr,
+        overviewLocalized.ar,
+        description
+      ),
+    },
+
     // ===== APPLICATIONS MISES EN AVANT =====
     showcaseApplications[]->{
       _id,
@@ -536,17 +573,45 @@ export const certificationBySlugQuery = groq`
   }
 `
 
+// export const opportunitiesPageQuery = groq`
+//   *[_type == "opportunities_page"][0]{
+//     _id,
+//     "title": coalesce(
+//       titleLocalized[$lang],
+//       titleLocalized.en,
+//       title
+//     ),
+//     "overview": coalesce(
+//       overviewLocalized[$lang],
+//       overviewLocalized.en,
+//       overview
+//     ),
+
+//     items[]->{
+//       _id,
+//       _type,
+//       image,
+//       duration,
+//       "overview": coalesce(overviewLocalized[$lang], overviewLocalized.en, overview),
+//       "title": coalesce(titleLocalized[$lang], titleLocalized.en, title),
+//       "slug": slug.current,
+//       tags,
+//     },
+//   }
+// `
 export const opportunitiesPageQuery = groq`
   *[_type == "opportunities_page"][0]{
     _id,
+
     "title": coalesce(
       titleLocalized[$lang],
       titleLocalized.en,
       title
     ),
+
     "overview": coalesce(
-      overviewLocalized[$lang],
-      overviewLocalized.en,
+      select(count(overviewLocalized[$lang]) > 0 => overviewLocalized[$lang]),
+      select(count(overviewLocalized.en) > 0 => overviewLocalized.en),
       overview
     ),
 
@@ -555,14 +620,53 @@ export const opportunitiesPageQuery = groq`
       _type,
       image,
       duration,
-      "overview": coalesce(overviewLocalized[$lang], overviewLocalized.en, overview),
-      "title": coalesce(titleLocalized[$lang], titleLocalized.en, title),
+
+      "overview": coalesce(
+        select(count(overviewLocalized[$lang]) > 0 => overviewLocalized[$lang]),
+        select(count(overviewLocalized.en) > 0 => overviewLocalized.en),
+        overview
+      ),
+
+      "title": coalesce(
+        titleLocalized[$lang],
+        titleLocalized.en,
+        title
+      ),
+
       "slug": slug.current,
       tags,
     },
   }
 `
 
+// export const opportunityBySlugQuery = groq`
+//   *[_type == "opportunity" && slug.current == $slug][0]{
+//     _id,
+//     image,
+//     duration,
+
+//     "title": coalesce(
+//       titleLocalized[$lang],
+//       titleLocalized.en,
+//       title
+//     ),
+
+//     "overview": coalesce(
+//       overviewLocalized[$lang],
+//       overviewLocalized.en,
+//       overview
+//     ),
+
+//     "description": coalesce(
+//       descriptionLocalized[$lang],
+//       descriptionLocalized.en,
+//       description
+//     ),
+
+//     files[]{ _key, "url": asset->url },
+//     links[],
+//   }
+// `
 export const opportunityBySlugQuery = groq`
   *[_type == "opportunity" && slug.current == $slug][0]{
     _id,
@@ -576,14 +680,14 @@ export const opportunityBySlugQuery = groq`
     ),
 
     "overview": coalesce(
-      overviewLocalized[$lang],
-      overviewLocalized.en,
+      select(count(overviewLocalized[$lang]) > 0 => overviewLocalized[$lang]),
+      select(count(overviewLocalized.en) > 0 => overviewLocalized.en),
       overview
     ),
 
     "description": coalesce(
-      descriptionLocalized[$lang],
-      descriptionLocalized.en,
+      select(count(descriptionLocalized[$lang]) > 0 => descriptionLocalized[$lang]),
+      select(count(descriptionLocalized.en) > 0 => descriptionLocalized.en),
       description
     ),
 
@@ -596,66 +700,48 @@ export const innovationsQuery = groq`
 *[_type == "innovations_page"][0]{
   _id,
 
-  // ===== PAGE TITLE (string) =====
   "title": coalesce(
-    titleLocalized[$lang],   // nouveau modèle
-    title[$lang],            // si un jour tu migres le legacy en localeString
+    titleLocalized[$lang],
     titleLocalized.en,
-    title.en,
     titleLocalized.fr,
-    title.fr,
     titleLocalized.ar,
-    title.ar,
-    title                    // legacy string (actuel)
+    title
   ),
 
-  // ===== PAGE OVERVIEW (PortableText) =====
   "overview": coalesce(
-    overviewLocalized[$lang],  // nouveau modèle localeBlock
-    overview[$lang],           // si overview devient localeBlock
+    overviewLocalized[$lang],
     overviewLocalized.en,
-    overview.en,
     overviewLocalized.fr,
-    overview.fr,
     overviewLocalized.ar,
-    overview.ar,
-    overview                   // legacy array (actuel)
+    overview
   ),
 
-  // ===== ITEMS: liste des innovations =====
   items[]->{
     _id,
     _type,
     "slug": slug.current,
 
-    // ===== INNOVATION TITLE =====
     "title": coalesce(
-      // modèle actuel : localeString
-      title[$lang],
-      title.en,
-      title.fr,
-      title.ar,
-      // fallback legacy éventuel
+      titleLocalized[$lang],
+      titleLocalized.en,
+      titleLocalized.fr,
+      titleLocalized.ar,
       title
     ),
 
-    // ===== INNOVATION OVERVIEW =====
     "overview": coalesce(
-      // modèle actuel : localeBlock
-      overview[$lang],
-      overview.en,
-      overview.fr,
-      overview.ar,
-      // fallback legacy éventuel
+      overviewLocalized[$lang],
+      overviewLocalized.en,
+      overviewLocalized.fr,
+      overviewLocalized.ar,
       overview
     ),
 
-    // (optionnel) si tu veux un extrait de description
     "description": coalesce(
-      description[$lang],
-      description.en,
-      description.fr,
-      description.ar,
+      descriptionLocalized[$lang],
+      descriptionLocalized.en,
+      descriptionLocalized.fr,
+      descriptionLocalized.ar,
       description
     ),
 
@@ -723,88 +809,133 @@ export const innovationBySlugQuery = groq`
 
 `
 
+// export const postsQuery = groq`
+// *[_type == "posts_page"][0]{
+//   _id,
+
+//   // ===== PAGE TITLE =====
+//   "title": coalesce(
+//   titleLocalized[$lang],
+//   titleLocalized.en,
+//   titleLocalized.fr,
+//   titleLocalized.ar,
+//   title
+// ),
+// "overview": coalesce(
+//   overviewLocalized[$lang],
+//   overviewLocalized.en,
+//   overviewLocalized.fr,
+//   overviewLocalized.ar,
+//   overview
+// ),
+// "description": coalesce(
+//   descriptionLocalized[$lang],
+//   descriptionLocalized.en,
+//   descriptionLocalized.fr,
+//   descriptionLocalized.ar,
+//   description
+// ),
+
+//   // ===== ITEMS = POSTS =====
+//   items[]->{
+//     _id,
+//     _type,
+
+//     "title": coalesce(
+//       titleLocalized[$lang],
+//       title[$lang],
+//       titleLocalized.en,
+//       title.en,
+//       titleLocalized.fr,
+//       title.fr,
+//       titleLocalized.ar,
+//       title.ar,
+//       title
+//     ),
+
+//     "overview": coalesce(
+//       overviewLocalized[$lang],
+//       overview[$lang],
+//       overviewLocalized.en,
+//       overview.en,
+//       overviewLocalized.fr,
+//       overview.fr,
+//       overviewLocalized.ar,
+//       overview.ar,
+//       overview
+//     ),
+
+//     "description": coalesce(
+//       descriptionLocalized[$lang],
+//       description[$lang],
+//       descriptionLocalized.en,
+//       description.en,
+//       descriptionLocalized.fr,
+//       description.fr,
+//       descriptionLocalized.ar,
+//       description.ar,
+//       description
+//     ),
+
+//     date,
+//     tags,
+//     coverImage,
+//     "slug": slug.current,
+//     author->{ name, picture },
+//   },
+// }
+// `
 export const postsQuery = groq`
 *[_type == "posts_page"][0]{
   _id,
 
-  // ===== PAGE TITLE =====
   "title": coalesce(
     titleLocalized[$lang],
-    title[$lang],
     titleLocalized.en,
-    title.en,
     titleLocalized.fr,
-    title.fr,
     titleLocalized.ar,
-    title.ar,
     title
   ),
 
-  // ===== PAGE OVERVIEW =====
   "overview": coalesce(
     overviewLocalized[$lang],
-    overview[$lang],
     overviewLocalized.en,
-    overview.en,
     overviewLocalized.fr,
-    overview.fr,
     overviewLocalized.ar,
-    overview.ar,
     overview
   ),
 
-  // ===== PAGE DESCRIPTION (optionnelle) =====
   "description": coalesce(
     descriptionLocalized[$lang],
-    description[$lang],
     descriptionLocalized.en,
-    description.en,
     descriptionLocalized.fr,
-    description.fr,
     descriptionLocalized.ar,
-    description.ar,
     description
   ),
 
-  // ===== ITEMS = POSTS =====
   items[]->{
     _id,
     _type,
 
     "title": coalesce(
-      titleLocalized[$lang],
       title[$lang],
-      titleLocalized.en,
       title.en,
-      titleLocalized.fr,
       title.fr,
-      titleLocalized.ar,
-      title.ar,
-      title
+      title.ar
     ),
 
     "overview": coalesce(
-      overviewLocalized[$lang],
       overview[$lang],
-      overviewLocalized.en,
       overview.en,
-      overviewLocalized.fr,
       overview.fr,
-      overviewLocalized.ar,
-      overview.ar,
-      overview
+      overview.ar
     ),
 
     "description": coalesce(
-      descriptionLocalized[$lang],
       description[$lang],
-      descriptionLocalized.en,
       description.en,
-      descriptionLocalized.fr,
       description.fr,
-      descriptionLocalized.ar,
-      description.ar,
-      description
+      description.ar
     ),
 
     date,

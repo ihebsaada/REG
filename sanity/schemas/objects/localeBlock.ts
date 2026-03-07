@@ -1,60 +1,51 @@
-// // sanity/schemas/objects/localeBlock.ts
-// import { defineArrayMember, defineField, defineType } from 'sanity'
-
-// const blockField = defineField({
-//   name: 'value',
-//   type: 'array',
-//   of: [
-//     defineArrayMember({
-//       type: 'block',
-//       marks: {
-//         decorators: [
-//           { title: 'Italic', value: 'em' },
-//           { title: 'Strong', value: 'strong' },
-//         ],
-//       },
-//     }),
-//   ],
-// })
-
-// export default defineType({
-//   name: 'localeBlock',
-//   title: 'Localized rich text',
-//   type: 'object',
-//   fields: [
-//     { ...blockField, name: 'en', title: 'English' },
-//     { ...blockField, name: 'fr', title: 'Français' },
-//     { ...blockField, name: 'ar', title: 'العربية' },
-//   ],
-// })
 // sanity/schemas/objects/localeBlock.ts
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
-const blockField = defineField({
-  name: 'value',
-  type: 'array',
-  of: [
-    defineArrayMember({
-      type: 'block',
-      lists: [],
-      styles: [],
-      marks: {
-        decorators: [
-          { title: 'Italic', value: 'em' },
-          { title: 'Strong', value: 'strong' },
-        ],
-      },
-    }),
-  ],
-})
+const portableTextArray = (name: string, title: string) =>
+  defineField({
+    name,
+    title,
+    type: 'array',
+    initialValue: [],
+    of: [
+      defineArrayMember({
+        type: 'block',
+        lists: [],
+        styles: [],
+        marks: {
+          decorators: [
+            { title: 'Italic', value: 'em' },
+            { title: 'Strong', value: 'strong' },
+          ],
+          annotations: [
+            {
+              name: 'link',
+              type: 'object',
+              title: 'Link',
+              fields: [{ name: 'href', type: 'url', title: 'Url' }],
+            },
+          ],
+        },
+      }),
+    ],
+    validation: (Rule) =>
+      Rule.custom((val) => {
+        if (val === undefined) return true
+        return Array.isArray(val) ? true : 'Must be an array (PortableText).'
+      }),
+  })
 
 export default defineType({
   name: 'localeBlock',
-  title: 'Localized text',
+  title: 'Localized text (PortableText)',
   type: 'object',
+
+  // ✅ important: forme complète quand l'objet est créé
+  initialValue: () => ({ en: [], fr: [], ar: [] }),
+
   fields: [
-    { ...blockField, name: 'en', title: 'English' },
-    { ...blockField, name: 'fr', title: 'Français' },
-    { ...blockField, name: 'ar', title: 'العربية' },
+    portableTextArray('en', 'English'),
+    portableTextArray('fr', 'Français'),
+    portableTextArray('ar', 'العربية'),
   ],
 })

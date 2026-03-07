@@ -42,6 +42,7 @@ export interface HomePageProps {
 export function HomePage({ data, encodeDataAttribute, dict }: HomePageProps) {
   // Default to an empty object to allow previews on non-existent documents
   const { sections = [], partners } = data ?? {}
+
   const testimonialsSection = sections.find(
     (section) => section.key === 'testimonials',
   )
@@ -128,6 +129,7 @@ export function HomePage({ data, encodeDataAttribute, dict }: HomePageProps) {
         coverImage={urlForImage(sections[2]?.coverImage)?.url() ?? ''}
         width={width}
         height={height}
+        dict={dict}
       />
 
       {/* Route expérimentale */}
@@ -139,28 +141,26 @@ export function HomePage({ data, encodeDataAttribute, dict }: HomePageProps) {
             <CustomPortableText value={sections[4]?.description ?? []} inline />
           }
           video={sections[4]?.videos?.[0]?.asset?.url}
-          stats={
-            sections[4]?.blocks?.map((item) => ({
-              value: item.title,
-              name: (
-                <CustomPortableText value={item.description ?? []} inline />
-              ),
-              unit: item.subtitle,
-            })) ?? []
-          }
-        />
-      </div>
-
-      {/* Stats */}
-      <Stats
-        stats={
-          sections[3]?.blocks?.map((item, index) => ({
-            id: `${item.title}-${index}`,
+          stats={(sections[4]?.statsItems?.length
+            ? sections[4].statsItems
+            : sections[4]?.blocks ?? []
+          ).map((item) => ({
             value: item.title,
             name: <CustomPortableText value={item.description ?? []} inline />,
             unit: item.subtitle,
-          })) ?? []
-        }
+          }))}
+        />
+      </div>
+      <Stats
+        stats={(sections[3]?.statsItems?.length
+          ? sections[3].statsItems
+          : sections[3]?.blocks ?? []
+        ).map((item, index) => ({
+          id: `${item.title}-${index}`,
+          value: item.title,
+          name: <CustomPortableText value={item.description ?? []} inline />,
+          unit: item.subtitle,
+        }))}
       />
 
       <div className="container">

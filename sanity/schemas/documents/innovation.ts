@@ -51,35 +51,33 @@ export default defineType({
       name: 'description',
       title: 'Project Description (legacy)',
       type: 'array',
-      of: [
-        defineArrayMember({
-          type: 'block',
-        }),
-      ],
+      of: [defineArrayMember({ type: 'block' })],
     }),
 
-    // ===== NOUVEAUX CHAMPS LOCALISÉS =====
+    // ===== LOCALIZED =====
     defineField({
       name: 'titleLocalized',
       title: 'Title (localized)',
       description: 'Localized title (en / fr / ar).',
-      type: 'localeString', // { en?, fr?, ar? }
+      type: 'localeString',
       options: { collapsible: true, collapsed: true },
+      validation: (rule) => rule.required(),
     }),
 
     defineField({
       name: 'overviewLocalized',
       title: 'Overview (localized)',
       description: 'Localized overview (en / fr / ar).',
-      type: 'localeBlock', // { en?, fr?, ar? } -> cf. ton schéma localeBlock
+      type: 'localeBlock', // ✅ minimal comme legacy overview
       options: { collapsible: true, collapsed: true },
+      validation: (rule) => rule.required(),
     }),
 
     defineField({
       name: 'descriptionLocalized',
       title: 'Project Description (localized)',
       description: 'Localized project description (en / fr / ar).',
-      type: 'localeBlock',
+      type: 'localeRichBlock', // ✅ RICHE comme legacy description
       options: { collapsible: true, collapsed: true },
     }),
 
@@ -114,23 +112,22 @@ export default defineType({
       name: 'files',
       title: 'Files',
       type: 'array',
-      of: [
-        {
-          type: 'file',
-          title: 'File',
-        },
-      ],
+      of: [{ type: 'file', title: 'File' }],
     }),
   ],
+
   preview: {
     select: {
       titleLegacy: 'title',
       titleEn: 'titleLocalized.en',
+      titleFr: 'titleLocalized.fr',
+      titleAr: 'titleLocalized.ar',
       media: 'images.0',
     },
-    prepare({ titleLegacy, titleEn, media }) {
+    prepare({ titleLegacy, titleEn, titleFr, titleAr, media }) {
       return {
-        title: titleEn || titleLegacy || 'Untitled innovation',
+        title:
+          titleEn || titleFr || titleAr || titleLegacy || 'Untitled innovation',
         media,
       }
     },

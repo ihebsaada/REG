@@ -61,6 +61,13 @@ export interface ShowcasePost {
   title?: PostPayload['title']
 }
 
+export interface SectionStatItem {
+  _key?: string
+  title?: string
+  subtitle?: string
+  description?: PortableTextBlock[]
+}
+
 export interface CustomBlock {
   _type: string
   _id: string
@@ -72,6 +79,7 @@ export interface CustomBlock {
   description?: PortableTextBlock[]
   icon?: string
   blocks?: CustomBlock[]
+  statsItems?: SectionStatItem[]
   author?: Author
   cta?: string
   ctaLink?: string

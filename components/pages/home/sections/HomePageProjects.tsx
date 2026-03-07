@@ -14,6 +14,7 @@ interface HomePageProjectsProps {
   showcaseProjects?: ShowcaseProject[]
   width: number
   height: number
+  dict?: any
 }
 
 export function HomePageProjects({
@@ -24,7 +25,9 @@ export function HomePageProjects({
   coverImage,
   width,
   height,
+  dict,
 }: HomePageProjectsProps) {
+  console.log('first', dict?.buttons?.learnMore)
   return (
     <div
       className={`w-full bg-reg-dark md:bg-center relative py-8 overflow-hidden bg-gray-900 isolate sm:py-32`}
@@ -74,7 +77,7 @@ export function HomePageProjects({
                   description={
                     <CustomPortableText value={project.overview ?? []} inline />
                   }
-                  buttonText="Learn more"
+                  buttonText={dict.buttons.learnMore}
                   buttonLink={href}
                   active={[0, 3].includes(i)}
                   className="max-w-sm bg-opacity-90 backdrop-blur-2px"

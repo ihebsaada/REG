@@ -11,21 +11,21 @@ export default defineType({
     defineField({
       name: 'titleLocalized',
       title: 'Title (localized)',
-      type: 'localeString', // { en?, fr?, ar? }
+      type: 'localeString',
       options: { collapsible: true, collapsed: true },
     }),
 
     defineField({
       name: 'overviewLocalized',
       title: 'Overview (localized)',
-      type: 'localeBlock', // { en?, fr?, ar? } PortableText[]
+      type: 'localeBlock', // ✅ minimal comme legacy overview
       options: { collapsible: true, collapsed: true },
     }),
 
     defineField({
       name: 'bodyLocalized',
       title: 'Body (localized)',
-      type: 'localeBlock', // ou localeRichBlock si tu veux
+      type: 'localeRichBlock', // ✅ riche comme legacy body (blockContent)
       options: { collapsible: true, collapsed: true },
     }),
 
@@ -57,7 +57,7 @@ export default defineType({
           styles: [],
           lists: [],
           marks: {
-            annotations: [],
+            annotations: [], // legacy sans Link
             decorators: [
               { title: 'Italic', value: 'em' },
               { title: 'Strong', value: 'strong' },
