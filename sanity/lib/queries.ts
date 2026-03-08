@@ -809,82 +809,6 @@ export const innovationBySlugQuery = groq`
 
 `
 
-// export const postsQuery = groq`
-// *[_type == "posts_page"][0]{
-//   _id,
-
-//   // ===== PAGE TITLE =====
-//   "title": coalesce(
-//   titleLocalized[$lang],
-//   titleLocalized.en,
-//   titleLocalized.fr,
-//   titleLocalized.ar,
-//   title
-// ),
-// "overview": coalesce(
-//   overviewLocalized[$lang],
-//   overviewLocalized.en,
-//   overviewLocalized.fr,
-//   overviewLocalized.ar,
-//   overview
-// ),
-// "description": coalesce(
-//   descriptionLocalized[$lang],
-//   descriptionLocalized.en,
-//   descriptionLocalized.fr,
-//   descriptionLocalized.ar,
-//   description
-// ),
-
-//   // ===== ITEMS = POSTS =====
-//   items[]->{
-//     _id,
-//     _type,
-
-//     "title": coalesce(
-//       titleLocalized[$lang],
-//       title[$lang],
-//       titleLocalized.en,
-//       title.en,
-//       titleLocalized.fr,
-//       title.fr,
-//       titleLocalized.ar,
-//       title.ar,
-//       title
-//     ),
-
-//     "overview": coalesce(
-//       overviewLocalized[$lang],
-//       overview[$lang],
-//       overviewLocalized.en,
-//       overview.en,
-//       overviewLocalized.fr,
-//       overview.fr,
-//       overviewLocalized.ar,
-//       overview.ar,
-//       overview
-//     ),
-
-//     "description": coalesce(
-//       descriptionLocalized[$lang],
-//       description[$lang],
-//       descriptionLocalized.en,
-//       description.en,
-//       descriptionLocalized.fr,
-//       description.fr,
-//       descriptionLocalized.ar,
-//       description.ar,
-//       description
-//     ),
-
-//     date,
-//     tags,
-//     coverImage,
-//     "slug": slug.current,
-//     author->{ name, picture },
-//   },
-// }
-// `
 export const postsQuery = groq`
 *[_type == "posts_page"][0]{
   _id,
@@ -918,24 +842,27 @@ export const postsQuery = groq`
     _type,
 
     "title": coalesce(
-      title[$lang],
-      title.en,
-      title.fr,
-      title.ar
+      titleLocalized[$lang],
+      titleLocalized.en,
+      titleLocalized.fr,
+      titleLocalized.ar,
+      title
     ),
 
     "overview": coalesce(
-      overview[$lang],
-      overview.en,
-      overview.fr,
-      overview.ar
+      overviewLocalized[$lang],
+      overviewLocalized.en,
+      overviewLocalized.fr,
+      overviewLocalized.ar,
+      overview
     ),
 
     "description": coalesce(
-      description[$lang],
-      description.en,
-      description.fr,
-      description.ar
+      descriptionLocalized[$lang],
+      descriptionLocalized.en,
+      descriptionLocalized.fr,
+      descriptionLocalized.ar,
+      description
     ),
 
     date,
@@ -954,25 +881,21 @@ export const postBySlugQuery = groq`
 
   // ===== TITLE =====
   "title": coalesce(
-    // modèle actuel : localeString
-    title[$lang],
-    title.en,
-    title.fr,
-    title.ar,
-    // fallback legacy : string simple
-    title
-  ),
+  titleLocalized[$lang],
+  titleLocalized.en,
+  titleLocalized.fr,
+  titleLocalized.ar,
+  title
+),
 
   // ===== OVERVIEW =====
   "overview": coalesce(
-    // modèle actuel : localeBlock
-    overview[$lang],
-    overview.en,
-    overview.fr,
-    overview.ar,
-    // fallback legacy : array de blocks
-    overview
-  ),
+  overviewLocalized[$lang],
+  overviewLocalized.en,
+  overviewLocalized.fr,
+  overviewLocalized.ar,
+  overview
+),
 
   // ===== DESCRIPTION =====
   "description": coalesce(

@@ -1,4 +1,4 @@
-import { DocumentIcon, ImageIcon } from '@sanity/icons'
+import { DocumentIcon } from '@sanity/icons'
 import { format, parseISO } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { defineArrayMember, defineField, defineType } from 'sanity'
@@ -10,90 +10,89 @@ export default defineType({
   title: 'Post',
   type: 'document',
   icon: DocumentIcon,
-  // Uncomment below to have edits publish automatically as you type
   liveEdit: true,
   fields: [
     defineField({
       name: 'title',
-      description: 'This field is the title of your project.',
+      title: 'Title (legacy)',
+      type: 'string',
+    }),
+    defineField({
+      name: 'titleLocalized',
       title: 'Title',
       type: 'localeString',
       validation: (rule) => rule.required(),
+      options: { collapsible: true, collapsed: true },
     }),
+
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
       options: {
-        source: 'title.en',
+        source: 'titleLocalized.en',
         maxLength: 96,
         isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
       validation: (rule) => rule.required(),
     }),
-    // defineField({
-    //   name: 'overview',
-    //   description:
-    //     'Used both for the <meta> description tag for SEO, and project subheader.',
-    //   title: 'Overview',
-    //   type: 'array',
-    //   of: [
-    //     // Paragraphs
-    //     defineArrayMember({
-    //       lists: [],
-    //       marks: {
-    //         annotations: [],
-    //         decorators: [
-    //           {
-    //             title: 'Italic',
-    //             value: 'em',
-    //           },
-    //           {
-    //             title: 'Strong',
-    //             value: 'strong',
-    //           },
-    //         ],
-    //       },
-    //       styles: [],
-    //       type: 'block',
-    //     }),
-    //   ],
-    //   validation: (rule) => rule.max(155).required(),
-    // }),
+
     defineField({
       name: 'overview',
-      description:
-        'Used both for the <meta> description tag for SEO, and project subheader.',
+      title: 'Overview (legacy)',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'block',
+          styles: [],
+          lists: [],
+          marks: {
+            annotations: [],
+            decorators: [
+              { title: 'Italic', value: 'em' },
+              { title: 'Strong', value: 'strong' },
+            ],
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'overviewLocalized',
       title: 'Overview',
       type: 'localeBlock',
       validation: (rule) => rule.required(),
+      options: { collapsible: true, collapsed: true },
     }),
 
     defineField({
       name: 'coverImage',
       title: 'Cover Image',
-      description:
-        'This image will be used as the cover image for the project. If you choose to add it to the show case projects, this is the image displayed in the list within the homepage.',
       type: 'image',
-      options: {
-        hotspot: true,
-      },
+      options: { hotspot: true },
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: 'tags',
       title: 'Tags',
       type: 'array',
       of: [{ type: 'string' }],
-      options: {
-        layout: 'tags',
-      },
+      options: { layout: 'tags' },
     }),
+
     defineField({
       name: 'description',
+      title: 'Project Description (legacy)',
+      type: 'array',
+      of: [defineArrayMember({ type: 'block' })],
+    }),
+    defineField({
+      name: 'descriptionLocalized',
       title: 'Project Description',
       type: 'localeBlock',
+      options: { collapsible: true, collapsed: true },
     }),
+
     defineField({
       name: 'date',
       title: 'Date',
@@ -125,22 +124,18 @@ export default defineType({
       name: 'files',
       title: 'Files',
       type: 'array',
-      of: [
-        {
-          type: 'file',
-          title: 'File',
-        },
-      ],
+      of: [{ type: 'file', title: 'File' }],
     }),
   ],
   preview: {
     select: {
-      title: 'title.en',
+      title: 'titleLocalized.en',
+      titleLegacy: 'title',
       author: 'author.name',
       date: 'date',
       media: 'coverImage',
     },
-    prepare({ title, media, author, date }) {
+    prepare({ title, titleLegacy, media, author, date }) {
       const subtitles = [
         author && `by ${author}`,
         date &&
@@ -149,7 +144,11 @@ export default defineType({
           })}`,
       ].filter(Boolean)
 
-      return { title, media, subtitle: subtitles.join(' ') }
+      return {
+        title: title || titleLegacy || 'Untitled',
+        media,
+        subtitle: subtitles.join(' '),
+      }
     },
   },
 })
