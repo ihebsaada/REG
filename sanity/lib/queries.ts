@@ -899,12 +899,12 @@ export const postBySlugQuery = groq`
 
   // ===== DESCRIPTION =====
   "description": coalesce(
-    description[$lang],
-    description.en,
-    description.fr,
-    description.ar,
-    description
-  ),
+  descriptionLocalized[$lang],
+  descriptionLocalized.en,
+  descriptionLocalized.fr,
+  descriptionLocalized.ar,
+  description
+),
 
   "slug": slug.current,
   tags,
