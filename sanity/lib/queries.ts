@@ -265,25 +265,17 @@ export const homePageQuery = groq`
       coverImage,
       "overview": coalesce(
         overviewLocalized[$lang],
-        overview[$lang],
         overviewLocalized.en,
-        overview.en,
         overviewLocalized.fr,
-        overview.fr,
         overviewLocalized.ar,
-        overview.ar,
         overview
       ),
       "slug": slug.current,
       "title": coalesce(
         titleLocalized[$lang],
-        title[$lang],
         titleLocalized.en,
-        title.en,
         titleLocalized.fr,
-        title.fr,
         titleLocalized.ar,
-        title.ar,
         title
       ),
       tags
@@ -387,26 +379,12 @@ export const pagesBySlugQuery = groq`
     ),
 
     certifications[]->{
-      _id,
-      "url": coverImage.asset->url,
-      "overview": coalesce(
-        overviewLocalized[$lang],
-        overview[$lang],
-        overviewLocalized.en,
-        overview.en,
-        overview
-      ),
-      "title": coalesce(
-        titleLocalized[$lang],
-        title[$lang],
-        titleLocalized.en,
-        title.en,
-        title.fr,
-        title.ar,
-        title
-      ),
-      "slug": slug.current,
-    },
+  _id,
+  "url": coverImage.asset->url,
+  overview,
+  title,
+  "slug": slug.current
+},
 
     images[]{
       "url": asset->url,
@@ -529,23 +507,9 @@ export const certificationsQuery = groq`
   *[_type == "certification"]{
     _id,
     coverImage,
-    "overview": coalesce(
-      overviewLocalized[$lang],
-      overview[$lang],
-      overviewLocalized.en,
-      overview.en,
-      overview
-    ),
-    "title": coalesce(
-      titleLocalized[$lang],
-      title[$lang],
-      titleLocalized.en,
-      title.en,
-      title.fr,
-      title.ar,
-      title
-    ),
-    "slug": slug.current,
+    overview,
+    title,
+    "slug": slug.current
   }
 `
 export const certificationBySlugQuery = groq`
@@ -554,22 +518,8 @@ export const certificationBySlugQuery = groq`
     coverImage{
       asset->{ _id, url }
     },
-    "overview": coalesce(
-      overviewLocalized[$lang],
-      overview[$lang],
-      overviewLocalized.en,
-      overview.en,
-      overview
-    ),
-    "title": coalesce(
-      titleLocalized[$lang],
-      title[$lang],
-      titleLocalized.en,
-      title.en,
-      title.fr,
-      title.ar,
-      title
-    ),
+    overview,
+    title
   }
 `
 
@@ -786,21 +736,9 @@ export const innovationBySlugQuery = groq`
     "url": coverImage.asset->url,
     "slug": slug.current,
 
-    "title": coalesce(
-      titleLocalized[$lang],
-      titleLocalized.en,
-      titleLocalized.fr,
-      titleLocalized.ar,
-      title
-    ),
-
-    "overview": coalesce(
-      overviewLocalized[$lang],
-      overviewLocalized.en,
-      overviewLocalized.fr,
-      overviewLocalized.ar,
+    
+      title,
       overview
-    ),
   },
   images[]{ "url": asset->url, alt, caption },
   videos[]{ "url": asset->url, alt, caption },
@@ -914,26 +852,12 @@ export const postBySlugQuery = groq`
 
   // ===== CERTIFICATIONS ASSOCIÉES =====
   certifications[]->{
-    _id,
-    "url": coverImage.asset->url,
-    "slug": slug.current,
-
-    "title": coalesce(
-      title[$lang],
-      title.en,
-      title.fr,
-      title.ar,
-      title
-    ),
-
-    "overview": coalesce(
-      overview[$lang],
-      overview.en,
-      overview.fr,
-      overview.ar,
-      overview
-    ),
-  },
+  _id,
+  "url": coverImage.asset->url,
+  overview,
+  title,
+  "slug": slug.current
+},
 
   // ===== MÉDIAS NORMALISÉS =====
   images[]{ "url": asset->url, alt, caption },
