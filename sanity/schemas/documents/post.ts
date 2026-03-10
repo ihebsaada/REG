@@ -10,7 +10,7 @@ export default defineType({
   title: 'Post',
   type: 'document',
   icon: DocumentIcon,
-  liveEdit: true,
+  // liveEdit: true,
   fields: [
     defineField({
       name: 'title',
