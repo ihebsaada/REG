@@ -22,7 +22,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
     const doc$ = context.documentStore.listenQuery(
       `*[_id==$id || references($id)]{_type,slug,title,locale}`,
       params,
-      { perspective: 'previewDrafts' },
+      { perspective: 'drafts' },
     ) as Observable<
       | {
           _type: string
