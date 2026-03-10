@@ -1,4 +1,5 @@
-import { format, parseISO } from 'date-fns'
+import { stegaClean } from '@sanity/client/stega'
+import { format, isValid, parseISO } from 'date-fns'
 import fr from 'date-fns/locale/fr'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -17,6 +18,15 @@ export interface HomePageProps {
 export function HomePageShowcases({ data, dict }: HomePageProps) {
   // Default to an empty object to allow previews on non-existent documents
   const { opportunity, innovation } = data ?? {}
+
+  const safeFormatDate = (value?: string) => {
+    if (!value) return ''
+    const cleaned = stegaClean(value)
+    const parsedDate = parseISO(cleaned)
+    if (!isValid(parsedDate)) return ''
+    return format(parsedDate, 'dd/LL/yyyy', { locale: fr })
+  }
+
 
   return (
     <div className="flex flex-col gap-8 md:flex-row">
@@ -49,15 +59,7 @@ export function HomePageShowcases({ data, dict }: HomePageProps) {
                   {dict.home.showcases.opportunity.startDate}
                 </span>
                 <span>
-                  {opportunity?.duration?.start
-                    ? format(
-                        parseISO(opportunity?.duration?.start),
-                        'dd/LL/yyyy',
-                        {
-                          locale: fr,
-                        },
-                      )
-                    : ''}
+                  {safeFormatDate(opportunity?.duration?.start)}
                 </span>
               </div>
               <div className="flex flex-col gap-2 md:flex-row">
@@ -65,15 +67,7 @@ export function HomePageShowcases({ data, dict }: HomePageProps) {
                   {dict.home.showcases.opportunity.endDate}
                 </span>
                 <span>
-                  {opportunity?.duration?.end
-                    ? format(
-                        parseISO(opportunity?.duration?.end),
-                        'dd/LL/yyyy',
-                        {
-                          locale: fr,
-                        },
-                      )
-                    : ''}
+                  {safeFormatDate(opportunity?.duration?.end)}
                 </span>
               </div>
             </div>
@@ -113,10 +107,8 @@ export function HomePageShowcases({ data, dict }: HomePageProps) {
             {dict.home.showcases.innovation.sectionTitle}
           </h2>
           <h3 className="font-bold text-md">
-            {innovation?.title
-              ? typeof innovation?.title !== 'string'
-                ? innovation?.title['en']
-                : innovation?.title
+            {typeof innovation?.title === 'string'
+              ? innovation?.title
               : ''}
           </h3>
           <CustomPortableText value={innovation?.overview ?? []} />

@@ -36,66 +36,74 @@ export function ShowcasePosts({
           <div className="w-full mb-10 sm:mb-0 sm:w-1/2">
             <div className="relative h-full ml-0 mr-0 sm:mr-10">
               <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-green-500 rounded-lg"></span>
-              <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg">
-                <div className="mb-3">
-                  <AspectRatio ratio={16 / 9}>
-                    <Image
-                      className="object-cover"
-                      fill
-                      src={blocks?.[0].coverImage || ''}
-                      alt={blocks?.[0].title || ''}
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                    />
-                  </AspectRatio>
+              {blocks?.[0] ? (
+                <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg">
+                  <div className="mb-3">
+                    <AspectRatio ratio={16 / 9}>
+                      <Image
+                        className="object-cover"
+                        fill
+                        src={blocks[0].coverImage || ''}
+                        alt={blocks[0].title || ''}
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                      />
+                    </AspectRatio>
+                  </div>
+                  <div className="flex items-center ">
+                    <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
+                      <HandleLink
+                        href={`/posts/${blocks[0].slug}`}
+                        aria-description={blocks[0].title}
+                      >
+                        {blocks[0].title}
+                      </HandleLink>
+                    </h3>
+                  </div>
+                  <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
+                    ------------
+                  </p>
+                  <div className="pb-6 mb-2 text-gray-600 ">
+                    {blocks[0].description}
+                  </div>
                 </div>
-                <div className="flex items-center ">
-                  <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                    <HandleLink
-                      href={`/posts/${blocks?.[0].slug}`}
-                      aria-description={blocks?.[0].title}
-                    >
-                      {blocks?.[0].title}
-                    </HandleLink>
-                  </h3>
-                </div>
-                <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
-                  ------------
-                </p>
-                <div className="pb-6 mb-2 text-gray-600 ">
-                  {blocks?.[0].description}
-                </div>
-              </div>
+              ) : (
+                <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg"></div>
+              )}
             </div>
           </div>
           <div className="w-full sm:w-1/2">
             <div className="relative h-full ml-0 md:mr-10">
               <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-green-500 rounded-lg"></span>
-              <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg">
-                <div className="mb-3">
-                  <AspectRatio ratio={16 / 9}>
-                    <Image
-                      className="object-cover"
-                      fill
-                      src={blocks?.[1].coverImage || ''}
-                      alt={blocks?.[1].title || ''}
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                    />
-                  </AspectRatio>
+              {blocks?.[1] ? (
+                <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg">
+                  <div className="mb-3">
+                    <AspectRatio ratio={16 / 9}>
+                      <Image
+                        className="object-cover"
+                        fill
+                        src={blocks[1].coverImage || ''}
+                        alt={blocks[1].title || ''}
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                      />
+                    </AspectRatio>
+                  </div>
+                  <div className="flex items-center ">
+                    <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
+                      <HandleLink href={`/posts/${blocks[1].slug}`}>
+                        {blocks[1].title}
+                      </HandleLink>
+                    </h3>
+                  </div>
+                  <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
+                    ------------
+                  </p>
+                  <div className="pb-6 mb-2 text-gray-600">
+                    {blocks[1].description}
+                  </div>
                 </div>
-                <div className="flex items-center ">
-                  <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                    <HandleLink href={`/posts/${blocks?.[1].slug}`}>
-                      {blocks?.[1].title}
-                    </HandleLink>
-                  </h3>
-                </div>
-                <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
-                  ------------
-                </p>
-                <div className="pb-6 mb-2 text-gray-600">
-                  {blocks?.[1].description}
-                </div>
-              </div>
+              ) : (
+                <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg"></div>
+              )}
             </div>
           </div>
         </div>
@@ -103,94 +111,106 @@ export function ShowcasePosts({
           <div className="w-full mb-10 sm:mb-0 sm:w-1/2">
             <div className="relative h-full ml-0 mr-0 sm:mr-10">
               <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-green-400 rounded-lg"></span>
-              <div className="relative h-full p-5 bg-white border-2 border-green-400 rounded-lg">
-                <div className="mb-3">
-                  <AspectRatio ratio={16 / 9}>
-                    <Image
-                      className="object-cover"
-                      fill
-                      src={blocks?.[2].coverImage || ''}
-                      alt={blocks?.[2].title || ''}
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                    />
-                  </AspectRatio>
+              {blocks?.[2] ? (
+                <div className="relative h-full p-5 bg-white border-2 border-green-400 rounded-lg">
+                  <div className="mb-3">
+                    <AspectRatio ratio={16 / 9}>
+                      <Image
+                        className="object-cover"
+                        fill
+                        src={blocks[2].coverImage || ''}
+                        alt={blocks[2].title || ''}
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                      />
+                    </AspectRatio>
+                  </div>
+                  <div className="flex items-center ">
+                    <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
+                      <HandleLink href={`/posts/${blocks[2].slug}`}>
+                        {blocks[2].title}
+                      </HandleLink>
+                    </h3>
+                  </div>
+                  <p className="mt-3 mb-1 text-xs font-medium text-green-400 uppercase">
+                    ------------
+                  </p>
+                  <div className="pb-6 mb-2 text-gray-600">
+                    {blocks[2].description}
+                  </div>
                 </div>
-                <div className="flex items-center ">
-                  <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                    <HandleLink href={`/posts/${blocks?.[2].slug}`}>
-                      {blocks?.[2].title}
-                    </HandleLink>
-                  </h3>
-                </div>
-                <p className="mt-3 mb-1 text-xs font-medium text-green-400 uppercase">
-                  ------------
-                </p>
-                <div className="pb-6 mb-2 text-gray-600">
-                  {blocks?.[2].description}
-                </div>
-              </div>
+              ) : (
+                <div className="relative h-full p-5 bg-white border-2 border-green-400 rounded-lg"></div>
+              )}
             </div>
           </div>
           <div className="w-full mb-10 sm:mb-0 sm:w-1/2">
             <div className="relative h-full ml-0 mr-0 sm:mr-10">
               <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-green-400 rounded-lg"></span>
-              <div className="relative h-full p-5 bg-white border-2 border-green-400 rounded-lg">
-                <div className="mb-3">
-                  <AspectRatio ratio={16 / 9}>
-                    <Image
-                      className="object-cover"
-                      fill
-                      src={blocks?.[3].coverImage || ''}
-                      alt={blocks?.[3].title || ''}
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                    />
-                  </AspectRatio>
+              {blocks?.[3] ? (
+                <div className="relative h-full p-5 bg-white border-2 border-green-400 rounded-lg">
+                  <div className="mb-3">
+                    <AspectRatio ratio={16 / 9}>
+                      <Image
+                        className="object-cover"
+                        fill
+                        src={blocks[3].coverImage || ''}
+                        alt={blocks[3].title || ''}
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                      />
+                    </AspectRatio>
+                  </div>
+                  <div className="flex items-center ">
+                    <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
+                      <HandleLink href={`/posts/${blocks[3].slug}`}>
+                        {blocks[3].title}
+                      </HandleLink>
+                    </h3>
+                  </div>
+                  <p className="mt-3 mb-1 text-xs font-medium text-green-400 uppercase">
+                    ------------
+                  </p>
+                  <div className="pb-6 mb-2 text-gray-600">
+                    {blocks[3].description}
+                  </div>
                 </div>
-                <div className="flex items-center ">
-                  <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                    <HandleLink href={`/posts/${blocks?.[3].slug}`}>
-                      {blocks?.[3].title}
-                    </HandleLink>
-                  </h3>
-                </div>
-                <p className="mt-3 mb-1 text-xs font-medium text-green-400 uppercase">
-                  ------------
-                </p>
-                <div className="pb-6 mb-2 text-gray-600">
-                  {blocks?.[3].description}
-                </div>
-              </div>
+              ) : (
+                <div className="relative h-full p-5 bg-white border-2 border-green-400 rounded-lg"></div>
+              )}
             </div>
           </div>
           <div className="w-full sm:w-1/2">
             <div className="relative h-full ml-0 md:mr-10">
               <span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-green-500 rounded-lg"></span>
-              <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg">
-                <div className="mb-3">
-                  <AspectRatio ratio={16 / 9}>
-                    <Image
-                      className="object-cover"
-                      fill
-                      src={blocks?.[4].coverImage || ''}
-                      alt={blocks?.[4].title || ''}
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                    />
-                  </AspectRatio>
+              {blocks?.[4] ? (
+                <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg">
+                  <div className="mb-3">
+                    <AspectRatio ratio={16 / 9}>
+                      <Image
+                        className="object-cover"
+                        fill
+                        src={blocks[4].coverImage || ''}
+                        alt={blocks[4].title || ''}
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                      />
+                    </AspectRatio>
+                  </div>
+                  <div className="flex items-center ">
+                    <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
+                      <HandleLink href={`/posts/${blocks[4].slug}`}>
+                        {blocks[4].title}
+                      </HandleLink>
+                    </h3>
+                  </div>
+                  <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
+                    ------------
+                  </p>
+                  <div className="pb-6 mb-2 text-gray-600">
+                    {blocks[4].description}
+                  </div>
                 </div>
-                <div className="flex items-center ">
-                  <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                    <HandleLink href={`/posts/${blocks?.[4].slug}`}>
-                      {blocks?.[4].title}
-                    </HandleLink>
-                  </h3>
-                </div>
-                <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
-                  ------------
-                </p>
-                <div className="pb-6 mb-2 text-gray-600">
-                  {blocks?.[4].description}
-                </div>
-              </div>
+              ) : (
+                <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg"></div>
+              )}
             </div>
           </div>
         </div>

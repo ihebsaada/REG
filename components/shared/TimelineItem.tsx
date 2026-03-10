@@ -1,3 +1,5 @@
+import { stegaClean } from '@sanity/client/stega'
+
 import ImageBox from '@/components/shared/ImageBox'
 import type { MilestoneItem } from '@/types'
 
@@ -10,9 +12,9 @@ export function TimelineItem({
 }) {
   const { description, duration, image, tags, title } = milestone
   const startYear = duration?.start
-    ? new Date(duration.start).getFullYear()
+    ? stegaClean(duration.start).substring(0, 4)
     : undefined
-  const endYear = duration?.end ? new Date(duration.end).getFullYear() : 'Now'
+  const endYear = duration?.end ? stegaClean(duration.end).substring(0, 4) : 'Now'
 
   return (
     <div className={`flex min-h-[200px] font-sans ${!isLast && 'pb-2'}`}>
@@ -40,7 +42,7 @@ export function TimelineItem({
         {/* Tags */}
         <div className="text-sm text-gray-600 ">
           {tags?.map((tag, key) => (
-            <span key={key}>
+            <span key={`${tag}-${key}`}>
               {tag}
               <span className="mx-1">●</span>
             </span>
