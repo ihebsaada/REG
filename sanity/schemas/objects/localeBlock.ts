@@ -66,10 +66,7 @@ const portableTextMembers = [
       ],
       annotations: [
         {
-          name: 'link',
-          type: 'object',
-          title: 'Link',
-          fields: [{ name: 'href', type: 'url', title: 'Url' }],
+          type: 'link',
         },
       ],
     },

@@ -34,6 +34,7 @@ import localeString from '@/sanity/schemas/objects/localeString'
 import milestone from '@/sanity/schemas/objects/milestone'
 import sectionStatItem from '@/sanity/schemas/objects/sectionStatItem'
 import socialNetwork from '@/sanity/schemas/objects/socialNetwork'
+import { portableTextLinkType } from '@/sanity/schemas/objects/portableTextLink'
 import timeline from '@/sanity/schemas/objects/timeline'
 import { videos } from '@/sanity/schemas/objects/videos'
 import { videoType } from '@/sanity/schemas/objects/videoType'
@@ -87,6 +88,7 @@ export default defineConfig({
       milestone,
       sectionStatItem,
       timeline,
+      portableTextLinkType,
 
       localeString,
       localeBlock,
